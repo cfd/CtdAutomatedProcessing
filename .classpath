@@ -2,12 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/Chris/Desktop/AIMS2012/jdom-2.0.4/jdom-2.0.4.jar" sourcepath="C:/Users/Chris/Desktop/AIMS2012/jdom-2.0.4/jdom-2.0.4-sources.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Desktop/aims3/CtdAutomatedProcessing/jdom-2.0.4.jar" sourcepath="C:/Users/Chris/Desktop/aims3/CtdAutomatedProcessing/jdom-2.0.4-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/Chris/Desktop/AIMS2012/jdom-2.0.4/jdom-2.0.4-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Chris/Desktop/aims3/CtdAutomatedProcessing/jdom-2.0.4-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Chris/Desktop/AIMS2012/sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Desktop/aims3/CtdAutomatedProcessing/sqlite-jdbc-3.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
