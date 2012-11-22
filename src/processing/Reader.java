@@ -43,10 +43,8 @@ public class Reader {
 			Element sensorArrayEle = rootEle.getChild("Instrument").getChild("SensorArray");
 			List<Element> sensors = sensorArrayEle.getChildren();
 			System.out.println("IDs to look up in hashmap for information:");
-			int count = 0;
 			writer.writeCalcArray(sensors);
 			
-			System.out.println(sensors.size() + " = size attribute");
 			
 			
 			

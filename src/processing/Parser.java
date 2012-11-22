@@ -11,8 +11,8 @@ import model.SensorInfo;
 
 public class Parser {
 	
-	public static LinkedHashMap<Integer, SensorInfo> sensorsMap;
-	private static Connection con;
+	private LinkedHashMap<Integer, SensorInfo> sensorsMap;
+	private Connection con;
 	private Statement statement;
 	
 	public Parser() {
@@ -65,6 +65,10 @@ public class Parser {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public LinkedHashMap<Integer, SensorInfo> getSensorsMap(){
+		return sensorsMap;
 	}
 
 	/**
