@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Filter >
+  <Version value="7.21k" />
+  <ServerName value="Filter" />
+  <InputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <InputFileArray size="" GrowBy="-1">
+  </InputFileArray>
+  <OutputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <NameAppend value="F" />
+  <OutputFile value="" />
+  <LastProcessed value="0" />
+  <TimeConstFilterA value="0.500000" />
+  <TimeConstFilterB value="1.000000" />
+  <CalcArray Size="" >
+  </CalcArray>
+  <FilterTypeArray >
+  </FilterTypeArray>
+</Filter>
