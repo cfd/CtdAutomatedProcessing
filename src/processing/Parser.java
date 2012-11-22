@@ -27,7 +27,7 @@ public class Parser {
 		//call database
 		//make objects of SensorInfo
 		//put in map
-		//sensorID as key, object created as value.
+		//sensorID as key, object created as value
 		
 	}
 
