@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Align_CTD >
+  <Version value="7.21k" />
+  <ServerName value="Align CTD" />
+  <InputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <InputFileArray size="" GrowBy="-1" >
+  </InputFileArray>
+  <OutputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <NameAppend value="A" />
+  <OutputFile value="" />
+  <LastProcessed value="0" />
+  <CalcArray Size="" 
+  </CalcArray>
+  <ValArray size="" >
+  </ValArray>
+</Align_CTD>
