@@ -49,7 +49,7 @@ public class Parser {
 		
 			try {
 				//wrtr.writeCalcArray();
-				rdr.read("C:\\Users\\Chris\\Desktop\\AIMS2012\\ctddata\\ctd\\imos-processed\\config\\SBE19plusV2_6180\\SBE19plusV2_NRS1_6180_20120917\\NRS1_6180_20120917.xmlcon");
+				rdr.read("NRS1_6180_20120917.xmlcon");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
