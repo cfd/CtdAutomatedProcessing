@@ -22,30 +22,24 @@ public class Writer {
 
 	public void writeCalcArray() throws IOException{
 			Document doc = new Document();
-			Element root = new Element("Data_Conversion");
+			Element root = new Element("CalcArrayItem");
 			doc.setRootElement(root);
 			
-			
-			Element calcArray = new Element("CalcArray");
-			Element calcArrayItem = new Element("CalcArrayItem");
 			Element calc = new Element("Calc");
 			Element fullname = new Element("FullName");
 
-			calcArray.setAttribute("Size", "");
 			
-			calcArrayItem.setAttribute("index", "");
-			calcArrayItem.setAttribute("CalcId", "");
+			root.setAttribute("index", "");
+			root.setAttribute("CalcId", "");
 			
 			calc.setAttribute("UnitID", "");
 			calc.setAttribute("Ordinal", "");
 			fullname.setAttribute("value", "");
 			
-			calcArrayItem.addContent(calc);
+			root.addContent(calc);
 			calc.addContent(fullname);
 			
 			
-			root.addContent(calcArray);
-			calcArray.addContent(calcArrayItem);
 			
 			
 			

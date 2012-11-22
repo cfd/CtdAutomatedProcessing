@@ -81,8 +81,8 @@ public class Parser {
 		Reader rdr = new Reader();
 		
 			try {
-				//wrtr.writeCalcArray();
-				rdr.read("NRS1_6180_20120917.xmlcon");
+				wrtr.writeCalcArray();
+				//rdr.read("NRS1_6180_20120917.xmlcon");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
