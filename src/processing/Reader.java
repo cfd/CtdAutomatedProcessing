@@ -13,6 +13,9 @@ public class Reader {
 	
 	
 	public void read(String path) throws IOException, JDOMException{
+		
+		Writer writer = new Writer();
+		
 
 		SAXBuilder builder =  new SAXBuilder();
 		Document readDoc;
@@ -40,11 +43,9 @@ public class Reader {
 			Element sensorArrayEle = rootEle.getChild("Instrument").getChild("SensorArray");
 			List<Element> sensors = sensorArrayEle.getChildren();
 			System.out.println("IDs to look up in hashmap for information:");
-			for (Element sensor : sensors){
-				int id = Integer.parseInt(sensor.getAttributeValue("SensorID"));
-				System.out.println(id);
-				
-			}
+			int count = 0;
+			writer.writeCalcArray(sensors);
+			
 			System.out.println(sensors.size() + " = size attribute");
 			
 			

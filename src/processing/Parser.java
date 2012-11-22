@@ -11,7 +11,7 @@ import model.SensorInfo;
 
 public class Parser {
 	
-	private LinkedHashMap<Integer, SensorInfo> sensorsMap;
+	public static LinkedHashMap<Integer, SensorInfo> sensorsMap;
 	private static Connection con;
 	private Statement statement;
 	
@@ -76,13 +76,12 @@ public class Parser {
 		Parser parser = new Parser();
 		
 		
-		
-		Writer wrtr = new Writer();
+
 		Reader rdr = new Reader();
 		
 			try {
-				wrtr.writeCalcArray();
-				//rdr.read("NRS1_6180_20120917.xmlcon");
+				
+				rdr.read("NRS1_6180_20120917.xmlcon");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
