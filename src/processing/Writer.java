@@ -18,6 +18,7 @@ public class Writer {
 	XMLOutputter xmlOutput;
 	private ArrayList<SensorInfo> shitToWrite = new ArrayList<>();
 	ArrayList<SensorInfo> sortedList = new ArrayList<>();
+	Parser parser = new Parser();
 
 	public Writer() {
 		xmlOutput = new XMLOutputter(Format.getPrettyFormat());
@@ -34,8 +35,8 @@ public class Writer {
 		Element testElement = new Element("standinroot");
 		doc.setRootElement(testElement);
 
-		SensorInfo time = Parser.sensorsMap.get(-1);
-		SensorInfo scanCount = Parser.sensorsMap.get(-2);
+		SensorInfo time = parser.getSensorsMap().get(-1);
+		SensorInfo scanCount = parser.getSensorsMap().get(-2);
 
 		sortedList.add(time);
 		sortedList.add(scanCount);
@@ -56,9 +57,9 @@ public class Writer {
 			insertSensor("Upoly", sensor);
 		}
 		
-		SensorInfo freq = Parser.sensorsMap.get(-5);
-		SensorInfo desRate = Parser.sensorsMap.get(-3);
-		SensorInfo density = Parser.sensorsMap.get(-4);
+		SensorInfo freq = parser.getSensorsMap().get(-5);
+		SensorInfo desRate = parser.getSensorsMap().get(-3);
+		SensorInfo density = parser.getSensorsMap().get(-4);
 
 		sortedList.add(freq);
 		sortedList.add(desRate);
@@ -136,7 +137,7 @@ public class Writer {
 
 	private void insertSensor(String sensorName, Element sensor) {
 
-		SensorInfo info = Parser.sensorsMap.get(Integer.parseInt(sensor
+		SensorInfo info = parser.getSensorsMap().get(Integer.parseInt(sensor
 				.getAttributeValue("SensorID")));
 		if (info != null) {
 			if (info.getFullname().startsWith(sensorName)) {
