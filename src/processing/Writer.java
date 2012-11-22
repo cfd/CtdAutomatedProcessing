@@ -129,7 +129,7 @@ public class Writer {
 			count++;
 		}
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"C:\\Users\\Brendan\\Desktop\\work\\mockup.psa")));
+				"C:\\Users\\Chris\\Desktop\\mockup.psa")));
 		System.out.println("Wrote to file");
 
 	}
