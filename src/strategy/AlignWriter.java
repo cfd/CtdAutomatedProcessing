@@ -1,12 +1,8 @@
 package strategy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import model.SensorInfo;
-
-import org.jdom2.Element;
 
 public class AlignWriter implements IPsaWriter{
 	
