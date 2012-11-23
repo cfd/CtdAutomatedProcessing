@@ -1,13 +1,14 @@
 package processing;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashMap;
-import util.ConnectDB;
 
 import model.SensorInfo;
+import util.ConnectDB;
 
 public class Parser {
 	
@@ -83,13 +84,15 @@ public class Parser {
 
 		Reader rdr = new Reader();
 		
+		File dir = new File("xmlcons");
+		for (File file : dir.listFiles()) {
 			try {
-				
-				rdr.read("NRS1_6180_20120917.xmlcon");
+				System.out.println(file.getName());
+				rdr.read(file.toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+		}
 	}
 }
