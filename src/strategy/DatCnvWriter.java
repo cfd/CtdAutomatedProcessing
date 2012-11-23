@@ -1,11 +1,8 @@
 package strategy;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.SensorInfo;
-
-import org.jdom2.Element;
 
 public class DatCnvWriter implements IPsaWriter{
 
