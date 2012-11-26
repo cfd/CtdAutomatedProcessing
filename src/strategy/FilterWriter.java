@@ -39,7 +39,7 @@ public class FilterWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeCalcArray() {
+	public void writeCalcArray(String userPoly) {
 		//CalcArray Element from
 		
 		Element root = doc.getRootElement();
@@ -75,8 +75,14 @@ public class FilterWriter implements IPsaWriter{
 			
 			//set up FullName
 			Element fullName = new Element("FullName");
-			calc.setAttribute("value", 
-					"" + sensor.getFullname());
+			if (sensor.getFullname().startsWith("Upoly")) {
+				calc.setAttribute("value", 
+						"" + sensor.getFullname() + userPoly);
+			}
+			else {
+				calc.setAttribute("value", 
+						"" + sensor.getFullname() );
+			}
 
 			//add fullname to calc
 			calc.addContent(fullName);
@@ -85,7 +91,7 @@ public class FilterWriter implements IPsaWriter{
 			if (sensor.getFullname().startsWith("Upoly")) {
 				
 				Element calcName = new Element("CalcName");
-				calcName.setAttribute("value", "Upoly 0, ISUS V3 Nitrate");
+				calcName.setAttribute("value", "Upoly 0, " + userPoly);
 				calc.addContent(calcName);
 				
 			}
