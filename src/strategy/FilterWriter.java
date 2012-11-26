@@ -141,14 +141,15 @@ public class FilterWriter implements IPsaWriter{
 			arrayItem.setAttribute("index", "" + counter++);
 			
 			
-			
+			int value;
 			if (first){
+				value = 2;
 				first = false;
 			} else {
-				arrayItem.setAttribute("value", "" + 1);
+				value = 1;
 			}
 			
-			arrayItem.setAttribute("value", "" + 2);
+			arrayItem.setAttribute("value", "" + value);
 		}
 	}
 
