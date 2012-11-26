@@ -165,7 +165,17 @@ public class Writer {
 		writers.add(loopEditWriter);
 
 		for (Writer writer : writers) {
-			writer.getWriterType().setup(orderedSensors);
+			try {
+				writer.getWriterType().setup(orderedSensors);
+				writer.getWriterType().readTemplate();
+				writer.getWriterType().writeUpperSection();
+				writer.getWriterType().writeCalcArray();
+				writer.getWriterType().writeLowerSection();
+				writer.getWriterType().writeToNewPsaFile();
+			} catch (Exception e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 //			for (SensorInfo i : orderedSensors) {
 //				System.out.println(i.getFullname());
 //			}
