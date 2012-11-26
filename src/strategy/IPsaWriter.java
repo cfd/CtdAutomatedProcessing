@@ -1,6 +1,9 @@
 package strategy;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.jdom2.JDOMException;
 
 import model.SensorInfo;
 
@@ -8,7 +11,7 @@ public interface IPsaWriter {
 	
 	public abstract void setup(ArrayList<SensorInfo> orderedSensors);
 	
-	public abstract void readTemplate();
+	public abstract void readTemplate() throws JDOMException, IOException;
 	
 	public abstract void writeUpperSection();
 	
