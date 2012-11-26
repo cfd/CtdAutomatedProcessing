@@ -25,6 +25,7 @@ public class Writer {
 	
 	private static Connection con;
 	private static Statement statement;
+	private static String userPoly;
 	
 	
 	private IPsaWriter writerType;
@@ -55,6 +56,11 @@ public class Writer {
 		Element sensorArrayEle = rootEle.getChild("Instrument").getChild("SensorArray");
 		List<Element> sensorsInXmlcon = sensorArrayEle.getChildren();
 		for (Element e : sensorsInXmlcon){
+			Element child = e.getChildren().get(0);
+			if(child.getName().equals("UserPolynomialSensor")){
+				Element sensorName = child.getChild("SensorName");
+				userPoly = sensorName.getValue();
+			}
 			System.out.println(e.getAttributeValue("SensorID"));
 		}
 		System.out.println();
@@ -169,7 +175,7 @@ public class Writer {
 				writer.getWriterType().setup(orderedSensors);
 				writer.getWriterType().readTemplate();
 				writer.getWriterType().writeUpperSection();
-				writer.getWriterType().writeCalcArray();
+				writer.getWriterType().writeCalcArray(userPoly);
 				writer.getWriterType().writeLowerSection();
 				writer.getWriterType().writeToNewPsaFile();
 			} catch (Exception e){

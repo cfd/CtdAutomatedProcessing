@@ -16,7 +16,7 @@ public interface IPsaWriter {
 	
 	public abstract void writeUpperSection();
 	
-	public abstract void writeCalcArray();
+	public abstract void writeCalcArray(String userPoly);
 	
 	public abstract void writeLowerSection();
 	
