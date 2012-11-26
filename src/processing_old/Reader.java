@@ -14,7 +14,7 @@ public class Reader {
 	
 	public void read(String path) throws IOException, JDOMException{
 		
-		Writer writer = new Writer();
+		WriterOld writer = new WriterOld();
 		
 
 		SAXBuilder builder =  new SAXBuilder();

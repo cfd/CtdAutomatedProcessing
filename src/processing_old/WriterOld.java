@@ -14,12 +14,12 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-public class Writer {
+public class WriterOld {
 	XMLOutputter xmlOutput;
 	ArrayList<SensorInfo> sortedList = new ArrayList<>();
 	Parser parser = new Parser();
 
-	public Writer() {
+	public WriterOld() {
 		xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 	}
 
