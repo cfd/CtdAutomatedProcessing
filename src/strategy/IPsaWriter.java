@@ -1,5 +1,6 @@
 package strategy;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,10 +16,10 @@ public interface IPsaWriter {
 	
 	public abstract void writeUpperSection();
 	
-	public abstract void writeCalcArray();
+	public abstract void writeCalcArray(String userPoly);
 	
 	public abstract void writeLowerSection();
 	
-	public abstract void writeToNewPsaFile();
+	public abstract void writeToNewPsaFile() throws FileNotFoundException, IOException;
 
 }
