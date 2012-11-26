@@ -32,7 +32,6 @@ public class AlignWriter implements IPsaWriter {
 		System.out.println();
 		System.out.println("3 strategy");
 		System.out.println(orderedSensors);
-		
 	}
 
 	@Override
@@ -45,11 +44,10 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeUpperSection() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void writeCalcArray() {
+	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
 		int count = 0;
 		Element rootElement = doc.getRootElement();
@@ -57,12 +55,6 @@ public class AlignWriter implements IPsaWriter {
 		calcArray.setAttribute("Size", sensors.size() + "");
 		
 		for (SensorInfo info : sensors) {
-		
-			/*	
-			 * int id = Integer.parseInt(sensor.getAttributeValue("SensorID"));
-			 *	System.out.println(id);
-			 *	SensorInfo info = Parser.sensorsMap.get(id);
-			 */
 
 			if (info != null) {
 
@@ -81,10 +73,11 @@ public class AlignWriter implements IPsaWriter {
 				calcArray.addContent(calcArrayItem);
 				calcArrayItem.addContent(calc);
 				calc.addContent(fullname);
+				
 				if (info.getFullname().startsWith("Upoly")) {
-					fullname.setAttribute("value", "Upoly 0, " + info.getFullname());
+					fullname.setAttribute("value", "Upoly 0, " + info.getFullname() + ", "  + userPoly);
 					Element calcName = new Element("CalcName");
-					calcName.setAttribute("value", "Upoly 0, NTU");
+					calcName.setAttribute("value", "Upoly 0, " + userPoly);
 					calc.addContent(calcName);
 				}
 				if (info.getFullname().startsWith("Oxygen, SBE 43")) {
@@ -104,7 +97,7 @@ public class AlignWriter implements IPsaWriter {
 					calc.addContent(windowSize);
 				}
 			count++;
-		}
+			}
 		}
 	}
 
