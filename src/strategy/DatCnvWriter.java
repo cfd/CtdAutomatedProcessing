@@ -26,15 +26,6 @@ public class DatCnvWriter implements IPsaWriter {
 		System.out.println();
 		System.out.println("1 strategy");
 		System.out.println(orderedSensors);
-		if (DEBUG) {
-			try {
-				readTemplate();
-				writeUpperSection();
-				writeCalcArray();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	@Override
@@ -75,6 +66,15 @@ public class DatCnvWriter implements IPsaWriter {
 	@Override
 	public void writeCalcArray() {
 		Element calcArray = new Element("CalcArray");
+		ArrayList<Element> CalcArrayItem = new ArrayList<>();
+		Element timeElapsed = new Element("CalcArrayItem");
+		timeElapsed.setAttribute("index","0");
+		timeElapsed.setAttribute("CalcID", "84");
+		if (DEBUG){
+		System.out.println(timeElapsed.getAttributes());
+		}
+		//Content timeElapsed;
+		
 		for(SensorInfo sensor : sensors){
 			System.out.println(sensor.getFullname());
 		}
