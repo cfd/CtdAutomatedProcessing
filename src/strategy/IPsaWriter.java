@@ -1,5 +1,6 @@
 package strategy;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,6 +20,6 @@ public interface IPsaWriter {
 	
 	public abstract void writeLowerSection();
 	
-	public abstract void writeToNewPsaFile();
+	public abstract void writeToNewPsaFile() throws FileNotFoundException, IOException;
 
 }
