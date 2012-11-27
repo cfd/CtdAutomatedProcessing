@@ -184,6 +184,8 @@ public class Writer {
 			}
 //			for (SensorInfo i : orderedSensors) {
 //				System.out.println(i.getFullname());
+			
+			
 //			}
 		}
 
