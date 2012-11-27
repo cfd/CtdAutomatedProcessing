@@ -166,7 +166,7 @@ public class FilterWriter implements IPsaWriter{
 
 	@Override
 	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
