@@ -44,8 +44,7 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeUpperSection() {
 		// TODO Auto-generated method stub
-		
-		
+		////UPPER SECTION NOT COMPLETED YET!!!/////
 	}
 
 	@Override
@@ -149,12 +148,8 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
-		
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				"output/AlignIMOS.psa")));
 		System.out.println("AlignIMOS.psa File Written!");
 	}
-
-
-
 }
