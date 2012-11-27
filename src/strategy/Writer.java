@@ -44,7 +44,7 @@ public class Writer {
 
 
 	public IPsaWriter getWriterType() {
-		return writerType;
+		return writerType;\
 	}
 
 
