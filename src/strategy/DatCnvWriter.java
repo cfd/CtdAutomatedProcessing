@@ -57,8 +57,8 @@ public class DatCnvWriter implements IPsaWriter {
 
 		// Creates the Time Elapsed and Scan Count array items
 		Element timeElapsed = calcArrayItemWritter(0, 84, 52, 0,
-				"Time, Elapsed [seconds]");
-		Element scanCount = calcArrayItemWritter(1, 72, -1, 0, "Scan Count");
+				"Time, Elapsed [seconds]", userPoly);
+		Element scanCount = calcArrayItemWritter(1, 72, -1, 0, "Scan Count", userPoly);
 
 		// Adds the Time Elapsed and Scan Count items
 		calcArray.addContent(timeElapsed);
@@ -68,7 +68,7 @@ public class DatCnvWriter implements IPsaWriter {
 		for (SensorInfo sensor : sensors) {
 			calcArray.addContent(calcArrayItemWritter(index++,
 					sensor.getCalcID(), sensor.getUnitID(),
-					sensor.getOrdinal(), sensor.getFullName()));
+					sensor.getOrdinal(), sensor.getFullName(), userPoly));
 		}
 
 		if (DEBUG) {
@@ -100,7 +100,7 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	private Element calcArrayItemWritter(int index, int calcID, int unitID,
-			int ordinal, String fullname) {
+			int ordinal, String fullname, String userPoly) {
 		//Sets up calc and calcArray Elements
 		Element calcArrayItem = new Element("CalcArrayItem");
 		Element calc = new Element("Calc");
@@ -109,6 +109,15 @@ public class DatCnvWriter implements IPsaWriter {
 		Element name = new Element("FullName");
 		name.setAttribute("value", fullname);
 		calc.addContent(name);
+			
+		// Sets the calc
+		calc.setAttribute("UnitID", "" + unitID);
+		calc.setAttribute("Ordinal", "" + ordinal);
+
+		// Sets the calcArrayItem
+		calcArrayItem.setAttribute("index", "" + index);
+		calcArrayItem.setAttribute("CalcID", "" + calcID);
+		calcArrayItem.addContent(calc);
 		
 		//Sets up the WindowSize
 		Element windowSize = new Element("WindowSize");
@@ -132,17 +141,13 @@ public class DatCnvWriter implements IPsaWriter {
 			calc.addContent(hysteresis);
 			calc.addContent(tau);
 			break;
+		case "Upoly 0":
+			name.setAttribute("value", fullname + ", " + userPoly);
+			Element calcName = new Element("CalcName");
+			calcName.setAttribute("value", userPoly);
+			calc.addContent(calcName);
 		}
-		
-		// Sets the calc
-		calc.setAttribute("UnitID", "" + unitID);
-		calc.setAttribute("Ordinal", "" + ordinal);
-		
 
-		// Sets the calcArrayItem
-		calcArrayItem.setAttribute("index", "" + index);
-		calcArrayItem.setAttribute("CalcID", "" + calcID);
-		calcArrayItem.addContent(calc);
 		return calcArrayItem;
 	}
 
