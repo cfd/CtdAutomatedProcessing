@@ -17,7 +17,13 @@ import org.jdom2.output.XMLOutputter;
 import org.jdom2.input.SAXBuilder;
 
 public class AlignWriter implements IPsaWriter {
-
+	
+	XMLOutputter xmlOutput;
+	
+	public AlignWriter() {
+		xmlOutput = new XMLOutputter(Format.getPrettyFormat());
+	}
+	
 	ArrayList<SensorInfo> sensors;
 	Document doc;	
 	@Override
@@ -38,8 +44,7 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeUpperSection() {
 		// TODO Auto-generated method stub
-		
-		
+		////UPPER SECTION NOT COMPLETED YET!!!/////
 	}
 
 	@Override
@@ -143,14 +148,8 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				"output/AlignIMOS.psa")));
 		System.out.println("AlignIMOS.psa File Written!");
 	}
-
-
-
 }
