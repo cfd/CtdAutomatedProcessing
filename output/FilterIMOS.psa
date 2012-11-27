@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Filter>
+  <Version value="7.21k" />
+  <ServerName value="Filter" />
+  <InputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <InputFileArray size="" GrowBy="-1" />
+  <OutputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
+  <NameAppend value="F" />
+  <OutputFile value="" />
+  <LastProcessed value="0" />
+  <TimeConstFilterA value="0.500000" />
+  <TimeConstFilterB value="1.000000" />
+  <CalcArray Size="9">
+    <CalcArrayItem index="0" CalcID="95">
+      <Calc UnitID="3" Ordinal="0" value="Pressure, Strain Gauge [db]">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="1" CalcID="97">
+      <Calc UnitID="6" Ordinal="0" value="Temperature [ITS-90, deg C]">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="2" CalcID="12">
+      <Calc UnitID="58" Ordinal="0" value="Conductivity [S/m]">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="3" CalcID="93">
+      <Calc UnitID="38" Ordinal="0" value="Fluorescence, WET Labs ECO-AFL/FL [mg/m^3]">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="4" CalcID="87">
+      <Calc UnitID="-1" Ordinal="0" value="Upoly 0NTU">
+        <FullName />
+        <CalcName value="Upoly 0, NTU" />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="5" CalcID="36">
+      <Calc UnitID="23" Ordinal="1" value="Frequency 1">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="6" CalcID="18">
+      <Calc UnitID="32" Ordinal="0" value="Descent Rate [m/s]">
+        <FullName />
+        <WindowSize value="2.000000" />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="7" CalcID="15">
+      <Calc UnitID="11" Ordinal="0" value="Density [density, Kg/m^3]">
+        <FullName />
+      </Calc>
+    </CalcArrayItem>
+    <CalcArrayItem index="8" CalcID="55">
+      <Calc UnitID="40" Ordinal="0" value="Oxygen, SBE 43 [ml/l]">
+        <FullName />
+        <WindowSize value="2.000000" />
+        <ApplyHysteresisCorrection value="1" />
+        <ApplyTauCorrection value="1" />
+      </Calc>
+    </CalcArrayItem>
+  </CalcArray>
+  <FilterTypeArray />
+</Filter>
