@@ -131,7 +131,6 @@ public class DatCnvWriter implements IPsaWriter {
 	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
 
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-		;
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				"output/DatCnvIMOS.psa")));
 		System.out.println("Wrote to file");
