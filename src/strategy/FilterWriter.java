@@ -75,20 +75,20 @@ public class FilterWriter implements IPsaWriter{
 			
 			//set up FullName
 			Element fullName = new Element("FullName");
-			if (sensor.getFullname().startsWith("Upoly")) {
+			if (sensor.getFullName().startsWith("Upoly")) {
 				calc.setAttribute("value", 
-						"" + sensor.getFullname() + userPoly);
+						"" + sensor.getFullName() + userPoly);
 			}
 			else {
 				calc.setAttribute("value", 
-						"" + sensor.getFullname() );
+						"" + sensor.getFullName() );
 			}
 
 			//add fullname to calc
 			calc.addContent(fullName);
 			
 			//set up elements unqiue to 'Upoly 0, Upoly 0, ISUS V3 Nitrate'
-			if (sensor.getFullname().startsWith("Upoly")) {
+			if (sensor.getFullName().startsWith("Upoly")) {
 				
 				Element calcName = new Element("CalcName");
 				calcName.setAttribute("value", "Upoly 0, " + userPoly);
@@ -96,7 +96,7 @@ public class FilterWriter implements IPsaWriter{
 				
 			}
 			//set up elements unqiue to 'Oxygen, SBE 43'
-			else if (sensor.getFullname().startsWith("Oxygen")) {
+			else if (sensor.getFullName().startsWith("Oxygen")) {
 				
 				//set up windowsize
 				Element windowSize = new Element("WindowSize");
@@ -117,7 +117,7 @@ public class FilterWriter implements IPsaWriter{
 				calc.addContent(applyTauCorrection);
 			}
 			//set up elements unqiue to Descent Rate [m/s]
-			else if (sensor.getFullname().startsWith("Descent")){
+			else if (sensor.getFullName().startsWith("Descent")){
 				Element windowSize = new Element("WindowSize");
 				windowSize.setAttribute("value", "2.000000");
 				calc.addContent(windowSize);
