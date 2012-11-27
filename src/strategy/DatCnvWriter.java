@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -27,7 +26,6 @@ public class DatCnvWriter implements IPsaWriter {
 		System.out.println();
 		System.out.println("1 strategy");
 		System.out.println(orderedSensors);
-		System.out.println("lol");
 	}
 
 	@Override
