@@ -38,7 +38,13 @@ public class FilterWriter implements IPsaWriter{
 
 	@Override
 	public void writeUpperSection() {
-		// TODO Auto-generated method stub
+		// TODO needs updating after talking to aims n stuff
+		
+		Element root = doc.getRootElement();
+		Element inputFileArray = root.getChild("InputFileArray");
+		
+		//TODO fix this later after looking in to csv files
+		inputFileArray.setAttribute("size", "" + 0);
 		
 	}
 
@@ -80,11 +86,11 @@ public class FilterWriter implements IPsaWriter{
 			//set up FullName
 			Element fullName = new Element("FullName");
 			if (sensor.getFullName().startsWith("Upoly")) {
-				calc.setAttribute("value", 
+				fullName.setAttribute("value", 
 						"" + sensor.getFullName() + userPoly);
 			}
 			else {
-				calc.setAttribute("value", 
+				fullName.setAttribute("value", 
 						"" + sensor.getFullName() );
 			}
 
@@ -154,6 +160,7 @@ public class FilterWriter implements IPsaWriter{
 			}
 			
 			arrayItem.setAttribute("value", "" + value);
+			filterTypeArray.addContent(arrayItem);
 		}
 	}
 
