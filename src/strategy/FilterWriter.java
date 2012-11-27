@@ -86,7 +86,7 @@ public class FilterWriter implements IPsaWriter{
 			Element fullName = new Element("FullName");
 			if (sensor.getFullName().startsWith("Upoly")) {
 				fullName.setAttribute("value", 
-						"" + sensor.getFullName() + userPoly);
+						"" + sensor.getFullName() + ", " + userPoly);
 			}
 			else {
 				fullName.setAttribute("value", 
