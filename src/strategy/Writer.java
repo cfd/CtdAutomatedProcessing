@@ -157,7 +157,7 @@ public class Writer {
 
 		datCnvWriter.populateSensorsMap();
 		try {
-			List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon("xmlcons/IMOS_ANMN_NRS_CTP_300712_NRS_DAR_01.xmlcon");
+			List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
 			datCnvWriter.sortSensors(sensorsInXmlcon);
 		} catch (Exception e) {
 			e.printStackTrace();
