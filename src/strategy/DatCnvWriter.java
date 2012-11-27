@@ -26,7 +26,6 @@ public class DatCnvWriter implements IPsaWriter {
 		System.out.println();
 		System.out.println("1 strategy");
 		System.out.println(orderedSensors);
-		System.out.println();
 	}
 
 	@Override
