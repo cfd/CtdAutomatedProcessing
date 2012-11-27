@@ -88,8 +88,7 @@ public class FilterWriter implements IPsaWriter{
 				fullName.setAttribute("value", "Upoly 0, " + sensor.getFullName() + ", "  + userPoly);
 			}
 			else {
-				fullName.setAttribute("value", 
-						"" + sensor.getFullName() );
+				fullName.setAttribute("value", "" + sensor.getFullName() );
 			}
 
 			//add fullname to calc
