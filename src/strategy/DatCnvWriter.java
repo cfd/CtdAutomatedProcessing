@@ -116,6 +116,7 @@ public class DatCnvWriter implements IPsaWriter {
 		//Disables user poly and other fields for another run
 		isLatLongPressure = false;
 		amountUserPoly = 0;
+		isOxygen = true;
 		// TODO Auto-generated method stub
 
 	}
