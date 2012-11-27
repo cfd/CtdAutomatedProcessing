@@ -32,7 +32,6 @@ public class LoopEditWriter implements IPsaWriter{
 		System.out.println();
 		System.out.println("6 strategy");
 		System.out.println(orderedSensors);
-		
 	}
 	
 	@Override
