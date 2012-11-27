@@ -38,7 +38,7 @@ public class AlignWriter implements IPsaWriter {
 	public void readTemplate() throws JDOMException, IOException {
 		// TODO Auto-generated method stub
 		SAXBuilder builder =  new SAXBuilder();
-		doc =  builder.build(new File(".\\psa_templates\\AlignTemplate.xml"));
+		doc =  builder.build(new File("./psa_templates/AlignTemplate.xml"));
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class AlignWriter implements IPsaWriter {
 		// TODO Auto-generated method stub
 		
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				".\\output\\AlignIMOS.psa")));
+				"output/AlignIMOS.psa")));
 		System.out.println("AlignIMOS.psa File Written!");
 	}
 
