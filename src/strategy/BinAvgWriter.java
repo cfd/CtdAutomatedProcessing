@@ -30,7 +30,7 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeCalcArray() {
+	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
 		
 	}

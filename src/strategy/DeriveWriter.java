@@ -31,7 +31,7 @@ public class DeriveWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeCalcArray() {
+	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
 		
 	}

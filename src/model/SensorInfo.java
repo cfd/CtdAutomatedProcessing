@@ -7,7 +7,7 @@ public class SensorInfo {
 	private int calcID;
 	private int ordinal;
 
-	private String fullname;
+	private String fullName;
 	
 	public SensorInfo(int unitID, int sensorID, int calcID, int ordinal, String fullname) {
 		super();
@@ -15,34 +15,29 @@ public class SensorInfo {
 		this.sensorID = sensorID;
 		this.calcID = calcID;
 		this.ordinal = ordinal;
-		this.fullname = fullname;
+		this.fullName = fullname;
 	}
 
 	public int getUnitID() {
 		return unitID;
 	}
 
-
 	public void setUnitID(int unitID) {
 		this.unitID = unitID;
 	}
-
 
 	public int getSensorID() {
 		return sensorID;
 	}
 
-
 	public void setSensorID(int sensorID) {
 		this.sensorID = sensorID;
 	}
 
-
 	public int getCalcID() {
 		return calcID;
 	}
-
-
+	
 	public void setCalcID(int calcID) {
 		this.calcID = calcID;
 	}
@@ -55,14 +50,15 @@ public class SensorInfo {
 		this.ordinal = ordinal;
 	}
 
-
-
-	public String getFullname() {
-		return fullname;
+	public String getFullName() {
+		return fullName;
 	}
 
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setFullName(String fullname) {
+		this.fullName = fullname;
+	}
+	
+	public String shortenName(int i) {
+			return fullName.substring(0, i-1);
 	}
 }
