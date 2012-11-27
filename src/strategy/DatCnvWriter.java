@@ -69,7 +69,7 @@ public class DatCnvWriter implements IPsaWriter {
 		for (SensorInfo sensor : sensors) {
 			calcArray.addContent(calcArrayItemWritter(index++,
 					sensor.getCalcID(), sensor.getUnitID(),
-					sensor.getOrdinal(), sensor.getFullname()));
+					sensor.getOrdinal(), sensor.getFullName()));
 		}
 
 		if (DEBUG) {
@@ -77,7 +77,7 @@ public class DatCnvWriter implements IPsaWriter {
 		}
 
 		for (SensorInfo sensor : sensors) {
-			System.out.println(sensor.getFullname());
+			System.out.println(sensor.getFullName());
 		}
 		// TODO Auto-generated method stub
 
