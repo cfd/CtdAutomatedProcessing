@@ -66,5 +66,4 @@ public class LoopEditWriter implements IPsaWriter{
 				"output/LoopEditIMOS.psa")));
 		System.out.println("LoopEditIMOS.psa File Written!");
 	}
-
 }
