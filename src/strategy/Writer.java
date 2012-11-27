@@ -138,7 +138,7 @@ public class Writer {
 		SensorInfo info = sensorsMap.get(Integer.parseInt(sensor
 				.getAttributeValue("SensorID")));
 		if (info != null) {
-			if (info.getFullname().startsWith(sensorName)) {
+			if (info.getFullName().startsWith(sensorName)) {
 				orderedSensors.add(info);
 			}
 		}
