@@ -151,7 +151,7 @@ public class AlignWriter implements IPsaWriter {
 		// TODO Auto-generated method stub
 		
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				".\\output\\AlignIMOS.psa")));
+				"output/AlignIMOS.psa")));
 		System.out.println("AlignIMOS.psa File Written!");
 	}
 
