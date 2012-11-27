@@ -33,7 +33,7 @@
     </CalcArrayItem>
     <CalcArrayItem index="4" CalcID="87">
       <Calc UnitID="-1" Ordinal="0">
-        <FullName value="Upoly 0Turbidity" />
+        <FullName value="Upoly 0, Upoly 0, Turbidity" />
         <CalcName value="Upoly 0, Turbidity" />
       </Calc>
     </CalcArrayItem>
