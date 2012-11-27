@@ -44,6 +44,8 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeUpperSection() {
 		// TODO Auto-generated method stub
+		
+		
 	}
 
 	@Override
@@ -68,19 +70,19 @@ public class AlignWriter implements IPsaWriter {
 
 				calc.setAttribute("UnitID", "" + info.getUnitID());
 				calc.setAttribute("Ordinal", "" + info.getOrdinal());
-				fullname.setAttribute("value", info.getFullname());
+				fullname.setAttribute("value", info.getFullName());
 
 				calcArray.addContent(calcArrayItem);
 				calcArrayItem.addContent(calc);
 				calc.addContent(fullname);
 				
-				if (info.getFullname().startsWith("Upoly")) {
-					fullname.setAttribute("value", "Upoly 0, " + info.getFullname() + ", "  + userPoly);
+				if (info.getFullName().startsWith("Upoly")) {
+					fullname.setAttribute("value", "Upoly 0, " + info.getFullName() + ", "  + userPoly);
 					Element calcName = new Element("CalcName");
 					calcName.setAttribute("value", "Upoly 0, " + userPoly);
 					calc.addContent(calcName);
 				}
-				if (info.getFullname().startsWith("Oxygen, SBE 43")) {
+				if (info.getFullName().startsWith("Oxygen, SBE 43")) {
 					Element windowSize = new Element("WindowSize");
 					windowSize.setAttribute("value", "2.000000");
 					Element applyH = new Element("ApplyHysteresisCorrection");
@@ -91,7 +93,7 @@ public class AlignWriter implements IPsaWriter {
 					calc.addContent(applyH);
 					calc.addContent(tau);
 				}
-				if (info.getFullname().startsWith("Descent")){
+				if (info.getFullName().startsWith("Descent")){
 					Element windowSize = new Element("WindowSize");
 					windowSize.setAttribute("value", "2.000000");
 					calc.addContent(windowSize);
@@ -104,7 +106,44 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void writeLowerSection() {
 		// TODO Auto-generated method stub
+		int count1 = 0;
+		Element rootElement = doc.getRootElement();
+		Element valArray = rootElement.getChild("ValArray");
+		valArray.setAttribute("size", sensors.size() + "");
 		
+		for (SensorInfo info : sensors) {
+
+			if (info != null) {
+
+				Element valArrayItem = new Element("ValArrayItem");
+				
+				valArrayItem.setAttribute("index", "" + count1);
+				
+				if (info.getFullName().startsWith("Temperature")){
+					valArrayItem.setAttribute("value", "0.500000");
+				} else {
+					valArrayItem.setAttribute("value", "0.000000");
+				}
+				
+				valArrayItem.setAttribute("variable_name", info.getFullName());
+				
+				int i = info.getFullName().indexOf('[');
+				if (i != -1){
+					valArrayItem.setAttribute("variable_name", info.shortenName(i));
+				}
+				
+				if (info.getFullName().startsWith("Upoly")){
+					valArrayItem.setAttribute("variable_name", "User Polynomial");
+				}
+				
+				if (info.getFullName().startsWith("Frequency")){
+					valArrayItem.setAttribute("variable_name", "Frequency");
+				}
+				
+				valArray.addContent(valArrayItem);
+			}
+		count1++;
+		}
 	}
 
 	@Override

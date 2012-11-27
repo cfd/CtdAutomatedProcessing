@@ -99,18 +99,18 @@ public class WriterOld {
 
 				calc.setAttribute("UnitID", "" + info.getUnitID());
 				calc.setAttribute("Ordinal", "" + info.getOrdinal());
-				fullname.setAttribute("value", info.getFullname());
+				fullname.setAttribute("value", info.getFullName());
 
 				testElement.addContent(calcArrayItem);
 				calcArrayItem.addContent(calc);
 				calc.addContent(fullname);
 
-				if (info.getFullname().startsWith("Upoly")) {
+				if (info.getFullName().startsWith("Upoly")) {
 					Element calcName = new Element("CalcName");
 					calcName.setAttribute("value", "NTU");
 					calc.addContent(calcName);
 				}
-				if (info.getFullname().startsWith("Oxygen, SBE 43")) {
+				if (info.getFullName().startsWith("Oxygen, SBE 43")) {
 					Element windowSize = new Element("WindowSize");
 					windowSize.setAttribute("value", "2.000000");
 					Element applyH = new Element("ApplyHysteresisCorrection");
@@ -121,7 +121,7 @@ public class WriterOld {
 					calc.addContent(applyH);
 					calc.addContent(tau);
 				}
-				if (info.getFullname().startsWith("Descent")){
+				if (info.getFullName().startsWith("Descent")){
 					Element windowSize = new Element("WindowSize");
 					windowSize.setAttribute("value", "2.000000");
 					calc.addContent(windowSize);
@@ -141,7 +141,7 @@ public class WriterOld {
 		SensorInfo info = parser.getSensorsMap().get(Integer.parseInt(sensor
 				.getAttributeValue("SensorID")));
 		if (info != null) {
-			if (info.getFullname().startsWith(sensorName)) {
+			if (info.getFullName().startsWith(sensorName)) {
 				sortedList.add(info);
 			}
 		}
