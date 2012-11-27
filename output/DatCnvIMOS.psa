@@ -55,8 +55,7 @@
     </CalcArrayItem>
     <CalcArrayItem index="6" CalcID="87">
       <Calc UnitID="-1" Ordinal="0">
-        <FullName value="Upoly 0, NTU" />
-        <CalcName value="NTU" />
+        <FullName value="Upoly 0" />
       </Calc>
     </CalcArrayItem>
     <CalcArrayItem index="7" CalcID="36">
