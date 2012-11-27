@@ -1,8 +1,6 @@
 package strategy;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,8 +10,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 public class FilterWriter implements IPsaWriter{
 
@@ -38,13 +34,7 @@ public class FilterWriter implements IPsaWriter{
 
 	@Override
 	public void writeUpperSection() {
-		// TODO needs updating after talking to aims n stuff
-		
-		Element root = doc.getRootElement();
-		Element inputFileArray = root.getChild("InputFileArray");
-		
-		//TODO fix this later after looking in to csv files
-		inputFileArray.setAttribute("size", "" + 0);
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -86,11 +76,11 @@ public class FilterWriter implements IPsaWriter{
 			//set up FullName
 			Element fullName = new Element("FullName");
 			if (sensor.getFullName().startsWith("Upoly")) {
-				fullName.setAttribute("value", 
+				calc.setAttribute("value", 
 						"" + sensor.getFullName() + userPoly);
 			}
 			else {
-				fullName.setAttribute("value", 
+				calc.setAttribute("value", 
 						"" + sensor.getFullName() );
 			}
 
@@ -160,18 +150,13 @@ public class FilterWriter implements IPsaWriter{
 			}
 			
 			arrayItem.setAttribute("value", "" + value);
-			filterTypeArray.addContent(arrayItem);
 		}
 	}
 
 	@Override
-	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
+	public void writeToNewPsaFile() {
 		// TODO Auto-generated method stub
-
-		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/FilterIMOS.psa")));
-		System.out.println("Wrote to file");
+		
 	}
 
 }
