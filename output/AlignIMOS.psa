@@ -3,7 +3,7 @@
   <Version value="7.21k" />
   <ServerName value="Align CTD" />
   <InputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
-  <InputFileArray size="" GrowBy="-1" />
+  <InputFileArray size="0" GrowBy="-1" />
   <OutputDir value="\\Pearl\aims-data\CTD\imos-processed\data\batch" />
   <NameAppend value="A" />
   <OutputFile value="" />

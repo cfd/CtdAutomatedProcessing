@@ -75,14 +75,6 @@
         <FullName value="Density [density, Kg/m^3]" />
       </Calc>
     </CalcArrayItem>
-    <CalcArrayItem index="10" CalcID="55">
-      <Calc UnitID="40" Ordinal="0">
-        <FullName value="Oxygen, SBE 43 [ml/l]" />
-        <WindowSize value="2.000000" />
-        <ApplyHysteresisCorrection value="1" />
-        <ApplyTauCorrection value="1" />
-      </Calc>
-    </CalcArrayItem>
   </CalcArray>
   <MiscellaneousDataForCalculations>
     <Latitude value="0.000000" />
