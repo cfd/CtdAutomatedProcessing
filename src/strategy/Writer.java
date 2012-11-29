@@ -22,45 +22,40 @@ public class Writer {
 
 	private static LinkedHashMap<Integer, SensorInfo> sensorsMap;
 	private static ArrayList<SensorInfo> orderedSensors;
-	
+
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
-	
-	
+
 	private IPsaWriter writerType;
 
-	
 	public Writer(IPsaWriter psaWriter) {
 		this.writerType = psaWriter;
 		sensorsMap = new LinkedHashMap<>();
 		orderedSensors = new ArrayList<>();
 	}
-	
 
 	public static LinkedHashMap<Integer, SensorInfo> getSensorsMap() {
 		return sensorsMap;
 	}
 
-
 	public IPsaWriter getWriterType() {
 		return writerType;
 	}
 
+	public List<Element> readXmlcon(File file) throws IOException,
+			JDOMException {
+		SAXBuilder builder = new SAXBuilder();
 
-	public List<Element> readXmlcon(File file) throws IOException, JDOMException {
-		SAXBuilder builder =  new SAXBuilder();
-		
-		Document readDoc =  builder.build(file);
-		
-		
-		
+		Document readDoc = builder.build(file);
+
 		Element rootEle = readDoc.getRootElement();
-		Element sensorArrayEle = rootEle.getChild("Instrument").getChild("SensorArray");
+		Element sensorArrayEle = rootEle.getChild("Instrument").getChild(
+				"SensorArray");
 		List<Element> sensorsInXmlcon = sensorArrayEle.getChildren();
-		for (Element e : sensorsInXmlcon){
+		for (Element e : sensorsInXmlcon) {
 			Element child = e.getChildren().get(0);
-			if(child.getName().equals("UserPolynomialSensor")){
+			if (child.getName().equals("UserPolynomialSensor")) {
 				Element sensorName = child.getChild("SensorName");
 				userPoly = sensorName.getValue();
 			}
@@ -69,12 +64,12 @@ public class Writer {
 		System.out.println();
 		return sensorsInXmlcon;
 	}
-	
-//	private String getFileName(String file) {
-//		File xmlFile = new File(file);
-//		String fileName = xmlFile.getName();
-//		return null;
-//	}
+
+	// private String getFileName(String file) {
+	// File xmlFile = new File(file);
+	// String fileName = xmlFile.getName();
+	// return null;
+	// }
 
 	public void populateSensorsMap() {
 		ConnectDB db = new ConnectDB();
@@ -89,7 +84,10 @@ public class Writer {
 				int unitID = results.getInt("unit_ID");
 				int ordinal = results.getInt("ordinal");
 				String name = results.getString("full_name");
-				getSensorsMap().put(sensorID, new SensorInfo(unitID, sensorID, calcID, ordinal, name));
+				getSensorsMap()
+						.put(sensorID,
+								new SensorInfo(unitID, sensorID, calcID,
+										ordinal, name));
 			}
 			con.close();
 
@@ -127,7 +125,7 @@ public class Writer {
 		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("Upoly", sensor);
 		}
-		
+
 		SensorInfo freq = sensorsMap.get(-5);
 		SensorInfo desRate = sensorsMap.get(-3);
 		SensorInfo density = sensorsMap.get(-4);
@@ -141,7 +139,7 @@ public class Writer {
 		}
 
 	}
-	
+
 	private void insertSensor(String sensorName, Element sensor) {
 
 		SensorInfo info = sensorsMap.get(Integer.parseInt(sensor
@@ -164,53 +162,48 @@ public class Writer {
 		Writer loopEditWriter = new Writer(new LoopEditWriter());
 
 		datCnvWriter.populateSensorsMap();
-		
-		
-		File dir = new File("xmlcons");
-		
-		for (File xml : dir.listFiles()) {
-		try {
-			List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon(xml);
-			datCnvWriter.sortSensors(sensorsInXmlcon);
-			//String FileName = getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 
-		writers.add(datCnvWriter);
-		writers.add(alignWriter);
-		writers.add(filterWriter);
-		writers.add(binAvgWriter);
-		writers.add(deriveWriter);
-		writers.add(loopEditWriter);
-		String outputDirName = xml.getName();
-		new File("output/" + outputDirName).mkdir();
-		
-		for (Writer writer : writers) {
+		File dir = new File("xmlcons");
+
+		for (File xml : dir.listFiles()) {
 			try {
-				writer.getWriterType().setup(orderedSensors);
-				writer.getWriterType().readTemplate();
-				writer.getWriterType().writeUpperSection();
-				writer.getWriterType().writeCalcArray(userPoly);
-				writer.getWriterType().writeLowerSection();
-				writer.getWriterType().writeToNewPsaFile(outputDirName);
-			} catch (Exception e){
-				// TODO Auto-generated catch block
+				List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon(xml);
+				datCnvWriter.sortSensors(sensorsInXmlcon);
+				// String FileName =
+				// getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-//			for (SensorInfo i : orderedSensors) {
-//				System.out.println(i.getFullname());
-			
-			
-//			}
-		}
+
+			writers.add(datCnvWriter);
+			writers.add(alignWriter);
+			writers.add(filterWriter);
+			writers.add(binAvgWriter);
+			writers.add(deriveWriter);
+			writers.add(loopEditWriter);
+			String outputDirName = xml.getName();
+			new File("output/" + outputDirName).mkdir();
+
+			for (Writer writer : writers) {
+				try {
+					writer.getWriterType().setup(orderedSensors);
+					writer.getWriterType().readTemplate();
+					writer.getWriterType().writeUpperSection();
+					writer.getWriterType().writeCalcArray(userPoly);
+					writer.getWriterType().writeLowerSection();
+					writer.getWriterType().writeToNewPsaFile(outputDirName);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// for (SensorInfo i : orderedSensors) {
+				// System.out.println(i.getFullname());
+
+				// }
+			}
 		}
 
 	}
-
-
 
 }
