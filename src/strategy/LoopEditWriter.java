@@ -17,11 +17,8 @@ import model.SensorInfo;
 
 public class LoopEditWriter implements IPsaWriter{
 
-	XMLOutputter xmlOutput;
 	
-		public LoopEditWriter() {
-		xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-	}
+
 	
 	ArrayList<SensorInfo> sensors;
 	Document doc;
@@ -43,27 +40,22 @@ public class LoopEditWriter implements IPsaWriter{
 
 	@Override
 	public void writeUpperSection() {
-		// TODO Auto-generated method stub
-		////UPPER SECTION NOT COMPLETED YET!!!/////
 	}
 
 	@Override
 	public void writeCalcArray(String userPoly) {
-		// TODO Auto-generated method stub
-		//CALC ARRAY NOT REQUIRED
 	}
 
 	@Override
 	public void writeLowerSection() {
-		// TODO Auto-generated method stub
-		//LOWER SECTION NOT REQUIRED
 	}
 
 	@Override
-	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
+	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
+		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/LoopEditIMOS.psa")));
+				"output/" + newDirName + "/LoopEditIMOS.psa")));
 		System.out.println("LoopEditIMOS.psa File Written!");
 	}
 }

@@ -60,11 +60,11 @@ public class DeriveWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeToNewPsaFile() throws FileNotFoundException, IOException {
+	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/DeriveIMOS.psa")));
+				"output/" + newDirName + "/DeriveIMOS.psa")));
 		System.out.println("Wrote to file");
 		
 	}

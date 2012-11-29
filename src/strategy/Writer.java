@@ -48,9 +48,12 @@ public class Writer {
 	}
 
 
-	public List<Element> readXmlcon(String file) throws IOException, JDOMException {
+	public List<Element> readXmlcon(File file) throws IOException, JDOMException {
 		SAXBuilder builder =  new SAXBuilder();
-		Document readDoc =  builder.build(new File(file));
+		
+		Document readDoc =  builder.build(file);
+		
+		
 		
 		Element rootEle = readDoc.getRootElement();
 		Element sensorArrayEle = rootEle.getChild("Instrument").getChild("SensorArray");
@@ -66,6 +69,12 @@ public class Writer {
 		System.out.println();
 		return sensorsInXmlcon;
 	}
+	
+//	private String getFileName(String file) {
+//		File xmlFile = new File(file);
+//		String fileName = xmlFile.getName();
+//		return null;
+//	}
 
 	public void populateSensorsMap() {
 		ConnectDB db = new ConnectDB();
@@ -153,15 +162,23 @@ public class Writer {
 		Writer binAvgWriter = new Writer(new BinAvgWriter());
 		Writer deriveWriter = new Writer(new DeriveWriter());
 		Writer loopEditWriter = new Writer(new LoopEditWriter());
-		// TODO other 3 writers
 
 		datCnvWriter.populateSensorsMap();
+		
+		
+		File dir = new File("xmlcons");
+		
+		for (File xml : dir.listFiles()) {
 		try {
-			List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
+			List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon(xml);
 			datCnvWriter.sortSensors(sensorsInXmlcon);
+			//String FileName = getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 
 		writers.add(datCnvWriter);
 		writers.add(alignWriter);
@@ -169,7 +186,9 @@ public class Writer {
 		writers.add(binAvgWriter);
 		writers.add(deriveWriter);
 		writers.add(loopEditWriter);
-
+		String outputDirName = xml.getName();
+		new File("output/" + outputDirName).mkdir();
+		
 		for (Writer writer : writers) {
 			try {
 				writer.getWriterType().setup(orderedSensors);
@@ -177,7 +196,7 @@ public class Writer {
 				writer.getWriterType().writeUpperSection();
 				writer.getWriterType().writeCalcArray(userPoly);
 				writer.getWriterType().writeLowerSection();
-				writer.getWriterType().writeToNewPsaFile();
+				writer.getWriterType().writeToNewPsaFile(outputDirName);
 			} catch (Exception e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -188,6 +207,10 @@ public class Writer {
 			
 //			}
 		}
+		}
 
 	}
+
+
+
 }

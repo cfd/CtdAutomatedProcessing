@@ -20,6 +20,6 @@ public interface IPsaWriter {
 	
 	public abstract void writeLowerSection();
 	
-	public abstract void writeToNewPsaFile() throws FileNotFoundException, IOException;
+	public abstract void writeToNewPsaFile(String outputDirName) throws FileNotFoundException, IOException;
 
 }
