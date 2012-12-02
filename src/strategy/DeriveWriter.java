@@ -16,43 +16,30 @@ import model.SensorInfo;
 
 public class DeriveWriter implements IPsaWriter{
 	private Document doc;
-	private static boolean DEBUG = false;
 	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		System.out.println();
 		System.out.println("5 strategy");
 		System.out.println(orderedSensors);
-		
 	}
 	
 	@Override
 	public void readTemplate() throws JDOMException, IOException{
 		SAXBuilder builder = new SAXBuilder();
 		doc = builder.build(new File("psa_templates/DeriveTemplate.xml"));
-
-		if (DEBUG) {
-			System.out.println("I Read The File");
-		}
-		
 	}
 
 	@Override
 	public void writeUpperSection() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void writeCalcArray(String userPoly) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void writeLowerSection() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
