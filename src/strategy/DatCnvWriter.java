@@ -48,6 +48,11 @@ public class DatCnvWriter implements IPsaWriter {
 		if (DEBUG) {
 			System.out.println("Writter upper section");
 		}
+		Element root = doc.getRootElement();
+		Element inputDir = root.getChild("InputDir");
+		inputDir.setAttribute("value", workingDirectory + "raw");
+		Element outputDir = root.getChild("OutputDir");
+		outputDir.setAttribute("value", workingDirectory + "batch");
 	}
 
 	@Override
@@ -132,7 +137,7 @@ public class DatCnvWriter implements IPsaWriter {
 
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/DatCnvIMOS.psa")));
+				 newDirName + "/DatCnvIMOS.psa")));
 		System.out.println("Wrote to file");
 
 	}

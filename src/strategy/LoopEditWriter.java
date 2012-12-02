@@ -52,7 +52,7 @@ public class LoopEditWriter implements IPsaWriter{
 		// TODO Auto-generated method stub
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/LoopEditIMOS.psa")));
+				newDirName + "/LoopEditIMOS.psa")));
 		System.out.println("LoopEditIMOS.psa File Written!");
 	}
 }

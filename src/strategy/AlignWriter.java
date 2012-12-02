@@ -149,7 +149,7 @@ public class AlignWriter implements IPsaWriter {
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/AlignIMOS.psa")));
+				newDirName + "/AlignIMOS.psa")));
 		System.out.println("AlignIMOS.psa File Written!");
 	}
 }

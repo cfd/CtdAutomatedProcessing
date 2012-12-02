@@ -165,7 +165,7 @@ public class FilterWriter implements IPsaWriter{
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/FilterIMOS.psa")));
+				newDirName + "/FilterIMOS.psa")));
 		System.out.println("Wrote to file");
 	}
 

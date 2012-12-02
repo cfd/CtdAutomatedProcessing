@@ -185,11 +185,11 @@ public class Writer {
 			writers.add(loopEditWriter);
 			
 			//Where the psa writes to
-			String outputDirName = xml.getName();			
-			new File("output/" + outputDirName).mkdir();
+			String outputDirName = "Seabird/config/" + xml.getName();			
+			new File(outputDirName).mkdir();
 			
 			//Where the batch, final and raw files are located
-			String workingDirectory = "Seabird/";
+			String workingDirectory = "Seabird/data";
 			
 
 			for (Writer writer : writers) {

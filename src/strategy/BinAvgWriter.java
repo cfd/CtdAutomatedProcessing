@@ -59,7 +59,7 @@ public class BinAvgWriter implements IPsaWriter{
 		// TODO Auto-generated method stub
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/BinAvgIMOS.psa")));
+				newDirName + "/BinAvgIMOS.psa")));
 		System.out.println("BinAvgIMOS.psa File Written!");
 	}
 

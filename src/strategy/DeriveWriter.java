@@ -47,7 +47,7 @@ public class DeriveWriter implements IPsaWriter{
 		
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
-				"output/" + newDirName + "/DeriveIMOS.psa")));
+				newDirName + "/DeriveIMOS.psa")));
 		System.out.println("Wrote to file");
 		
 	}
