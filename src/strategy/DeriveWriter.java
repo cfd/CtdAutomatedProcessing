@@ -51,5 +51,4 @@ public class DeriveWriter implements IPsaWriter{
 		System.out.println("Wrote to file");
 		
 	}
-
 }
