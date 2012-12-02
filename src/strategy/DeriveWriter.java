@@ -15,15 +15,11 @@ import org.jdom2.output.XMLOutputter;
 import model.SensorInfo;
 
 public class DeriveWriter implements IPsaWriter{
-
-	
-	private ArrayList<SensorInfo> sensors;
 	private Document doc;
 	private static boolean DEBUG = false;
 	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
-		sensors = orderedSensors;
 		System.out.println();
 		System.out.println("5 strategy");
 		System.out.println(orderedSensors);
