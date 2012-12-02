@@ -26,7 +26,7 @@ public class Writer {
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
-	private final static String workingDirectory = "Seabird/";
+	
 
 	private IPsaWriter writerType;
 
@@ -183,8 +183,14 @@ public class Writer {
 			writers.add(binAvgWriter);
 			writers.add(deriveWriter);
 			writers.add(loopEditWriter);
-			String outputDirName = xml.getName();
+			
+			//Where the psa writes to
+			String outputDirName = xml.getName();			
 			new File("output/" + outputDirName).mkdir();
+			
+			//Where the batch, final and raw files are located
+			String workingDirectory = "Seabird/";
+			
 
 			for (Writer writer : writers) {
 				try {
