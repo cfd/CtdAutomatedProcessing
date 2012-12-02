@@ -14,7 +14,7 @@ public interface IPsaWriter {
 	
 	public abstract void readTemplate() throws JDOMException, IOException;
 	
-	public abstract void writeUpperSection();
+	public abstract void writeUpperSection(String workingDirectory);
 	
 	public abstract void writeCalcArray(String userPoly);
 	

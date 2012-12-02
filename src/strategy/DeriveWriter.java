@@ -31,7 +31,7 @@ public class DeriveWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeUpperSection() {
+	public void writeUpperSection(String workingDirectory) {
 	}
 
 	@Override

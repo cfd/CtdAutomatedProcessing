@@ -26,6 +26,7 @@ public class Writer {
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
+	private final static String workingDirectory = "Seabird/";
 
 	private IPsaWriter writerType;
 
@@ -189,7 +190,7 @@ public class Writer {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
-					writer.getWriterType().writeUpperSection();
+					writer.getWriterType().writeUpperSection(workingDirectory);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);

@@ -36,7 +36,7 @@ public class LoopEditWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeUpperSection() {
+	public void writeUpperSection(String workingDirectory) {
 	}
 
 	@Override
