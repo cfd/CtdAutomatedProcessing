@@ -189,7 +189,7 @@ public class Writer {
 			new File(outputDirName).mkdir();
 			
 			//Where the batch, final and raw files are located
-			String workingDirectory = "Seabird/data";
+			String workingDirectory = "Seabird/data/";
 			
 
 			for (Writer writer : writers) {
