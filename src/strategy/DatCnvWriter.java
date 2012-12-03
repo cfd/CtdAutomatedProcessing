@@ -59,20 +59,20 @@ public class DatCnvWriter implements IPsaWriter {
 
 	@Override
 	public void writeCalcArray(String userPoly) {
-		if (userPoly != null){
-		//Checks if user poly is ISUS V3 Nitrate
-		switch(userPoly){
-		case "ISUS V3 Aux":
-			isLatLongPressure = true;
-			userPoly = "ISUS V3 Nitrate";
-			break;
-		case "Turbidity":
-			isOxygen = false;
+		if (userPoly != null) {
+			// Checks if user poly is ISUS V3 Nitrate
+			switch (userPoly) {
+			case "ISUS V3 Aux":
+				isLatLongPressure = true;
+				userPoly = "ISUS V3 Nitrate";
+				break;
+			case "Turbidity":
+				isOxygen = false;
+			}
 		}
-		}
-		//counter
+		// counter
 		int count = 0;
-		
+
 		Element root = doc.getRootElement();
 		Element calcArray = root.getChild("CalcArray");
 
@@ -82,34 +82,39 @@ public class DatCnvWriter implements IPsaWriter {
 		// Creates the Time Elapsed and Scan Count array items
 		Element timeElapsed = calcArrayItemWritter(count++, 84, 52, 0,
 				"Time, Elapsed [seconds]", userPoly);
-		Element scanCount = calcArrayItemWritter(count++, 72, -1, 0, "Scan Count", userPoly);
+		Element scanCount = calcArrayItemWritter(count++, 72, -1, 0,
+				"Scan Count", userPoly);
 
 		// Adds the Time Elapsed and Scan Count items
 		calcArray.addContent(timeElapsed);
 		calcArray.addContent(scanCount);
-		if (isLatLongPressure){
-			Element pressure = calcArrayItemWritter(count++,65,3,0,"Pressure, Digiquartz [db]", userPoly);
+		if (isLatLongPressure) {
+			Element pressure = calcArrayItemWritter(count++, 65, 3, 0,
+					"Pressure, Digiquartz [db]", userPoly);
 			calcArray.addContent(pressure);
 		}
 
 		for (SensorInfo sensor : sensors) {
-			//Checks if there are two user polynomials might need to do some more here
-			if (amountUserPoly > 0 && sensor.getFullName().equals("Upoly 0")){
+			// Checks if there are two user polynomials might need to do some
+			// more here
+			if (amountUserPoly > 0 && sensor.getFullName().equals("Upoly 0")) {
 				continue;
-			}
-			else if(!isOxygen && sensor.getFullName().equals("Oxygen, SBE 43 [ml/l]")){
+			} else if (!isOxygen
+					&& sensor.getFullName().equals("Oxygen, SBE 43 [ml/l]")) {
 				continue;
 			}
 			calcArray.addContent(calcArrayItemWritter(count++,
 					sensor.getCalcID(), sensor.getUnitID(),
 					sensor.getOrdinal(), sensor.getFullName(), userPoly));
-			
+
 		}
-		
-		if(isLatLongPressure){
-			Element latitude = calcArrayItemWritter(count++,39,4,0,"Latitude [deg]",userPoly);
+
+		if (isLatLongPressure) {
+			Element latitude = calcArrayItemWritter(count++, 39, 4, 0,
+					"Latitude [deg]", userPoly);
 			calcArray.addContent(latitude);
-			latitude = calcArrayItemWritter(count++,39,4,0,"Latitude [deg]",userPoly);
+			latitude = calcArrayItemWritter(count++, 39, 4, 0,
+					"Latitude [deg]", userPoly);
 			calcArray.addContent(latitude);
 		}
 
@@ -120,8 +125,8 @@ public class DatCnvWriter implements IPsaWriter {
 		for (SensorInfo sensor : sensors) {
 			System.out.println(sensor.getFullName());
 		}
-		
-		//Disables user poly and other fields for another run
+
+		// Disables user poly and other fields for another run
 		isLatLongPressure = false;
 		amountUserPoly = 0;
 		isOxygen = true;
@@ -136,11 +141,12 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	@Override
-	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
+	public void writeToNewPsaFile(String newDirName)
+			throws FileNotFoundException, IOException {
 
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
-		xmlOutput.output(doc, new FileOutputStream(new File(
-				 newDirName + "/DatCnvIMOS.psa")));
+		xmlOutput.output(doc, new FileOutputStream(new File(newDirName
+				+ "/DatCnvIMOS.psa")));
 		System.out.println("Wrote to file");
 
 	}

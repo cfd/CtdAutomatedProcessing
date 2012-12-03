@@ -193,6 +193,13 @@ public class Writer {
 			String outputDirName = DIRECTORY + "/config/" + xml.getName();			
 			new File(outputDirName).mkdir();
 			
+			
+			//Makes the data stuff
+			new File(outputDirName + "/data").mkdir();
+			new File(outputDirName + "/data/raw").mkdir();
+			new File(outputDirName + "/data/batch").mkdir();
+			new File(outputDirName + "/data/final").mkdir();
+			
 			//Where the batch, final and raw files are located
 			String workingDirectory = DIRECTORY + "/data/";
 			
