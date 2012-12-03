@@ -1,7 +1,11 @@
 package strategy;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,12 +15,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import model.SensorInfo;
-import util.ConnectDB;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+import util.ConnectDB;
 
 public class Writer {
 
@@ -169,7 +174,6 @@ public class Writer {
 		datCnvWriter.populateSensorsMap();
 
 		File dir = new File(DIRECTORY + "/xmlcons");
-		int count = 0;
 
 		for (File xml : dir.listFiles()) {
 			try {
@@ -223,10 +227,44 @@ public class Writer {
 
 				// }
 			}
-			count++;
 			orderedSensors.clear();
+			
+			
+			
+	    	InputStream inStream = null;
+	    	OutputStream outStream = null;
+	     
+	        	try{
+	     
+	     
+	        	    inStream = new FileInputStream(xml);
+	        	    outStream = new FileOutputStream(new File(outputDirName + "/" + xml.getName()));
+	        	    
+	     
+	        	    byte[] buffer = new byte[1024];
+	     
+	        	    int length;
+	        	    //copy the file content in bytes 
+	        	    while ((length = inStream.read(buffer)) > 0){
+	     
+	        	    	outStream.write(buffer, 0, length);
+	     
+	        	    }
+	     
+	        	    inStream.close();
+	        	    outStream.close();
+	     
+	        	    //delete the original file
+	        	    xml.delete();
+	     
+	        	    System.out.println("File is copied successfully!");
+	     
+	        	}catch(IOException e){
+	        	    e.printStackTrace();
+	        	}
+			
+			
 		}
-System.out.println(count);
 	}
 
 }
