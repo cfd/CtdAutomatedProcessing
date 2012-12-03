@@ -32,7 +32,6 @@ public class Writer {
 	private static Statement statement;
 	private static String userPoly;
 	private static final String DIRECTORY = "//pearl/temp/adc-jcu2012";
-	
 
 	private IPsaWriter writerType;
 
@@ -131,7 +130,7 @@ public class Writer {
 		}
 		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("OBS", sensor);
-		}		
+		}
 		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("Upoly", sensor);
 		}
@@ -192,78 +191,69 @@ public class Writer {
 			writers.add(binAvgWriter);
 			writers.add(deriveWriter);
 			writers.add(loopEditWriter);
-			
-			//Where the psa writes to
-			String outputDirName = DIRECTORY + "/config/" + xml.getName();			
+
+			// Where the psa writes to
+			String outputDirName = DIRECTORY + "/config/" + xml.getName();
 			new File(outputDirName).mkdir();
-			
-			
-			//Makes the data stuff
+
+			// Makes the data stuff
 			new File(outputDirName + "/data").mkdir();
 			new File(outputDirName + "/data/raw").mkdir();
 			new File(outputDirName + "/data/batch").mkdir();
 			new File(outputDirName + "/data/final").mkdir();
-			
-			//Where the batch, final and raw files are located
+
+			// Where the batch, final and raw files are located
 			String workingDirectory = outputDirName + "/data/";
-			
-			//Where the xml con is
+
+			// Where the xml con is
 			String xmlLocation = DIRECTORY + "/xmlcons/" + xml.getName();
 
 			for (Writer writer : writers) {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
-					writer.getWriterType().writeUpperSection(workingDirectory, xmlLocation);
+					writer.getWriterType().writeUpperSection(workingDirectory,
+							xmlLocation);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}				
+				}
 				// for (SensorInfo i : orderedSensors) {
 				// System.out.println(i.getFullname());
 
 				// }
 			}
 			orderedSensors.clear();
-			
-			
-			
-	    	InputStream inStream = null;
-	    	OutputStream outStream = null;
-	     
-	        	try{
-	     
-	     
-	        	    inStream = new FileInputStream(xml);
-	        	    outStream = new FileOutputStream(new File(outputDirName + "/" + xml.getName()));
-	        	    
-	     
-	        	    byte[] buffer = new byte[1024];
-	     
-	        	    int length;
-	        	    //copy the file content in bytes 
-	        	    while ((length = inStream.read(buffer)) > 0){
-	     
-	        	    	outStream.write(buffer, 0, length);
-	     
-	        	    }
-	     
-	        	    inStream.close();
-	        	    outStream.close();
-	     
-	        	    //delete the original file
-	        	    xml.delete();
-	     
-	        	    System.out.println("File is copied successfully!");
-	     
-	        	}catch(IOException e){
-	        	    e.printStackTrace();
-	        	}
-			
-			
+
+			InputStream inStream = null;
+			OutputStream outStream = null;
+
+			try {
+				inStream = new FileInputStream(xml);
+				outStream = new FileOutputStream(new File(outputDirName + "/"
+						+ xml.getName()));
+
+				byte[] buffer = new byte[1024];
+				int length;
+
+				// copy the file content in bytes
+				while ((length = inStream.read(buffer)) > 0) {
+					outStream.write(buffer, 0, length);
+				}
+
+				inStream.close();
+				outStream.close();
+
+				// delete the original file
+				xml.delete();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 
