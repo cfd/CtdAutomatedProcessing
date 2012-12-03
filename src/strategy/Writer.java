@@ -201,7 +201,7 @@ public class Writer {
 			new File(outputDirName + "/data/final").mkdir();
 			
 			//Where the batch, final and raw files are located
-			String workingDirectory = DIRECTORY + "/data/";
+			String workingDirectory = outputDirName + "/data/";
 			
 			//Where the xml con is
 			String xmlLocation = DIRECTORY + "/xmlcons/" + xml.getName();
