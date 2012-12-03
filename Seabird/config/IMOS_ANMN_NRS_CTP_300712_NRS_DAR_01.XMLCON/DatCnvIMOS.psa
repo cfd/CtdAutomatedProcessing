@@ -2,11 +2,11 @@
 <Data_Conversion>
   <Version value="" />
   <ServerName value="Data Conversion" />
-  <InstrumentPath value="" />
+  <InstrumentPath value="xmlcons/IMOS_ANMN_NRS_CTP_300712_NRS_DAR_01.XMLCON" />
   <InstrumentMatch value="0" />
-  <InputDir value="Seabird/data/raw" />
+  <InputDir value="C:/Users/Brendan/Desktop/working/CtdAutomatedProcessing2/Seabird/data/raw" />
   <InputFileArray size="0" GrowBy="-1" />
-  <OutputDir value="Seabird/data/batch" />
+  <OutputDir value="C:/Users/Brendan/Desktop/working/CtdAutomatedProcessing2/Seabird/data/batch" />
   <NameAppend value="C" />
   <OutputFile value="" />
   <LastProcessed value="0" />

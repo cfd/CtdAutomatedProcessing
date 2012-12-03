@@ -26,6 +26,7 @@ public class Writer {
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
+	private static final String DIRECTORY = "C:/Users/Brendan/Desktop/working/CtdAutomatedProcessing2/Seabird";
 	
 
 	private IPsaWriter writerType;
@@ -185,11 +186,11 @@ public class Writer {
 			writers.add(loopEditWriter);
 			
 			//Where the psa writes to
-			String outputDirName = "Seabird/config/" + xml.getName();			
+			String outputDirName = DIRECTORY + "/config/" + xml.getName();			
 			new File(outputDirName).mkdir();
 			
 			//Where the batch, final and raw files are located
-			String workingDirectory = "Seabird/data/";
+			String workingDirectory = DIRECTORY + "/data/";
 			
 			//Where the xml con is
 			String xmlLocation = "xmlcons/" + xml.getName();
@@ -205,12 +206,13 @@ public class Writer {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}				
 				// for (SensorInfo i : orderedSensors) {
 				// System.out.println(i.getFullname());
 
 				// }
 			}
+			orderedSensors.clear();
 		}
 
 	}
