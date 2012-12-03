@@ -207,13 +207,15 @@ public class Writer {
 
 			// Where the xml con is
 			String xmlLocation = DIRECTORY + "/xmlcons/" + xml.getName();
-
+			//Where the xml con is moved to
+			String xmlNewLocation = outputDirName + xml.getName();
+			
 			for (Writer writer : writers) {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
 					writer.getWriterType().writeUpperSection(workingDirectory,
-							xmlLocation);
+							xmlNewLocation);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);
