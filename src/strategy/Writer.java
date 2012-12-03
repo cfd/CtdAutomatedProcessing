@@ -26,7 +26,7 @@ public class Writer {
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
-	private static final String DIRECTORY = "C:/Users/Brendan/Desktop/working/CtdAutomatedProcessing2/Seabird";
+	private static final String DIRECTORY = "//pearl/temp/adc-jcu2012";
 	
 
 	private IPsaWriter writerType;
@@ -166,6 +166,7 @@ public class Writer {
 		datCnvWriter.populateSensorsMap();
 
 		File dir = new File("xmlcons");
+		int count = 0;
 
 		for (File xml : dir.listFiles()) {
 			try {
@@ -193,7 +194,7 @@ public class Writer {
 			String workingDirectory = DIRECTORY + "/data/";
 			
 			//Where the xml con is
-			String xmlLocation = "xmlcons/" + xml.getName();
+			String xmlLocation = DIRECTORY + "/xmlcons/" + xml.getName();
 
 			for (Writer writer : writers) {
 				try {
@@ -212,9 +213,10 @@ public class Writer {
 
 				// }
 			}
+			count++;
 			orderedSensors.clear();
 		}
-
+System.out.println(count);
 	}
 
 }
