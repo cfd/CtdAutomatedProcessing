@@ -37,7 +37,7 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeUpperSection(String workingDirectory, String outputDirName) {
+	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
 		
 	}

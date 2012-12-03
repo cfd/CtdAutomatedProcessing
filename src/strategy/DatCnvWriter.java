@@ -44,11 +44,13 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	@Override
-	public void writeUpperSection(String workingDirectory, String outputDirName) {
+	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		if (DEBUG) {
 			System.out.println("Writter upper section");
 		}
 		Element root = doc.getRootElement();
+		Element inPath = root.getChild("InstrumentPath");
+		inPath.setAttribute("value", instrumentPath);
 		Element inputDir = root.getChild("InputDir");
 		inputDir.setAttribute("value", workingDirectory + "raw");
 		Element outputDir = root.getChild("OutputDir");

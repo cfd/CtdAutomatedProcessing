@@ -191,12 +191,14 @@ public class Writer {
 			//Where the batch, final and raw files are located
 			String workingDirectory = "Seabird/data/";
 			
+			//Where the xml con is
+			String xmlLocation = "xmlcons/" + xml.getName();
 
 			for (Writer writer : writers) {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
-					writer.getWriterType().writeUpperSection(workingDirectory, outputDirName);
+					writer.getWriterType().writeUpperSection(workingDirectory, xmlLocation);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);
