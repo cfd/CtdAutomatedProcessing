@@ -42,7 +42,7 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	@Override
-	public void writeUpperSection(String workingDirectory) {
+	public void writeUpperSection(String workingDirectory, String outputDirName) {
 		// TODO Auto-generated method stub
 		////UPPER SECTION NOT COMPLETED YET!!!/////
 	}

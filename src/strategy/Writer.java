@@ -196,7 +196,7 @@ public class Writer {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
-					writer.getWriterType().writeUpperSection(workingDirectory);
+					writer.getWriterType().writeUpperSection(workingDirectory, outputDirName);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);

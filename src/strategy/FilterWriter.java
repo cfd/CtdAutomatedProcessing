@@ -37,7 +37,7 @@ public class FilterWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void writeUpperSection(String workingDirectory) {
+	public void writeUpperSection(String workingDirectory, String outputDirName) {
 		// TODO Auto-generated method stub
 		
 		Element root = doc.getRootElement();

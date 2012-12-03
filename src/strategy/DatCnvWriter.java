@@ -44,7 +44,7 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	@Override
-	public void writeUpperSection(String workingDirectory) {
+	public void writeUpperSection(String workingDirectory, String outputDirName) {
 		if (DEBUG) {
 			System.out.println("Writter upper section");
 		}

@@ -4,9 +4,9 @@
   <ServerName value="Data Conversion" />
   <InstrumentPath value="" />
   <InstrumentMatch value="0" />
-  <InputDir value="Seabird/dataraw" />
+  <InputDir value="Seabird/data/raw" />
   <InputFileArray size="0" GrowBy="-1" />
-  <OutputDir value="Seabird/databatch" />
+  <OutputDir value="Seabird/data/batch" />
   <NameAppend value="C" />
   <OutputFile value="" />
   <LastProcessed value="0" />
