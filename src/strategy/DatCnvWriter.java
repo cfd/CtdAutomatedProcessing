@@ -59,6 +59,7 @@ public class DatCnvWriter implements IPsaWriter {
 
 	@Override
 	public void writeCalcArray(String userPoly) {
+		if (userPoly != null){
 		//Checks if user poly is ISUS V3 Nitrate
 		switch(userPoly){
 		case "ISUS V3 Aux":
@@ -68,7 +69,7 @@ public class DatCnvWriter implements IPsaWriter {
 		case "Turbidity":
 			isOxygen = false;
 		}
-		
+		}
 		//counter
 		int count = 0;
 		

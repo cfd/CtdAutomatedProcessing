@@ -125,6 +125,9 @@ public class Writer {
 			insertSensor("Fluorescence", sensor);
 		}
 		for (Element sensor : sensorsInXmlcon) {
+			insertSensor("OBS", sensor);
+		}		
+		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("Upoly", sensor);
 		}
 
@@ -165,7 +168,7 @@ public class Writer {
 
 		datCnvWriter.populateSensorsMap();
 
-		File dir = new File("xmlcons");
+		File dir = new File(DIRECTORY + "/xmlcons");
 		int count = 0;
 
 		for (File xml : dir.listFiles()) {
