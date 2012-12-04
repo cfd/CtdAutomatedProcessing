@@ -31,7 +31,7 @@ public class Writer {
 	private static Connection con;
 	private static Statement statement;
 	private static String userPoly;
-	private static final String DIRECTORY = "//pearl/temp/adc-jcu2012";
+	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 
 	private IPsaWriter writerType;
 
@@ -193,7 +193,7 @@ public class Writer {
 			writers.add(loopEditWriter);
 
 			// Where the psa writes to
-			String outputDirName = DIRECTORY + "/config/" + xml.getName();
+			String outputDirName = DIRECTORY + "\\config\\" + xml.getName();
 			new File(outputDirName).mkdir();
 
 			// Makes the data stuff
@@ -203,10 +203,10 @@ public class Writer {
 			new File(outputDirName + "/data/final").mkdir();
 
 			// Where the batch, final and raw files are located
-			String workingDirectory = outputDirName + "/data/";
+			String workingDirectory = outputDirName + "\\data\\";
 
 			// Where the xml con is
-			String xmlLocation = outputDirName + "/" + xml.getName();
+			String xmlLocation = outputDirName + "\\" + xml.getName();
 			
 			for (Writer writer : writers) {
 				try {
