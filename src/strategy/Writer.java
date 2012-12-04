@@ -82,7 +82,8 @@ public class Writer {
 		con = db.getDdConnection();
 		try {
 			statement = con.createStatement();
-
+			System.out.println(con);
+			System.out.println(statement);
 			ResultSet results = getAllAttributes();
 			while (results.next()) {
 				int sensorID = results.getInt("sensor_ID");

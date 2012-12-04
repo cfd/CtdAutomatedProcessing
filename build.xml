@@ -42,28 +42,33 @@
 			<classpath refid="CtdAutomatedProcessing.classpath" />
 		</javac>
 	</target>
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
-		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar" >
-			<zipfileset dir="lib "/>
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar">
+			<fileset dir="db" includes="*.sqlite3"/>
 			<fileset dir="bin" includes="**/*.class"/>
+				<archives>
+					<zips>
+						<fileset dir="lib" includes="*.jar" />
+					</zips>
+				</archives>
 			<manifest>
 				<attribute name="Main-Class" value="strategy.Writer" />
 			</manifest>
 		</jar>
 
 	</target>
-	
-	
-	
-	
-	
+
+
+
+
+
 
 
 	<target
