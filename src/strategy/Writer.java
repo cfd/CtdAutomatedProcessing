@@ -175,86 +175,88 @@ public class Writer {
 		File dir = new File(DIRECTORY + "/xmlcons");
 
 		for (File xml : dir.listFiles()) {
-			try {
-				List<Element> sensorsInXmlcon = datCnvWriter.readXmlcon(xml);
-				datCnvWriter.sortSensors(sensorsInXmlcon);
-				// String FileName =
-				// getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			writers.add(datCnvWriter);
-			writers.add(alignWriter);
-			writers.add(filterWriter);
-			writers.add(binAvgWriter);
-			writers.add(deriveWriter);
-			writers.add(loopEditWriter);
-
-			// Where the psa writes to
-			String outputDirName = DIRECTORY + "\\config\\" + xml.getName();
-			new File(outputDirName).mkdir();
-
-			// Makes the data stuff
-			new File(outputDirName + "/data").mkdir();
-			new File(outputDirName + "/data/raw").mkdir();
-			new File(outputDirName + "/data/batch").mkdir();
-			new File(outputDirName + "/data/final").mkdir();
-
-			// Where the batch, final and raw files are located
-			String workingDirectory = outputDirName + "\\data\\";
-
-			// Where the xml con is
-			String xmlLocation = outputDirName + "\\" + xml.getName();
-			
-			for (Writer writer : writers) {
+			if (xml.getName().endsWith(".xmlcon")) {
 				try {
-					writer.getWriterType().setup(orderedSensors);
-					writer.getWriterType().readTemplate();
-					writer.getWriterType().writeUpperSection(workingDirectory,
-							xmlLocation);
-					writer.getWriterType().writeCalcArray(userPoly);
-					writer.getWriterType().writeLowerSection();
-					writer.getWriterType().writeToNewPsaFile(outputDirName);
+					List<Element> sensorsInXmlcon = datCnvWriter
+							.readXmlcon(xml);
+					datCnvWriter.sortSensors(sensorsInXmlcon);
+					// String FileName =
+					// getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
+
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				// for (SensorInfo i : orderedSensors) {
-				// System.out.println(i.getFullname());
 
-				// }
-			}
-			orderedSensors.clear();
+				writers.add(datCnvWriter);
+				writers.add(alignWriter);
+				writers.add(filterWriter);
+				writers.add(binAvgWriter);
+				writers.add(deriveWriter);
+				writers.add(loopEditWriter);
 
-			InputStream inStream = null;
-			OutputStream outStream = null;
+				// Where the psa writes to
+				String outputDirName = DIRECTORY + "\\config\\" + xml.getName();
+				new File(outputDirName).mkdir();
 
-			try {
-				inStream = new FileInputStream(xml);
-				outStream = new FileOutputStream(new File(outputDirName + "/"
-						+ xml.getName()));
+				// Makes the data stuff
+				new File(outputDirName + "/data").mkdir();
+				new File(outputDirName + "/data/raw").mkdir();
+				new File(outputDirName + "/data/batch").mkdir();
+				new File(outputDirName + "/data/final").mkdir();
 
-				byte[] buffer = new byte[1024];
-				int length;
+				// Where the batch, final and raw files are located
+				String workingDirectory = outputDirName + "\\data\\";
 
-				// copy the file content in bytes
-				while ((length = inStream.read(buffer)) > 0) {
-					outStream.write(buffer, 0, length);
+				// Where the xml con is
+				String xmlLocation = outputDirName + "\\" + xml.getName();
+
+				for (Writer writer : writers) {
+					try {
+						writer.getWriterType().setup(orderedSensors);
+						writer.getWriterType().readTemplate();
+						writer.getWriterType().writeUpperSection(
+								workingDirectory, xmlLocation);
+						writer.getWriterType().writeCalcArray(userPoly);
+						writer.getWriterType().writeLowerSection();
+						writer.getWriterType().writeToNewPsaFile(outputDirName);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// for (SensorInfo i : orderedSensors) {
+					// System.out.println(i.getFullname());
+
+					// }
+				}
+				orderedSensors.clear();
+
+				InputStream inStream = null;
+				OutputStream outStream = null;
+
+				try {
+					inStream = new FileInputStream(xml);
+					outStream = new FileOutputStream(new File(outputDirName
+							+ "/" + xml.getName()));
+
+					byte[] buffer = new byte[1024];
+					int length;
+
+					// copy the file content in bytes
+					while ((length = inStream.read(buffer)) > 0) {
+						outStream.write(buffer, 0, length);
+					}
+
+					inStream.close();
+					outStream.close();
+
+					// delete the original file
+					xml.delete();
+
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 
-				inStream.close();
-				outStream.close();
-
-				// delete the original file
-				xml.delete();
-
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-
 		}
 	}
-
 }
