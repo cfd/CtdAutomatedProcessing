@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -39,6 +40,11 @@ public class BinAvgWriter implements IPsaWriter{
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
+		Element root = doc.getRootElement();
+		Element inputDir = root.getChild("InputDir");
+		inputDir.setAttribute("value", workingDirectory + "batch");
+		Element outputDir = root.getChild("OutputDir");
+		outputDir.setAttribute("value", workingDirectory + "final");
 		
 	}
 

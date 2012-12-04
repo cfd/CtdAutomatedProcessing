@@ -206,16 +206,14 @@ public class Writer {
 			String workingDirectory = outputDirName + "/data/";
 
 			// Where the xml con is
-			String xmlLocation = DIRECTORY + "/xmlcons/" + xml.getName();
-			//Where the xml con is moved to
-			String xmlNewLocation = outputDirName + xml.getName();
+			String xmlLocation = outputDirName + "/" + xml.getName();
 			
 			for (Writer writer : writers) {
 				try {
 					writer.getWriterType().setup(orderedSensors);
 					writer.getWriterType().readTemplate();
 					writer.getWriterType().writeUpperSection(workingDirectory,
-							xmlNewLocation);
+							xmlLocation);
 					writer.getWriterType().writeCalcArray(userPoly);
 					writer.getWriterType().writeLowerSection();
 					writer.getWriterType().writeToNewPsaFile(outputDirName);

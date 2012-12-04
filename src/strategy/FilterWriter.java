@@ -42,9 +42,13 @@ public class FilterWriter implements IPsaWriter{
 		
 		Element root = doc.getRootElement();
 		Element inputFileArray = root.getChild("InputFileArray");
-		
 		inputFileArray.setAttribute("size", "" + 0);
 		
+		//Sets the input and output dir
+		Element inputDir = root.getChild("InputDir");
+		inputDir.setAttribute("value", workingDirectory + "batch");
+		Element outputDir = root.getChild("OutputDir");
+		outputDir.setAttribute("value", workingDirectory + "batch");		
 	}
 
 	@Override

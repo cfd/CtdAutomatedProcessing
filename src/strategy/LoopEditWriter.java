@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import model.SensorInfo;
 import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -37,6 +38,11 @@ public class LoopEditWriter implements IPsaWriter{
 
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
+		Element root = doc.getRootElement();
+		Element inputDir = root.getChild("InputDir");
+		inputDir.setAttribute("value", workingDirectory + "raw");
+		Element outputDir = root.getChild("OutputDir");
+		outputDir.setAttribute("value", workingDirectory + "batch");
 	}
 
 	@Override

@@ -45,6 +45,11 @@ public class AlignWriter implements IPsaWriter {
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
 		////UPPER SECTION NOT COMPLETED YET!!!/////
+		Element root = doc.getRootElement();
+		Element inputDir = root.getChild("InputDir");
+		inputDir.setAttribute("value", workingDirectory + "batch");
+		Element outputDir = root.getChild("OutputDir");
+		outputDir.setAttribute("value", workingDirectory + "batch");
 	}
 
 	@Override

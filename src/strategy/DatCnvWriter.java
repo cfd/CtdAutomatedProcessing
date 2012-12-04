@@ -64,7 +64,7 @@ public class DatCnvWriter implements IPsaWriter {
 			switch (userPoly) {
 			case "ISUS V3 Aux":
 				isLatLongPressure = true;
-				userPoly = "ISUS V3 Nitrate";
+				//userPoly = "ISUS V3 Nitrate";
 				break;
 			case "Turbidity":
 				isOxygen = false;
