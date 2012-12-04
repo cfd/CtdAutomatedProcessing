@@ -70,7 +70,7 @@ public class AlignWriter implements IPsaWriter {
 				Element fullname = new Element("FullName");
 
 				calcArrayItem.setAttribute("index", "" + count);
-				calcArrayItem.setAttribute("CalcId", "" + info.getCalcID());
+				calcArrayItem.setAttribute("CalcID", "" + info.getCalcID());
 
 				calc.setAttribute("UnitID", "" + info.getUnitID());
 				calc.setAttribute("Ordinal", "" + info.getOrdinal());
