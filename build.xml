@@ -1,90 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="CtdAutomatedProcessing">
-    <property environment="env"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="../../eclipse-java-juno-SR1-win32-x86_64/eclipse/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar"/>
-        <pathelement location="../../eclipse-java-juno-SR1-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
-    </path>
-    <path id="CtdAutomatedProcessing.classpath">
-        <pathelement location="bin"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="jdom-2.0.4.jar"/>
-        <pathelement location="sqlite-jdbc-3.7.2.jar"/>
-    </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="bin"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="CtdAutomatedProcessing.classpath"/>
-        </javac>
-    </target>
-              	
-                <target name="deploy_jar" description="JAR Deployment" depends="build">
-                     <!-- Compiles source and packages sst atlas data append class into jar -->
-              
-                     <jar destfile="CreatePSAFiles.jar" basedir="src">
-              
-                     	<restrict>
-                     	     <name name="**/*.class"/>
-                     	     <archives>
-                     	       <zips>
-                     	         <fileset dir="src" includes="**/*.java"/>
-                     	       </zips>
-                     	     </archives>
-                     	    </restrict>
-                     	
-                         <manifest>
-                             <!--<attribute name="Built-By" value="${user.name}"/>-->
-                         	<attribute name="Main-Class" value="strategy.Writer"/>
-                         </manifest>
-                     </jar>
-              
-                 </target>
-              
-    	
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-    <target name="Parser">
-        <java classname="processing_old.Parser" failonerror="true" fork="yes">
-            <classpath refid="CtdAutomatedProcessing.classpath"/>
-        </java>
-    </target>
-    <target name="Writer">
-        <java classname="strategy.Writer" failonerror="true" fork="yes">
-            <classpath refid="CtdAutomatedProcessing.classpath"/>
-        </java>
-    </target>
+<!-- WARNING: Eclipse auto-generated file. Any modifications will be overwritten. 
+	To include a user specific buildfile here, simply create one in the same 
+	directory with the processing instruction <?eclipse.ant.import?> as the first 
+	entry and export the buildfile again. -->
+<project basedir="." default="build" name="CtdAutomatedProcessing">
+	<property environment="env" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<path id="JUnit 4.libraryclasspath">
+		<pathelement
+			location="../../eclipse-java-juno-SR1-win32-x86_64/eclipse/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900/junit.jar" />
+		<pathelement
+			location="../../eclipse-java-juno-SR1-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar" />
+	</path>
+	<path id="CtdAutomatedProcessing.classpath">
+		<pathelement location="bin" />
+		<path refid="JUnit 4.libraryclasspath" />
+		<pathelement location="jdom-2.0.4.jar" />
+		<pathelement location="sqlite-jdbc-3.7.2.jar" />
+	</path>
+	<target name="init">
+		<mkdir dir="bin" />
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="bin" />
+	</target>
+	<target depends="clean" name="cleanall" />
+	<target depends="build-subprojects,build-project" name="build" />
+	<target name="build-subprojects" />
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin"
+			includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="CtdAutomatedProcessing.classpath" />
+		</javac>
+	</target>
+	
+	
+	
+	
+	
+	
+
+	<target name="deploy_jar" description="JAR Deployment" depends="build">
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar" >
+			<zipfileset dir="lib "/>
+			<fileset dir="bin" includes="**/*.class"/>
+			<manifest>
+				<attribute name="Main-Class" value="strategy.Writer" />
+			</manifest>
+		</jar>
+
+	</target>
+	
+	
+	
+	
+	
+
+
+	<target
+		description="Build all projects which reference this project. Useful to propagate changes."
+		name="build-refprojects" />
+	<target description="copy Eclipse compiler jars to ant lib directory"
+		name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar" />
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler"
+		name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<antcall target="build" />
+	</target>
+	<target name="Writer">
+		<java classname="strategy.Writer" failonerror="true" fork="yes">
+			<classpath refid="CtdAutomatedProcessing.classpath" />
+		</java>
+	</target>
 </project>
