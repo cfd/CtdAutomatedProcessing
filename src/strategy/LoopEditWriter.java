@@ -40,7 +40,7 @@ public class LoopEditWriter implements IPsaWriter{
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		Element root = doc.getRootElement();
 		Element inputDir = root.getChild("InputDir");
-		inputDir.setAttribute("value", workingDirectory + "raw");
+		inputDir.setAttribute("value", workingDirectory + "batch");
 		Element outputDir = root.getChild("OutputDir");
 		outputDir.setAttribute("value", workingDirectory + "batch");
 	}
