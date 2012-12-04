@@ -51,8 +51,9 @@
 
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
 		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar">
-			<fileset dir="db" includes="*.sqlite3"/>
+			
 			<fileset dir="bin" includes="**/*.class"/>
+			<fileset dir="database" includes="*.sqlite3"/>
 				<archives>
 					<zips>
 						<fileset dir="lib" includes="*.jar" />
