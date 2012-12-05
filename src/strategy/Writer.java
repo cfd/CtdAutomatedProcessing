@@ -279,10 +279,35 @@ public class Writer {
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
 			//Write the stuff
+			
+			
+			///datcnv i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex" /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon" /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa" /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch" /aC
 			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
-			fout.println("datcnv /i\"" + outputDirName + "\\data\\raw\\%1.hex\" /c\"" + outputDirName + "\\" + name + "\" /p\"" + outputDirName + "\\DatCnvIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+			fout.println("datcnv /i\"" + outputDirName + "\\data\\raw\\%1.hex\" /c\""
+					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
+					"\\DatCnvIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+			
 			//filter /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
-			fout.println("filter /i\"" + outputDirName + "\\data\\Batch\\%1C.cnv\" /p\"" + outputDirName + "\\FilterIMOS.psa\" /o\"" + outputDirName + "\\data\\Batch\" /aF");
+			fout.println("filter /i\"" + outputDirName + "\\data\\batch\\%1C.cnv\" /p\""
+					+ outputDirName + "\\FilterIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aF");
+			
+			//alignctd /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
+			fout.println("alignctd /i\"" + outputDirName + "\\data\\batch\\%1CF.cnv\" /p\""
+					+ outputDirName + "\\AlignIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aA");
+			
+			//loopedit /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
+			fout.println("loopedit /i\"" + outputDirName + "\\data\\batch\\%1CFA.cnv\" /p\""
+					+ outputDirName + "\\LoopEditIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aL");
+			
+			//derive /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv" /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
+			fout.println("derive /i\"" + outputDirName + "\\data\\batch\\%1CFAL.cnv\" /c\""
+					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
+					"\\DeriveIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+
+			//binavg /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
+			fout.println("binavg /i\"" + outputDirName + "\\data\\batch\\%1CFALD.cnv\" /p\""
+					+ outputDirName + "\\BinAvgIMOS.psa\" /o\"" + outputDirName + "\\data\\final\" /aB");
+			
 		}catch (FileNotFoundException e){
 			e.printStackTrace();
 		} finally{
@@ -297,7 +322,7 @@ public class Writer {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + outputDirName + "\\process.bat");			
+			fout.println("sbebatch " + outputDirName + "\\process.bat *");			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally{
