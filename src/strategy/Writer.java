@@ -2,10 +2,12 @@ package strategy;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -214,7 +216,8 @@ public class Writer {
 				for (Writer writer : writers) {
 					try {
 						writer.getWriterType().setup(orderedSensors);
-						writer.getWriterType().readTemplate(DIRECTORY + "\\utilities\\psa_templates");
+						writer.getWriterType().readTemplate(
+								DIRECTORY + "\\utilities\\psa_templates");
 						writer.getWriterType().writeUpperSection(
 								workingDirectory, xmlLocation);
 						writer.getWriterType().writeCalcArray(userPoly);
@@ -231,6 +234,10 @@ public class Writer {
 				}
 				orderedSensors.clear();
 
+				//Creates the bat files for the seabird processing
+				createSeabirdBat(outputDirName);
+				createProcessBat(outputDirName, xml.getName());
+				
 				InputStream inStream = null;
 				OutputStream outStream = null;
 
@@ -258,6 +265,43 @@ public class Writer {
 				}
 
 			}
+		}
+	}
+
+	/**
+	 * Creates the process batch file for each directory
+	 * @param outputDirName
+	 * @param name
+	 */
+	private static void createProcessBat(String outputDirName, String name) {
+		File file = new File(outputDirName + "\\process.bat");
+		PrintWriter fout = null;
+		try {
+			fout = new PrintWriter(file.getAbsolutePath());
+			//Write the stuff
+			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
+			fout.println("datcnv /i\"" + outputDirName + "\\data\\raw\\%1.hex\" /c\"" + outputDirName + "\\" + name + "\" /p\"" + outputDirName + "\\DatCnvIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+			//filter /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
+			fout.println("filter /i\"" + outputDirName + "\\data\\Batch\\%1C.cnv\" /p\"" + outputDirName + "\\FilterIMOS.psa\" /o\"" + outputDirName + "\\data\\Batch\" /aF");
+		}catch (FileNotFoundException e){
+			e.printStackTrace();
+		} finally{
+			fout.close();
+		}
+		
+	}
+
+	private static void createSeabirdBat(String outputDirName) {
+		File file = new File(outputDirName + "\\seabird.bat");
+		// Creates a new Print Writer
+		PrintWriter fout = null;
+		try {
+			fout = new PrintWriter(file.getAbsolutePath());
+			fout.println("sbebatch " + outputDirName + "\\process.bat");			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally{
+			fout.close();
 		}
 	}
 }
