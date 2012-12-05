@@ -51,14 +51,15 @@
 
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
 		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar">
+
 			
-			<fileset dir="bin" includes="**/*.class"/>
-			<fileset dir="database" includes="*.sqlite3"/>
-				<archives>
-					<zips>
-						<fileset dir="lib" includes="*.jar" />
-					</zips>
-				</archives>
+			<fileset dir="bin" includes="**/*.class" />
+			
+			<archives>
+				<zips>
+					<fileset dir="lib" includes="*.jar" />
+				</zips>
+			</archives>
 			<manifest>
 				<attribute name="Main-Class" value="strategy.Writer" />
 			</manifest>
