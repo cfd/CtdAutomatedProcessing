@@ -30,10 +30,10 @@ public class LoopEditWriter implements IPsaWriter{
 	}
 	
 	@Override
-	public void readTemplate() throws JDOMException, IOException {
+	public void readTemplate(String psaTemplate) throws JDOMException, IOException {
 		// TODO Auto-generated method stub
 		SAXBuilder builder =  new SAXBuilder();
-		 doc = builder.build(new File("./psa_templates/LoopEditTemplate.xml"));
+		 doc = builder.build(new File(psaTemplate + "\\LoopEditTemplate.xml"));
 	}
 
 	@Override

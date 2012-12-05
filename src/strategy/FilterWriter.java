@@ -29,11 +29,11 @@ public class FilterWriter implements IPsaWriter{
 	}
 
 	@Override
-	public void readTemplate() 
+	public void readTemplate(String psaTemplate) 
 			throws JDOMException, IOException {
 		SAXBuilder builder =  new SAXBuilder();
 		doc = builder.build
-				(new File("./psa_templates/FilterTemplate.xml"));
+				(new File(psaTemplate + "\\FilterTemplate.xml"));
 	}
 
 	@Override

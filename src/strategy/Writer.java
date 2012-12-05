@@ -214,7 +214,7 @@ public class Writer {
 				for (Writer writer : writers) {
 					try {
 						writer.getWriterType().setup(orderedSensors);
-						writer.getWriterType().readTemplate();
+						writer.getWriterType().readTemplate(DIRECTORY + "\\utilities\\psa_templates");
 						writer.getWriterType().writeUpperSection(
 								workingDirectory, xmlLocation);
 						writer.getWriterType().writeCalcArray(userPoly);

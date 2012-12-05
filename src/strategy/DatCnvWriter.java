@@ -32,9 +32,9 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	@Override
-	public void readTemplate() throws JDOMException, IOException {
+	public void readTemplate(String psaTemplate) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
-		doc = builder.build(new File("psa_templates/DataCnvTemplate.xml"));
+		doc = builder.build(new File(psaTemplate + "\\DataCnvTemplate.xml"));
 
 		if (DEBUG) {
 			System.out.println("I Read The File");

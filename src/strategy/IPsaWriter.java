@@ -12,7 +12,7 @@ public interface IPsaWriter {
 	
 	public abstract void setup(ArrayList<SensorInfo> orderedSensors);
 	
-	public abstract void readTemplate() throws JDOMException, IOException;
+	public abstract void readTemplate(String psaTemplate) throws JDOMException, IOException;
 	
 	public abstract void writeUpperSection(String workingDirectory, String instrumentPath);
 	
