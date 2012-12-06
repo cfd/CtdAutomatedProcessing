@@ -199,7 +199,7 @@ public class Writer {
 				writers.add(loopEditWriter);
 
 				// Where the psa writes to
-				String outputDirName = DIRECTORY + "\\config\\" + xml.getName();
+				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().substring(0, xml.getName().length() - 7);
 				new File(outputDirName).mkdir();
 
 				// Makes the data stuff
