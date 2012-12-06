@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -198,7 +199,8 @@ public class Writer {
 				writers.add(deriveWriter);
 				writers.add(loopEditWriter);
 
-				// Where the psa writes to
+				// Where the psa writes tod
+				
 				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().substring(0, xml.getName().length() - 7);
 				new File(outputDirName).mkdir();
 
