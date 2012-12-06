@@ -268,7 +268,7 @@ public class Writer {
 			}
 		}
 		//Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY + "\\config");
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
 		runSeabird.run();
 	}
 
