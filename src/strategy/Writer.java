@@ -24,6 +24,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import util.ConnectDB;
+import util.RunSeabird;
 
 public class Writer {
 
@@ -266,6 +267,9 @@ public class Writer {
 
 			}
 		}
+		//Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY + "\\config");
+		runSeabird.run();
 	}
 
 	/**
@@ -322,7 +326,7 @@ public class Writer {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + outputDirName + "\\process.bat *");			
+			fout.println("sbebatch " + outputDirName + "\\process.bat *\nEXIT [/B] [exitCode] ");			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally{
