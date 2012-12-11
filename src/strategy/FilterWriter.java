@@ -20,6 +20,11 @@ public class FilterWriter implements IPsaWriter{
 	ArrayList<SensorInfo> sensors;
 	Document doc;
 	
+	/**
+	 * takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '2 Strategy', & as well 
+	 * as the content of the @param orderedSensors to console.
+	 */
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -28,14 +33,29 @@ public class FilterWriter implements IPsaWriter{
 		System.out.println(orderedSensors);
 	}
 
+	/**
+	 * takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the psa file
+	 */
 	@Override
-	public void readTemplate(String psaTemplate) 
+	public void readTemplate(String psaTemplateFolderPath) 
 			throws JDOMException, IOException {
 		SAXBuilder builder =  new SAXBuilder();
 		doc = builder.build
-				(new File(psaTemplate + "\\FilterTemplate.xml"));
+				(new File(psaTemplateFolderPath + "\\FilterTemplate.xml"));
 	}
 
+	/**
+	 * writes the upper section of the psa file which is above the calcArray. 
+	 * 
+	 * This includes:
+	 * 	-	writing the the size of the inputFileArray as zero. This does not 
+	 * 		matter.
+	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
+	 * 		by "batch". similar thing is done for outputDir's value attribute.
+	 * 
+	 * the parameter @param instrumentPath is not used in this writer class.
+	 */
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
@@ -51,6 +71,10 @@ public class FilterWriter implements IPsaWriter{
 		outputDir.setAttribute("value", workingDirectory + "batch");		
 	}
 
+	/**
+	 * this method populates the calcarray of the psa file, it takes @param userpoly
+	 * incase the calcarray includes a Upoly sensor.
+	 */
 	@Override
 	public void writeCalcArray(String userPoly) {
 		//CalcArray Element from
@@ -136,6 +160,14 @@ public class FilterWriter implements IPsaWriter{
 		}
 	}
 
+	/**
+	 * this fills out the lower section of the psa file which is below the calcArray.
+	 * 
+	 * In the filter writer it has a section called the FilterTypeArray, this just 
+	 * includes an index for each sensor in the array and a value for value. 
+	 * 
+	 * All values should be 1, except the first one which is 2 (for reasons unknown).
+	 */
 	@Override
 	public void writeLowerSection() {
 		
@@ -145,7 +177,12 @@ public class FilterWriter implements IPsaWriter{
 		
 		boolean first = true;
 		int counter = 0;
-		for (SensorInfo sensor: sensors){
+		
+		/*
+		 * loops for each sensor but doesn't use any of them in the
+		 * actual loop, hence the SuppressWarning.
+		 */
+		for (@SuppressWarnings("unused") SensorInfo sensor: sensors){
 			
 			Element arrayItem = new Element("ArrayItem");
 			
@@ -165,6 +202,10 @@ public class FilterWriter implements IPsaWriter{
 		}
 	}
 
+	/**
+	 * outputs a psa file to the directory of @param newDirName, while making it's
+	 * format 'pretty'.
+	 */
 	@Override
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());

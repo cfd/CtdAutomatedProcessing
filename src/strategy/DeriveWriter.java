@@ -26,9 +26,9 @@ public class DeriveWriter implements IPsaWriter{
 	}
 	
 	@Override
-	public void readTemplate(String psaTemplate) throws JDOMException, IOException{
+	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException{
 		SAXBuilder builder = new SAXBuilder();
-		doc = builder.build(new File(psaTemplate + "\\DeriveTemplate.xml"));
+		doc = builder.build(new File(psaTemplateFolderPath + "\\DeriveTemplate.xml"));
 	}
 
 	@Override

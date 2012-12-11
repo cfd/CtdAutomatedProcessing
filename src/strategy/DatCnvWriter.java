@@ -23,6 +23,11 @@ public class DatCnvWriter implements IPsaWriter {
 	private boolean isLatLongPressure = false;
 	private boolean isOxygen = true;
 
+	/**
+	 * takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '1 Strategy', & as well 
+	 * as the content of the @param orderedSensors to console.
+	 */
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -30,11 +35,15 @@ public class DatCnvWriter implements IPsaWriter {
 		System.out.println("1 strategy");
 		System.out.println(orderedSensors);
 	}
-
+	
+	/**
+	 * takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the psa file.
+	 */
 	@Override
-	public void readTemplate(String psaTemplate) throws JDOMException, IOException {
+	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
-		doc = builder.build(new File(psaTemplate + "\\DataCnvTemplate.xml"));
+		doc = builder.build(new File(psaTemplateFolderPath + "\\DataCnvTemplate.xml"));
 
 		if (DEBUG) {
 			System.out.println("I Read The File");
@@ -43,6 +52,14 @@ public class DatCnvWriter implements IPsaWriter {
 
 	}
 
+	/**
+	 * writes the upper section of the psa file which is above the calcArray. 
+	 * 
+	 * This includes:
+	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
+	 * 		by "raw". similar thing is done for outputDir's value attribute,
+	 * 		but it is followed by "batch".
+	 */
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		if (DEBUG) {

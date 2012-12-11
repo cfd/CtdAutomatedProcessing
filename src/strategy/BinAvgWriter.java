@@ -20,7 +20,12 @@ public class BinAvgWriter implements IPsaWriter{
 	ArrayList<SensorInfo> sensors;
 	Document doc;
 	
-	
+
+	/**
+	 * takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '4 Strategy', & as well 
+	 * as the content of the @param orderedSensors to console.
+	 */
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -29,14 +34,31 @@ public class BinAvgWriter implements IPsaWriter{
 		System.out.println(orderedSensors);
 		
 	}
-	
+
+	/**
+	 * takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the psa file
+	 */
 	@Override
-	public void readTemplate(String psaTemplate) throws JDOMException, IOException {
+	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException {
 		// TODO Auto-generated method stub
 		SAXBuilder builder =  new SAXBuilder();
-		 doc = builder.build(new File(psaTemplate + "\\BinAvgTemplate.xml"));
+		 doc = builder.build(new File(psaTemplateFolderPath + "\\BinAvgTemplate.xml"));
 	}
 
+	/**
+	 * writes the upper section of the psa file which is above the calcArray. 
+	 * 
+	 * This includes:
+	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
+	 * 		by "batch". similar thing is done for outputDir's value attribute,
+	 * 		but workingDir is followed by final.
+	 * 
+	 * the parameter @param instrumentPath is not used in this writer class.
+	 * 
+	 * at the end of this method it removes pressure from the sensors as it's 
+	 * no longer needed.
+	 */
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
@@ -48,18 +70,28 @@ public class BinAvgWriter implements IPsaWriter{
 		
 	}
 
+	/**
+	 * doesn't need to do anything
+	 */
 	@Override
 	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * doesn't need to do anything
+	 */
 	@Override
 	public void writeLowerSection() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * outputs a psa file to the directory of @param newDirName, while making it's
+	 * format 'pretty'.
+	 */
 	@Override
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
