@@ -27,7 +27,7 @@ import org.jdom2.input.SAXBuilder;
 import util.ConnectDB;
 import util.RunSeabird;
 
-public class Writer {
+public class XmlconReader {
 
 	private static LinkedHashMap<Integer, SensorInfo> sensorsMap;
 	private static ArrayList<SensorInfo> orderedSensors;
@@ -39,7 +39,7 @@ public class Writer {
 
 	private IPsaWriter writerType;
 
-	public Writer(IPsaWriter psaWriter) {
+	public XmlconReader(IPsaWriter psaWriter) {
 		this.writerType = psaWriter;
 		sensorsMap = new LinkedHashMap<>();
 		orderedSensors = new ArrayList<>();
@@ -166,14 +166,14 @@ public class Writer {
 	}
 
 	public static void main(String args[]) {
-		ArrayList<Writer> writers = new ArrayList<>();
+		ArrayList<XmlconReader> writers = new ArrayList<>();
 
-		Writer datCnvWriter = new Writer(new DatCnvWriter());
-		Writer alignWriter = new Writer(new AlignWriter());
-		Writer filterWriter = new Writer(new FilterWriter());
-		Writer binAvgWriter = new Writer(new BinAvgWriter());
-		Writer deriveWriter = new Writer(new DeriveWriter());
-		Writer loopEditWriter = new Writer(new LoopEditWriter());
+		XmlconReader datCnvWriter = new XmlconReader(new DatCnvWriter());
+		XmlconReader alignWriter = new XmlconReader(new AlignWriter());
+		XmlconReader filterWriter = new XmlconReader(new FilterWriter());
+		XmlconReader binAvgWriter = new XmlconReader(new BinAvgWriter());
+		XmlconReader deriveWriter = new XmlconReader(new DeriveWriter());
+		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
 		datCnvWriter.populateSensorsMap();
 
@@ -217,7 +217,7 @@ public class Writer {
 				// Where the xml con is
 				String xmlLocation = outputDirName + "\\" + xml.getName();
 
-				for (Writer writer : writers) {
+				for (XmlconReader writer : writers) {
 					try {
 						writer.getWriterType().setup(orderedSensors);
 						writer.getWriterType().readTemplate(
