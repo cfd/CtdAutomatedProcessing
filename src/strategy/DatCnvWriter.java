@@ -151,6 +151,9 @@ public class DatCnvWriter implements IPsaWriter {
 
 	}
 
+	/**
+	 * called but does nothing
+	 */
 	@Override
 	public void writeLowerSection() {
 		// TODO Auto-generated method stub
