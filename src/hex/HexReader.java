@@ -9,7 +9,7 @@ public class HexReader {
 	public static void main(String[] args) {
 	 
 	        // Location of file to read
-	        File file = new File("C:\\Users\\Ricky Hlevnjak\\Desktop\\Working\\LOL.hex");
+	        File file = new File("\\\\pearl\\temp\\adc-jcu2012\\config\\19plus1_4409_20120905\\data\\raw\\GB12071.hex");
 	 
 	        try {
 	 
