@@ -2,14 +2,26 @@ package hex;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
+
+import util.ConnectDB;
 
 public class HexReader {
 
 	private final static LinkedHashMap<String,String> months = new LinkedHashMap<String,String>();
+	private static Connection con;
+	private static Statement statement;
 	
 	static {
+		//initalize LinkedHashMap
 		months.put("jan","01");
 		months.put("feb","02");
 		months.put("mar","03");
@@ -72,6 +84,32 @@ public class HexReader {
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		//TODO move somwhere else
+		//initalize Database
+		ConnectDB db = new ConnectDB();
+		con = db.getDdConnection();
+		try{
+			statement = con.createStatement();
+			ResultSet results = getConFile();
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			
+			while (results.next()){
+				String instrumentID = results.getString("Instrument_ID");
+				String startDate = results.getString("Start_Date");
+				Date start = new Date();
+				String endDate = results.getString("End_Date");
+				if(endDate != null && endDate.toLowerCase().equals("current")){
+					Date date = new Date();
+					System.out.println("I do things: " + dateFormat.format(date));
+				}
+				System.out.println(instrumentID + ", " + startDate + ", " + endDate);
+			}
+			con.close();
+		} catch (SQLException e){
+			System.out.println("I crashed here");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -130,6 +168,17 @@ public class HexReader {
 //		}
 		
 		return String.format("%s/%s/%s", day, month, year);
+	}
+	
+	private ResultSet getConFile(){
+		try{
+			String sql = String.format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'", serialNo);
+			ResultSet rs = statement.executeQuery(sql);
+			return rs;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public String getCalibrationDate(){
