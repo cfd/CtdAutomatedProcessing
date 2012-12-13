@@ -2,10 +2,28 @@ package hex;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class HexReader {
 
+	private final static LinkedHashMap<String,String> months = new LinkedHashMap<String,String>();
+	
+	static {
+		months.put("jan","01");
+		months.put("feb","02");
+		months.put("mar","03");
+		months.put("apr","04");
+		months.put("may","05");
+		months.put("jun","06");
+		months.put("jul","07");
+		months.put("aug","08");
+		months.put("sep","09");
+		months.put("oct","10");
+		months.put("nov","11");
+		months.put("dec","12");
+	}
+	
 	private static boolean DEBUG = true;
 	private String serialNo;
 	private String calibrationDate;
@@ -64,52 +82,52 @@ public class HexReader {
 	private String formatDate(String badDate){
 		String[] dateSplit = badDate.split(" ");
 		String day = dateSplit[1];
-		String month = dateSplit[0];
+		String month = months.get(dateSplit[0].toLowerCase());
 		String year = dateSplit[2];
 		
 		if (DEBUG){
 			System.out.printf("Day: %s, Month: %s, Year: %s%n", day, month, year);
 		}
 		
-		//Converts the date from 3 character to 2 number
-		switch (month.toLowerCase()){
-		case "jan" :
-			month = "01";
-			break;
-		case "feb" :
-			month = "02";
-			break;
-		case "mar" :
-			month = "03";
-			break;
-		case "apr" :
-			month = "04";
-			break;
-		case "may" :
-			month = "05";
-			break;
-		case "jun" :
-			month = "06";
-			break;
-		case "jul" :
-			month = "07";
-			break;
-		case "aug" :
-			month = "08";
-			break;
-		case "sep" :
-			month = "09";
-			break;
-		case "oct" :
-			month = "10";
-			break;
-		case "nov" :
-			month = "11";
-			break;
-		case "dec" :
-			month = "12";
-			break;
-		}
+//		//Converts the date from 3 character to 2 number
+//		switch (month.toLowerCase()){
+//		case "jan" :
+//			month = "01";
+//			break;
+//		case "feb" :
+//			month = "02";
+//			break;
+//		case "mar" :
+//			month = "03";
+//			break;
+//		case "apr" :
+//			month = "04";
+//			break;
+//		case "may" :
+//			month = "05";
+//			break;
+//		case "jun" :
+//			month = "06";
+//			break;
+//		case "jul" :
+//			month = "07";
+//			break;
+//		case "aug" :
+//			month = "08";
+//			break;
+//		case "sep" :
+//			month = "09";
+//			break;
+//		case "oct" :
+//			month = "10";
+//			break;
+//		case "nov" :
+//			month = "11";
+//			break;
+//		case "dec" :
+//			month = "12";
+//			break;
+//		}
 		
 		return String.format("%s/%s/%s", day, month, year);
 	}
