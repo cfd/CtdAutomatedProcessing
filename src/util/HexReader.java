@@ -230,9 +230,9 @@ public class HexReader {
 		return serialNo;
 	}
 
-	public static void main(String args[]) {
-		HexReader reader = new HexReader(
-				"\\\\pearl\\temp\\adc-jcu2012\\ctd\\GB12071.hex");
-		reader.run();
-	}
+//	public static void main(String args[]) {
+//		HexReader reader = new HexReader(
+//				"\\\\pearl\\temp\\adc-jcu2012\\ctd\\GB12071.hex");
+//		reader.run();
+//	}
 }
