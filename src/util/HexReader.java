@@ -1,4 +1,4 @@
-package hex;
+package util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-import util.ConnectDB;
 
 public class HexReader {
 
