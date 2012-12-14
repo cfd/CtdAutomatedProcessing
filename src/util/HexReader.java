@@ -108,11 +108,9 @@ public class HexReader {
 		ResultSet results = getConFile();
 
 		while (results.next()) {
-			String instrumentID = results.getString("Instrument_ID");
-			String hexFileLocation = DIRECTORY
-					+ "\\config\\"
-					+ results.getString("Associated_con_file").replaceFirst(
-							"[.][^.]+$", "") + "\\data\\raw\\";
+			String conFile = results.getString("Associated_con_file").replaceFirst(
+					"[.][^.]+$", "");
+			String hexFileLocation = DIRECTORY	+ "\\config\\"	+ conFile + "\\data\\raw\\";
 
 			Date startDate = new Date();
 			Date endDate = new Date();
@@ -133,7 +131,7 @@ public class HexReader {
 			}
 
 			if (DEBUG) {
-				System.out.println(instrumentID + ", " + stringStartDate + ", "
+				System.out.println(conFile + ", " + stringStartDate + ", "
 						+ stringEndDate);
 				System.out.printf("Start Date: %s%nEnd Date: %s%n",
 						DATEFORMAT.format(startDate),
@@ -143,7 +141,7 @@ public class HexReader {
 			if ((startDate.before(calibrationDate) || startDate
 					.equals(calibrationDate)) && endDate.after(calibrationDate)) {
 				if (DEBUG) {
-					System.out.println("InstrumentID is: " + instrumentID);
+					System.out.println("InstrumentID is: " + conFile);
 					System.out.println("File Location is: " + hexFileLocation);
 
 					// Copies the hex to the right location. Not deleting the
@@ -216,8 +214,6 @@ public class HexReader {
 			String sql = String
 					.format("SELECT * FROM Instrument_Calibration as IC where IC.Serial_no = '%s'",
 							serialNo);
-			// .format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'",
-			// serialNo);
 			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
