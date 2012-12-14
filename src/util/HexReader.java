@@ -1,7 +1,12 @@
 package util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +24,9 @@ public class HexReader {
 	private final static LinkedHashMap<String, String> months = new LinkedHashMap<String, String>();
 	private static Connection con;
 	private static Statement statement;
-	private static final DateFormat dateFormat = new SimpleDateFormat(
+	private static final DateFormat DATEFORMAT = new SimpleDateFormat(
 			"dd/MM/yyyy");
+	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 
 	static {
 		// initalize LinkedHashMap
@@ -42,16 +48,14 @@ public class HexReader {
 	private String serialNo;
 	private Date calibrationDate;
 
-	private String path;
+	private File file;
 
 	public HexReader(String path) {
-		this.path = path;
+		System.out.println(path);
+		file = new File(path);
 	}
 
 	public void run() {
-
-		// Location of file to read
-		File file = new File(path);
 
 		try {
 
@@ -106,6 +110,7 @@ public class HexReader {
 
 		while (results.next()) {
 			String instrumentID = results.getString("Instrument_ID");
+			String hexFileLocation = DIRECTORY + "\\config\\" + results.getString("Associated_con_file").replaceFirst("[.][^.]+$", "") + "\\data\\raw\\";
 
 			Date startDate = new Date();
 			Date endDate = new Date();
@@ -119,27 +124,55 @@ public class HexReader {
 			}
 			//Checks if there needs to be current date
 			else if(stringEndDate.toLowerCase().equals("current")){
-				startDate = dateFormat.parse(stringStartDate);
+				startDate = DATEFORMAT.parse(stringStartDate);
 			}else{
-				startDate = dateFormat.parse(stringStartDate);
-				endDate = dateFormat.parse(stringEndDate);
+				startDate = DATEFORMAT.parse(stringStartDate);
+				endDate = DATEFORMAT.parse(stringEndDate);
 			}
 			
 			if(DEBUG){
 				System.out.println(instrumentID + ", " + stringStartDate + ", "
 					+ stringEndDate);
-				System.out.printf("Start Date: %s%nEnd Date: %s%n", dateFormat.format(startDate), dateFormat.format(endDate));
+				System.out.printf("Start Date: %s%nEnd Date: %s%n", DATEFORMAT.format(startDate), DATEFORMAT.format(endDate));
 			}
 			
 			if((startDate.before(calibrationDate) || startDate.equals(calibrationDate)) && endDate.after(calibrationDate)){
 				if(DEBUG){
 					System.out.println("InstrumentID is: " + instrumentID);
+					System.out.println("File Location is: " + hexFileLocation);
+					
+					//Copies the hex to the right location. Not deleting the original
+					copyHex(hexFileLocation);
 				}
-				break;
 			}
 			
 		}
 		con.close();
+	}
+
+	private void copyHex(String hexFileLocation) {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+		
+		try {
+			inStream = new FileInputStream(file);
+			outStream = new FileOutputStream(new File(hexFileLocation + file.getName()));
+
+			byte[] buffer = new byte[1024];
+			int length;
+
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -160,7 +193,7 @@ public class HexReader {
 		}
 
 		try {
-			Date date = dateFormat.parse(day + "/" + month + "/" + year);
+			Date date = DATEFORMAT.parse(day + "/" + month + "/" + year);
 			return date;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -173,9 +206,9 @@ public class HexReader {
 
 	private ResultSet getConFile() {
 		try {
-			String sql = String
-					.format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'",
-							serialNo);
+			String sql = String.format("SELECT * FROM Instrument_Calibration as IC where IC.Serial_no = '%s'", serialNo);
+					//.format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'",
+							//serialNo);
 			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
@@ -194,7 +227,7 @@ public class HexReader {
 
 	public static void main(String args[]) {
 		HexReader reader = new HexReader(
-				"\\\\pearl\\temp\\adc-jcu2012\\config\\19plus1_4409_20120905\\data\\raw\\GB12071.hex");
+				"\\\\pearl\\temp\\adc-jcu2012\\ctd\\GB12071.hex");
 		reader.run();
 	}
 }

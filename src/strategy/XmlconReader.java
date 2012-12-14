@@ -24,6 +24,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import util.ConnectDB;
+import util.HexReader;
 import util.RunSeabird;
 
 public class XmlconReader {
@@ -200,9 +201,9 @@ public class XmlconReader {
 
 				// Where the psa writes tod
 				
-				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().substring(0, xml.getName().length() - 7);
+				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().replaceFirst("[.][^.]+$", "");
+				
 				new File(outputDirName).mkdir();
-				//I am a comment :P;
 
 				// Makes the data stuff
 				new File(outputDirName + "/data").mkdir();
