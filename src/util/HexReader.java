@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-
 public class HexReader {
 
 	private final static LinkedHashMap<String, String> months = new LinkedHashMap<String, String>();
@@ -110,42 +109,49 @@ public class HexReader {
 
 		while (results.next()) {
 			String instrumentID = results.getString("Instrument_ID");
-			String hexFileLocation = DIRECTORY + "\\config\\" + results.getString("Associated_con_file").replaceFirst("[.][^.]+$", "") + "\\data\\raw\\";
+			String hexFileLocation = DIRECTORY
+					+ "\\config\\"
+					+ results.getString("Associated_con_file").replaceFirst(
+							"[.][^.]+$", "") + "\\data\\raw\\";
 
 			Date startDate = new Date();
 			Date endDate = new Date();
 
 			String stringStartDate = results.getString("Start_Date");
 			String stringEndDate = results.getString("End_Date");
-			
-			//Checks for null values
-			if (stringEndDate == null || stringStartDate == null){
+
+			// Checks for null values
+			if (stringEndDate == null || stringStartDate == null) {
 				continue;
 			}
-			//Checks if there needs to be current date
-			else if(stringEndDate.toLowerCase().equals("current")){
+			// Checks if there needs to be current date
+			else if (stringEndDate.toLowerCase().equals("current")) {
 				startDate = DATEFORMAT.parse(stringStartDate);
-			}else{
+			} else {
 				startDate = DATEFORMAT.parse(stringStartDate);
 				endDate = DATEFORMAT.parse(stringEndDate);
 			}
-			
-			if(DEBUG){
+
+			if (DEBUG) {
 				System.out.println(instrumentID + ", " + stringStartDate + ", "
-					+ stringEndDate);
-				System.out.printf("Start Date: %s%nEnd Date: %s%n", DATEFORMAT.format(startDate), DATEFORMAT.format(endDate));
+						+ stringEndDate);
+				System.out.printf("Start Date: %s%nEnd Date: %s%n",
+						DATEFORMAT.format(startDate),
+						DATEFORMAT.format(endDate));
 			}
-			
-			if((startDate.before(calibrationDate) || startDate.equals(calibrationDate)) && endDate.after(calibrationDate)){
-				if(DEBUG){
+
+			if ((startDate.before(calibrationDate) || startDate
+					.equals(calibrationDate)) && endDate.after(calibrationDate)) {
+				if (DEBUG) {
 					System.out.println("InstrumentID is: " + instrumentID);
 					System.out.println("File Location is: " + hexFileLocation);
-					
-					//Copies the hex to the right location. Not deleting the original
+
+					// Copies the hex to the right location. Not deleting the
+					// original
 					copyHex(hexFileLocation);
 				}
 			}
-			
+
 		}
 		con.close();
 	}
@@ -153,10 +159,11 @@ public class HexReader {
 	private void copyHex(String hexFileLocation) {
 		InputStream inStream = null;
 		OutputStream outStream = null;
-		
+
 		try {
 			inStream = new FileInputStream(file);
-			outStream = new FileOutputStream(new File(hexFileLocation + file.getName()));
+			outStream = new FileOutputStream(new File(hexFileLocation
+					+ file.getName()));
 
 			byte[] buffer = new byte[1024];
 			int length;
@@ -172,7 +179,7 @@ public class HexReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -206,9 +213,11 @@ public class HexReader {
 
 	private ResultSet getConFile() {
 		try {
-			String sql = String.format("SELECT * FROM Instrument_Calibration as IC where IC.Serial_no = '%s'", serialNo);
-					//.format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'",
-							//serialNo);
+			String sql = String
+					.format("SELECT * FROM Instrument_Calibration as IC where IC.Serial_no = '%s'",
+							serialNo);
+			// .format("SELECT * FROM Instrument_Calibration as IC, Instrument_Details as ID WHERE IC.Serial_No = ID.Serial_no and IC.Serial_No = '%s'",
+			// serialNo);
 			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
