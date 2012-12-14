@@ -49,9 +49,8 @@ public class HexReader {
 
 	private File file;
 
-	public HexReader(String path) {
-		System.out.println(path);
-		file = new File(path);
+	public HexReader(File file) {
+		this.file = file;
 	}
 
 	public void run() {

@@ -267,9 +267,19 @@ public class XmlconReader {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}
+		
+		//put hex loop
+
+		File hexDir = new File(DIRECTORY + "/hex");
+		for (File hex : hexDir.listFiles()){
+			if (hex.getName().endsWith(".hex")) {
+				HexReader reader = new HexReader(hex);
+				reader.run();
+			}
+		}
+		
 		//Comment in when you want sea bird to run
 		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
 		runSeabird.run();
