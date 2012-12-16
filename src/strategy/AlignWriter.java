@@ -29,7 +29,7 @@ public class AlignWriter implements IPsaWriter {
 	
 	/**
 	 * takes @param orderedSensors and sets sensors to 
-	 * @param orderedSensors and prints '3 Strategy', & as well 
+	 * @param orderedSensors and prints '3 Strategy', as well 
 	 * as the content of the @param orderedSensors to console.
 	 */
 	
@@ -148,9 +148,9 @@ public class AlignWriter implements IPsaWriter {
 	 * In the filter writer it has a section called the FilterTypeArray, this just 
 	 * includes an index for each sensor in the array and a value for value. 
 	 * 
-	 * 
-	 * 
-	 * NEED MORE DOCUMENTING
+	 * Each variable name is listed as well as the valArrayItem number 
+	 * and value associated with each variable.
+	 *
 	 */
 	
 	@Override
