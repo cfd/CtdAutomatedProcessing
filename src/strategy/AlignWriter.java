@@ -155,7 +155,7 @@ public class AlignWriter implements IPsaWriter {
 	
 	@Override
 	public void writeLowerSection() {
-		// TODO MORE DOCUMENTATION
+	
 		int count1 = 0;
 		Element rootElement = doc.getRootElement();
 		Element valArray = rootElement.getChild("ValArray");
