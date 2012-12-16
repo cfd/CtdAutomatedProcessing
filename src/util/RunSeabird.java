@@ -39,7 +39,7 @@ public class RunSeabird {
 		String commands = "";
 		for (String folder : folders) {
 			commands += "start /wait " + directory + "\\config\\" + folder
-					+ "\\seabird.bat *\n";
+					+ "\\run.bat *\n";
 		}
 		System.out.println(commands);		
 		return commands;
