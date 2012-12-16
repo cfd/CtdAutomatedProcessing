@@ -167,7 +167,7 @@ public class DatCnvWriter implements IPsaWriter {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(newDirName
 				+ "/DatCnvIMOS.psa")));
-		System.out.println("Wrote to file");
+		System.out.println("DataCnvIMOS.psa File Written!");
 
 	}
 

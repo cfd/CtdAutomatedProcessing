@@ -203,15 +203,16 @@ public class FilterWriter implements IPsaWriter{
 	}
 
 	/**
-	 * outputs a psa file to the directory of @param newDirName, while making it's
+	 * Outputs a .psa file to the directory of @param newDirName, while making it's
 	 * format 'pretty'.
 	 */
+	
 	@Override
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				newDirName + "/FilterIMOS.psa")));
-		System.out.println("Wrote to file");
+		System.out.println("FilterIMOS.psa File Written!");
 	}
 
 }

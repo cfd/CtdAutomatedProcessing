@@ -89,9 +89,10 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * outputs a psa file to the directory of @param newDirName, while making it's
+	 * Outputs a .psa file to the directory of @param newDirName, while making it's
 	 * format 'pretty'.
 	 */
+	
 	@Override
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub

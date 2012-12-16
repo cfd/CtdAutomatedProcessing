@@ -15,9 +15,6 @@ import org.jdom2.output.XMLOutputter;
 
 public class LoopEditWriter implements IPsaWriter{
 
-	
-
-	
 	ArrayList<SensorInfo> sensors;
 	Document doc;
 	
