@@ -200,16 +200,19 @@ public class XmlconReader {
 				writers.add(loopEditWriter);
 
 				// Where the psa writes tod
-				
-				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().replaceFirst("[.][^.]+$", "");
-				
-				new File(outputDirName).mkdir();
 
-				// Makes the data stuff
-				new File(outputDirName + "/data").mkdir();
-				new File(outputDirName + "/data/raw").mkdir();
-				new File(outputDirName + "/data/batch").mkdir();
-				new File(outputDirName + "/data/final").mkdir();
+				String outputDirName = DIRECTORY + "\\config\\"
+						+ xml.getName().replaceFirst("[.][^.]+$", "");
+
+				createDirectory(outputDirName);
+
+				// new File(outputDirName).mkdir();
+				//
+				// // Makes the data stuff
+				// new File(outputDirName + "/data").mkdir();
+				// new File(outputDirName + "/data/raw").mkdir();
+				// new File(outputDirName + "/data/batch").mkdir();
+				// new File(outputDirName + "/data/final").mkdir();
 
 				// Where the batch, final and raw files are located
 				String workingDirectory = outputDirName + "\\data\\";
@@ -238,55 +241,86 @@ public class XmlconReader {
 				}
 				orderedSensors.clear();
 
-				//Creates the bat files for the seabird processing
+				// Creates the bat files for the seabird processing
 				createSeabirdBat(outputDirName);
 				createProcessBat(outputDirName, xml.getName());
+
+				// Moves the file
+				moveCon(xml, outputDirName);
+
+			} else if (xml.getName().endsWith(".con")) {
+				String outputDirName = DIRECTORY + "\\config\\"
+						+ xml.getName().replaceFirst("[.][^.]+$", "");
+
+				createDirectory(outputDirName);
 				
-				InputStream inStream = null;
-				OutputStream outStream = null;
+				// Creates the bat files for the seabird processing
+				createSeabirdBat(outputDirName);
+				createProcessBat(outputDirName, xml.getName());
 
-				try {
-					inStream = new FileInputStream(xml);
-					outStream = new FileOutputStream(new File(outputDirName
-							+ "/" + xml.getName()));
-
-					byte[] buffer = new byte[1024];
-					int length;
-
-					// copy the file content in bytes
-					while ((length = inStream.read(buffer)) > 0) {
-						outStream.write(buffer, 0, length);
-					}
-
-					inStream.close();
-					outStream.close();
-
-					// delete the original file
-					xml.delete();
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				// Moves the file
+				moveCon(xml, outputDirName);
 			}
 		}
-		
-		//put hex loop
 
+		// put hex loop
 		File hexDir = new File(DIRECTORY + "/hex");
-		for (File hex : hexDir.listFiles()){
+		for (File hex : hexDir.listFiles()) {
 			if (hex.getName().endsWith(".hex")) {
 				HexReader reader = new HexReader(hex);
 				reader.run();
 			}
 		}
-		
-		//Comment in when you want sea bird to run
+
+		// Comment in when you want sea bird to run
 		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
 		runSeabird.run();
 	}
 
+	private static void createDirectory(String outputDirName) {
+		new File(outputDirName).mkdir();
+
+		// Makes the data stuff
+		new File(outputDirName + "/data").mkdir();
+		new File(outputDirName + "/data/raw").mkdir();
+		new File(outputDirName + "/data/batch").mkdir();
+		new File(outputDirName + "/data/final").mkdir();
+
+	}
+
+	private static void moveCon(File xml, String outputDirName) {
+
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try {
+			inStream = new FileInputStream(xml);
+			outStream = new FileOutputStream(new File(outputDirName + "/"
+					+ xml.getName()));
+
+			byte[] buffer = new byte[1024];
+			int length;
+
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+			// delete the original file
+			xml.delete();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * Creates the process batch file for each directory
+	 * 
 	 * @param outputDirName
 	 * @param name
 	 */
@@ -295,42 +329,72 @@ public class XmlconReader {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			//Write the stuff
-			
-			
-			///datcnv i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex" /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon" /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa" /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch" /aC
-			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
-			fout.println("datcnv /i\"" + outputDirName + "\\data\\raw\\%1.hex\" /c\""
-					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
-					"\\DatCnvIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
-			
-			//filter /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
-			fout.println("filter /i\"" + outputDirName + "\\data\\batch\\%1C.cnv\" /p\""
-					+ outputDirName + "\\FilterIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aF");
-			
-			//alignctd /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
-			fout.println("alignctd /i\"" + outputDirName + "\\data\\batch\\%1CF.cnv\" /p\""
-					+ outputDirName + "\\AlignIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aA");
-			
-			//loopedit /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
-			fout.println("loopedit /i\"" + outputDirName + "\\data\\batch\\%1CFA.cnv\" /p\""
-					+ outputDirName + "\\LoopEditIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aL");
-			
-			//derive /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv" /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
-			fout.println("derive /i\"" + outputDirName + "\\data\\batch\\%1CFAL.cnv\" /c\""
-					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
-					"\\DeriveIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+			// Write the stuff
 
-			//binavg /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
-			fout.println("binavg /i\"" + outputDirName + "\\data\\batch\\%1CFALD.cnv\" /p\""
-					+ outputDirName + "\\BinAvgIMOS.psa\" /o\"" + outputDirName + "\\data\\final\" /aB");
-			
-		}catch (FileNotFoundException e){
+			// /datcnv
+			// i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex"
+			// /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon"
+			// /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa"
+			// /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch"
+			// /aC
+			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
+			fout.println("datcnv /i\"" + outputDirName
+					+ "\\data\\raw\\%1.hex\" /c\"" + outputDirName + "\\"
+					+ name + "\" /p\"" + outputDirName + "\\DatCnvIMOS.psa"
+					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+
+			// filter
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
+			fout.println("filter /i\"" + outputDirName
+					+ "\\data\\batch\\%1C.cnv\" /p\"" + outputDirName
+					+ "\\FilterIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aF");
+
+			// alignctd
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
+			fout.println("alignctd /i\"" + outputDirName
+					+ "\\data\\batch\\%1CF.cnv\" /p\"" + outputDirName
+					+ "\\AlignIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aA");
+
+			// loopedit
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
+			fout.println("loopedit /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + outputDirName
+					+ "\\LoopEditIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aL");
+
+			// derive
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv"
+			// /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
+			fout.println("derive /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + outputDirName + "\\"
+					+ name + "\" /p\"" + outputDirName + "\\DeriveIMOS.psa"
+					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+
+			// binavg
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
+			fout.println("binavg /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + outputDirName
+					+ "\\BinAvgIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\final\" /aB");
+
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			fout.close();
 		}
-		
+
 	}
 
 	private static void createSeabirdBat(String outputDirName) {
@@ -339,10 +403,11 @@ public class XmlconReader {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + outputDirName + "\\process.bat *\nEXIT [/B] [exitCode] ");			
+			fout.println("sbebatch " + outputDirName
+					+ "\\process.bat *\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			fout.close();
 		}
 	}
