@@ -22,10 +22,11 @@ public class BinAvgWriter implements IPsaWriter{
 	
 
 	/**
-	 * takes @param orderedSensors and sets sensors to 
-	 * @param orderedSensors and prints '4 Strategy', & as well 
+	 * Takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '4 Strategy', as well 
 	 * as the content of the @param orderedSensors to console.
 	 */
+	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -36,9 +37,10 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * takes @param psaTemplateFolderPath and uses it to create
-	 * the structure of the psa file
+	 * Takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the .psa file
 	 */
+	
 	@Override
 	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException {
 		// TODO Auto-generated method stub
@@ -47,18 +49,19 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * writes the upper section of the psa file which is above the calcArray. 
+	 * Writes the upper section of the .psa file which is above the calcArray. 
 	 * 
 	 * This includes:
 	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
-	 * 		by "batch". similar thing is done for outputDir's value attribute,
+	 * 		by "batch". A similar thing is done for outputDir's value attribute,
 	 * 		but workingDir is followed by final.
 	 * 
-	 * the parameter @param instrumentPath is not used in this writer class.
+	 * The parameter @param instrumentPath is not used in this writer class.
 	 * 
-	 * at the end of this method it removes pressure from the sensors as it's 
-	 * no longer needed.
+	 * At the end of this method, pressure is removed from the sensors as it is 
+	 * no longer required.
 	 */
+	
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
@@ -71,8 +74,9 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * doesn't need to do anything
+	 * Doesn't need to do anything.
 	 */
+	
 	@Override
 	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
@@ -80,8 +84,9 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * doesn't need to do anything
+	 * Doesn't need to do anything.
 	 */
+	
 	@Override
 	public void writeLowerSection() {
 		// TODO Auto-generated method stub
