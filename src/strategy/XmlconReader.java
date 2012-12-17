@@ -231,6 +231,14 @@ public class XmlconReader {
 	}
 
 	public static void main(String args[]) {
+		String conLocation = args[0];
+		String hexLocation = args[1];
+		String outputLocation = args[2];
+		
+		System.out.println(conLocation);
+		System.out.println(hexLocation);
+		System.out.println(outputLocation);
+		
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 		
 		//create 6 XMLcon Readers with each with a different psa Writer
