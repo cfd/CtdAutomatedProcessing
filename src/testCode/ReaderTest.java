@@ -11,6 +11,10 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.junit.Test;
 
+/**
+ * test code for testing JDOM api. 
+ */
+
 public class ReaderTest {
 
 	@Test

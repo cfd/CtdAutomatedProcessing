@@ -299,12 +299,6 @@ public class XmlconReader {
 				 * '[.][^.]+$' is what's required for the replaceFirst method to recongize '.' in 
 				 * a String
 				 * 
-				 * after that directory is made, along with sub directories such as
-				 * 		- '/data'			(also know as workingDirectory)
-				 * 		- '/data/raw'
-				 * 		- '/data/batch'
-				 * 		- '/data/final'
-				 * 
 				 * xmlLocation is defined by outputDirName + the xmlcons file name
 				 */
 
@@ -402,6 +396,10 @@ public class XmlconReader {
 		findHex(new File(DIRECTORY + "/hex"));
 	}
 	
+	/**
+	 * lacates
+	 * @param hexDir
+	 */
 	private static void findHex(File hexDir){
 		for (File hex : hexDir.listFiles()){
 			if(hex.isDirectory()){
@@ -413,6 +411,15 @@ public class XmlconReader {
 		}
 	}
 
+	/**
+	 * with createDirectory it creates a directory with @param outputDirName
+	 * 
+	 * after that directory is made, along with sub directories such as
+	 * 		- '/data'			(also know as workingDirectory)
+	 * 		- '/data/raw'
+	 * 		- '/data/batch'
+	 * 		- '/data/final'
+	 */
 	private static void createDirectory(String outputDirName) {
 		new File(outputDirName).mkdir();
 
@@ -533,6 +540,9 @@ public class XmlconReader {
 
 	}
 
+	/**
+	 * creates run.bat at @param outputDirName
+	 */
 	private static void createRunBat(String outputDirName) {
 		File file = new File(outputDirName + "\\run.bat");
 		// Creates a new Print Writer

@@ -1,7 +1,13 @@
 package model;
 
+/**
+ * SensorInfo is the class in which sensor info is used to carry across information for the
+ * indivisual sensors. They're primary used in the psa writers for writing the CalcArray 
+ * section.
+ */
+
 public class SensorInfo {
-	//asdfa
+
 	private int unitID;
 	private int sensorID;
 	private int calcID;
