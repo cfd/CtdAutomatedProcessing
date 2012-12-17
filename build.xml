@@ -50,20 +50,36 @@
 
 
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
-		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\CreatePSAFiles.jar">
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\processFiles.jar">
 
-			
+
 			<fileset dir="bin" includes="**/*.class" />
-			
+
 			<archives>
 				<zips>
 					<fileset dir="lib" includes="*.jar" />
 				</zips>
 			</archives>
 			<manifest>
-				<attribute name="Main-Class" value="strategy.Writer" />
+				<attribute name="Main-Class" value="strategy.XmlconReader" />
 			</manifest>
 		</jar>
+
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\processConPSAFiles.jar">
+
+
+			<fileset dir="bin" includes="**/*.class" />
+
+			<archives>
+				<zips>
+					<fileset dir="lib" includes="*.jar" />
+				</zips>
+			</archives>
+			<manifest>
+				<attribute name="Main-Class" value="strategy.DatCnvReader" />
+			</manifest>
+		</jar>
+
 
 	</target>
 

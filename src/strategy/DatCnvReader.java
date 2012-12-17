@@ -12,6 +12,8 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import util.RunSeabird;
+
 public class DatCnvReader {
 	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 	private static ArrayList<SensorInfo> sensors = new ArrayList<>();
@@ -20,6 +22,7 @@ public class DatCnvReader {
 	/**
 	 * @param args
 	 */
+	
 	public static void main(String[] args) {
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 
@@ -54,14 +57,9 @@ public class DatCnvReader {
 							writers.add(deriveWriter);
 							writers.add(loopEditWriter);
 
-							// Makes the data stuff
-							new File(xml + "/data").mkdir();
-							new File(xml + "/data/raw").mkdir();
-							new File(xml + "/data/batch").mkdir();
-							new File(xml + "/data/final").mkdir();
-
 							populatSensorArray(calcArrayItems);
 
+							System.out.println("I am doing things");
 							String outputDirName = xml.toString();
 
 							// Where the batch, final and raw files are located
@@ -93,7 +91,6 @@ public class DatCnvReader {
 							sensors.clear();
 							writers.clear();
 
-							// writers.clear();
 						} catch (IOException | JDOMException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -103,13 +100,18 @@ public class DatCnvReader {
 				}
 			}
 		}
+		
+		// Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
+		runSeabird.run();
 	}
 
 	/**
-	 * Populates the sensors array list based on the calc array items
+	 * Populates the sensors array list based on the calcArray items.
 	 * 
 	 * @param calcArrayItems
 	 */
+	
 	private static void populatSensorArray(List<Element> calcArrayItems) {
 		// Gets all the items for the sensors array
 		for (Element calcArray : calcArrayItems) {
@@ -134,12 +136,13 @@ public class DatCnvReader {
 	}
 
 	/**
-	 * Gets the list of elements from data cnv
+	 * Gets the list of elements from DataCnv
 	 * @param file
 	 * @return
 	 * @throws IOException
 	 * @throws JDOMException
 	 */
+	
 	public static List<Element> readDataCnv(File file) throws IOException,
 			JDOMException {
 		SAXBuilder builder = new SAXBuilder();

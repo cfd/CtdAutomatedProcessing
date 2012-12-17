@@ -173,7 +173,6 @@ public class HexReader {
 			inStream.close();
 			outStream.close();
 			
-			file.delete();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -182,7 +181,7 @@ public class HexReader {
 	}
 
 	/**
-	 * Formats the date to the same way as it is in the datebase
+	 * Formats the date to the same way as it is in the database
 	 * 
 	 * @param badDate
 	 * @return
