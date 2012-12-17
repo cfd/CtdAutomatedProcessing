@@ -181,7 +181,7 @@ public class HexReader {
 	}
 
 	/**
-	 * Formats the date to the same way as it is in the datebase
+	 * Formats the date to the same way as it is in the database
 	 * 
 	 * @param badDate
 	 * @return
