@@ -38,6 +38,11 @@ public class XmlconReader {
 	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 
 	private IPsaWriter writerType;
+	
+//	static {
+//		sensorsMap = new LinkedHashMap<>();
+//		orderedSensors = new ArrayList<>();
+//	}
 
 	public XmlconReader(IPsaWriter psaWriter) {
 		this.writerType = psaWriter;
@@ -53,16 +58,31 @@ public class XmlconReader {
 		return writerType;
 	}
 
+	/**
+	 * takes @param file which should be a xmlcon file and reads it,
+	 * gets the sensorArray Element, to pass the children to 
+	 * sensorsInXmlcon which is a list of the sensors in the xmlcon.
+	 * 
+	 * After this is done it will loop through the children and will try
+	 * to find the 'UserPolynomialSensor' and collects it's name value so 
+	 * it can be used in parsing the psa xml files.
+	 * 
+	 *  after this is all done it will return the @return sensorsInXmlcon
+	 * 
+	 * @return
+	 * @throws IOException
+	 * @throws JDOMException
+	 */
 	public List<Element> readXmlcon(File file) throws IOException,
 			JDOMException {
 		SAXBuilder builder = new SAXBuilder();
-
 		Document readDoc = builder.build(file);
-
 		Element rootEle = readDoc.getRootElement();
 		Element sensorArrayEle = rootEle.getChild("Instrument").getChild(
 				"SensorArray");
 		List<Element> sensorsInXmlcon = sensorArrayEle.getChildren();
+		
+		
 		for (Element e : sensorsInXmlcon) {
 			Element child = e.getChildren().get(0);
 			if (child.getName().equals("UserPolynomialSensor")) {
@@ -71,7 +91,11 @@ public class XmlconReader {
 			}
 			System.out.println(e.getAttributeValue("SensorID"));
 		}
+		
+		
 		System.out.println();
+		
+		
 		return sensorsInXmlcon;
 	}
 
@@ -129,6 +153,13 @@ public class XmlconReader {
 
 	}
 
+	/**
+	 * is intended to return a result set containing all the information on the
+	 * sensor from the query 'SELECT * FROM sensor_info'. in the event of an exception
+	 * rising it will return null.
+	 * 
+	 * @return rs
+	 */
 	public ResultSet getAllAttributes() {
 		try {
 			String sql = "SELECT * FROM sensor_info";
@@ -140,6 +171,15 @@ public class XmlconReader {
 		}
 	}
 
+	/**
+	 * adds Pressure, Temperature, Conductivity, Fluorescence,
+	 * OBS, & Upoly to the orderedSensors ArrayList.
+	 * 
+	 * At the moment the current method is not the best method
+	 * and could be potentially optimized
+	 * 
+	 * @param sensorsInXmlcon
+	 */
 	public void sortSensors(List<Element> sensorsInXmlcon) {
 		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("Pressure", sensor);
@@ -174,8 +214,14 @@ public class XmlconReader {
 
 	}
 
+	/**
+	 * inserts sensor into orderedSensors if it's fullname starts
+	 * with sensorName.
+	 * 
+	 * @param sensorName
+	 * @param sensor
+	 */
 	private void insertSensor(String sensorName, Element sensor) {
-
 		SensorInfo info = sensorsMap.get(Integer.parseInt(sensor
 				.getAttributeValue("SensorID")));
 		if (info != null) {
@@ -197,16 +243,35 @@ public class XmlconReader {
 		XmlconReader deriveWriter = new XmlconReader(new DeriveWriter());
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
+		//fills the sensorsMap of all the XmlconReader
 		
 		datCnvWriter.populateSensorsMap();
+		
+		//dir is the folder //pearl/temp/adc-jcu2012/xmlcon
 
 		File dir = new File(DIRECTORY + "/xmlcons");
 
+		//loops for every file in dir
 		for (File xml : dir.listFiles()) {
+			
+			/*
+			 * if the file ends with '.xmlcon' then proceed to parse the 6
+			 * psa files from it, otherwise continue to next file.
+			 */
+			
 			if (xml.getName().endsWith(".xmlcon")) {
 				try {
+					
+					/*
+					 * sets sensorsInXmlcon to the return of readXmlcon(xml)
+					 * and sets userpoly
+					 */
+					
 					List<Element> sensorsInXmlcon = datCnvWriter
 							.readXmlcon(xml);
+
+					//sort sensors
+					
 					datCnvWriter.sortSensors(sensorsInXmlcon);
 					// String FileName =
 					// getFileName("xmlcons/NRS2_6390_01102011_O2andNTU.xmlcon");
@@ -215,6 +280,12 @@ public class XmlconReader {
 					e.printStackTrace();
 				}
 
+				
+				/*
+				 * add the different psa-writters to the writters ArrayList defined at 
+				 * the start of the main.
+				 */
+				
 				writers.add(datCnvWriter);
 				writers.add(alignWriter);
 				writers.add(filterWriter);
@@ -222,7 +293,20 @@ public class XmlconReader {
 				writers.add(deriveWriter);
 				writers.add(loopEditWriter);
 
-				// Where the psa writes tod
+				/*
+				 * outputDirName as it suggests is the directory in which the everything will go.
+				 * 
+				 * '[.][^.]+$' is what's required for the replaceFirst method to recongize '.' in 
+				 * a String
+				 * 
+				 * after that directory is made, along with sub directories such as
+				 * 		- '/data'			(also know as workingDirectory)
+				 * 		- '/data/raw'
+				 * 		- '/data/batch'
+				 * 		- '/data/final'
+				 * 
+				 * xmlLocation is defined by outputDirName + the xmlcons file name
+				 */
 				
 				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().replaceFirst("[.][^.]+$", "");
 				
@@ -233,13 +317,36 @@ public class XmlconReader {
 				new File(outputDirName + "/data/raw").mkdir();
 				new File(outputDirName + "/data/batch").mkdir();
 				new File(outputDirName + "/data/final").mkdir();
-
+				
 				// Where the batch, final and raw files are located
 				String workingDirectory = outputDirName + "\\data\\";
 
-				// Where the xml con is
+				// Where the xmlcon is
 				String xmlLocation = outputDirName + "\\" + xml.getName();
 
+				/*
+				 * loop through the writers with the strategy pattern.
+				 * 
+				 * for each loop the following methods will be called
+				 * 		1) setup()
+				 * 			prepares writer for parsing
+				 * 		2) readTemplate
+				 * 			imports the appropiate templates
+				 * 		3) writeUppperSection
+				 * 			writes the section about the CalcArray. here things like
+				 * 			output/input directory are stored, and various other attributes
+				 * 		4) writeCalcArray
+				 * 			writes the CalcArray, here the instrument sensor attributes
+				 * 			and values are stored and defined for the psa file
+				 * 		5) writeLowerSection
+				 * 			writes the section below the CalcArray
+				 * 		6) writeToNewPsaFile
+				 * 			writes psafile to disk/server
+				 * 
+				 * steps 3 to 5 can be radically different for some of the writers and some
+				 * don't even need to use those methods.
+				 */
+				
 				for (XmlconReader writer : writers) {
 					try {
 						writer.getWriterType().setup(orderedSensors);
@@ -290,7 +397,7 @@ public class XmlconReader {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
+			} //end of if
 		}
 		
 		//put hex loop
