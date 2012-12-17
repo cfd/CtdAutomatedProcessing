@@ -241,7 +241,7 @@ public class XmlconReader {
 
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
-				createProcessBat(outputDirName, xml.getName());
+				createProcessSbbat(outputDirName, xml.getName());
 
 				// Moves the file
 				moveCon(xml, outputDirName);
@@ -254,7 +254,7 @@ public class XmlconReader {
 
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
-				createProcessBat(outputDirName, xml.getName());
+				createProcessSbbat(outputDirName, xml.getName());
 
 				// Moves the file
 				moveCon(xml, outputDirName);
@@ -322,8 +322,8 @@ public class XmlconReader {
 	 * @param outputDirName
 	 * @param name
 	 */
-	private static void createProcessBat(String outputDirName, String name) {
-		File file = new File(outputDirName + "\\process.bat");
+	private static void createProcessSbbat(String outputDirName, String name) {
+		File file = new File(outputDirName + "\\process.sbbat");
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
@@ -402,7 +402,7 @@ public class XmlconReader {
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
 			fout.println("sbebatch " + outputDirName
-					+ "\\process.bat *\nEXIT [/B] [exitCode] ");
+					+ "\\process.sbbat *\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
