@@ -22,7 +22,7 @@ public class RunSeabird {
 
 	public void writeBatch() {
 		//Do you like commenting?
-		File file = new File(directory + "\\xmlcons\\" + output);
+		File file = new File(directory + "\\" + output);
 		
 		//Checks if the batch file already exists and deletes it if it does
 		if (file.exists()) {

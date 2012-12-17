@@ -25,7 +25,6 @@ public class HexReader {
 	private static Statement statement;
 	private static final DateFormat DATEFORMAT = new SimpleDateFormat(
 			"dd/MM/yyyy");
-	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 
 	static {
 		// initalize LinkedHashMap
@@ -48,9 +47,11 @@ public class HexReader {
 	private Date calibrationDate;
 
 	private File file;
+	private String outputFileLocation;
 
-	public HexReader(File file) {
+	public HexReader(File file, String outputFileLocation) {
 		this.file = file;
+		this.outputFileLocation = outputFileLocation;
 	}
 
 	public void run() {
@@ -109,7 +110,7 @@ public class HexReader {
 		while (results.next()) {
 			String conFile = results.getString("Associated_con_file").replaceFirst(
 					"[.][^.]+$", "");
-			String hexFileLocation = DIRECTORY	+ "\\config\\"	+ conFile + "\\data\\raw\\";
+			String hexFileLocation = outputFileLocation + "\\"	+ conFile + "\\data\\raw\\";
 
 			Date startDate = new Date();
 			Date endDate = new Date();

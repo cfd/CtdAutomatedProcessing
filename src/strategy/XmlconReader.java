@@ -231,6 +231,33 @@ public class XmlconReader {
 	}
 
 	public static void main(String args[]) {
+		String inputLocation;
+		String inputHexLocation;
+		String outputFileLocation;
+		
+		try{
+			 inputLocation = args[0];
+		}catch (Exception e){
+			System.out.println("No con file location going to default");
+			inputLocation = "\\\\pearl\\temp\\adc-jcu2012\\xmlcons";
+		}
+		try{
+			inputHexLocation = args[1];
+		}catch (Exception e){
+			System.out.println("No hex file location going to default");
+			inputHexLocation = "\\\\pearl\\temp\\adc-jcu2012\\hex";
+		}
+		try{
+			 outputFileLocation = args[2];
+		}catch (Exception e){
+			System.out.println("No output file location going to default");
+			outputFileLocation = "\\\\pearl\\temp\\adc-jcu2012\\config";
+		}
+		
+		System.out.println(inputLocation);
+		System.out.println(inputHexLocation);
+		System.out.println(outputFileLocation);
+		
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 		
 		//create 6 XMLcon Readers with each with a different psa Writer
@@ -243,13 +270,13 @@ public class XmlconReader {
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 		
 		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
+		RunSeabird runSeabird = new RunSeabird(inputLocation, ".xmlcon", "xmlProcessSeabirds.bat");
 
 		//fills the sensorsMap of all the XmlconReader
 		datCnvWriter.populateSensorsMap();
 		//dir is the folder //pearl/temp/adc-jcu2012/xmlcon
 
-		File dir = new File(DIRECTORY + "/xmlcons");
+		File dir = new File(inputLocation);
 
 		//loops for every file in dir
 		for (File xml : dir.listFiles()) {
@@ -260,7 +287,7 @@ public class XmlconReader {
 			 */
 			
 			String xmlName = xml.getName().replaceFirst("[.][^.]+$", "");
-			if (xml.getName().endsWith(".xmlcon")) {
+			if (xml.getName().toLowerCase().endsWith(".xmlcon")) {
 				try {
 					
 					/*
@@ -303,7 +330,7 @@ public class XmlconReader {
 				 * xmlLocation is defined by outputDirName + the xmlcons file name
 				 */
 
-				String outputDirName = DIRECTORY + "\\config\\"
+				String outputDirName = outputFileLocation + "\\"
 						+ xml.getName().replaceFirst("[.][^.]+$", "");
 
 				createDirectory(outputDirName);
@@ -376,8 +403,8 @@ public class XmlconReader {
 				//Need there to be a file IDIOT
 				runSeabird.setBatch(outputDirName, xmlName);
 
-			} else if (xml.getName().endsWith(".con")) {
-				String outputDirName = DIRECTORY + "\\config\\"
+			} else if (xml.getName().toLowerCase().endsWith(".con")) {
+				String outputDirName = outputFileLocation + "\\"
 						+ xml.getName().replaceFirst("[.][^.]+$", "");
 
 				createDirectory(outputDirName);
@@ -397,19 +424,19 @@ public class XmlconReader {
 //		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
 //		runSeabird.run();
 		
-		findHex(new File(DIRECTORY + "/hex"));
+		findHex(new File(inputHexLocation), outputFileLocation);
 	}
 	
 	/**
 	 * lacates
 	 * @param hexDir
 	 */
-	private static void findHex(File hexDir){
+	private static void findHex(File hexDir, String outputFileLocation){
 		for (File hex : hexDir.listFiles()){
 			if(hex.isDirectory()){
-				findHex(hex);
+				findHex(hex, outputFileLocation);
 			}else if(hex.getName().endsWith(".hex")) {
-				HexReader reader = new HexReader(hex);
+				HexReader reader = new HexReader(hex, outputFileLocation);
 				reader.run();
 			}
 		}
