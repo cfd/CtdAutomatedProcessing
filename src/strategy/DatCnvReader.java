@@ -24,6 +24,25 @@ public class DatCnvReader {
 	 */
 	
 	public static void main(String[] args) {
+		String inputLocation;
+		String outputFileLocation;
+		
+		try{
+			 inputLocation = args[0];
+		}catch (Exception e){
+			System.out.println("No con file location going to default");
+			inputLocation = "\\\\pearl\\temp\\adc-jcu2012\\xmlcons";
+		}
+		try{
+			 outputFileLocation = args[2];
+		}catch (Exception e){
+			System.out.println("No output file location going to default");
+			outputFileLocation = "\\\\pearl\\temp\\adc-jcu2012\\config";
+		}
+		
+		System.out.println(inputLocation);
+		System.out.println(outputFileLocation);
+		
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 
 		XmlconReader alignWriter = new XmlconReader(new AlignWriter());
@@ -32,10 +51,10 @@ public class DatCnvReader {
 		XmlconReader deriveWriter = new XmlconReader(new DeriveWriter());
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
-		File dir = new File(DIRECTORY + "/config");
+		File dir = new File(outputFileLocation);
 		
 		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
+		RunSeabird runSeabird = new RunSeabird(inputLocation, ".con", "conProcessSeabirds.bat");
 
 		// Loops through all the folders in config
 		for (File xml : dir.listFiles()) {
@@ -50,7 +69,7 @@ public class DatCnvReader {
 				for (File con : xml.listFiles()) {
 
 					// If there is a .con and DatCnvIMOS.psa do the rest
-					if (con.getName().endsWith(".con")) {
+					if (con.getName().toLowerCase().endsWith(".con")) {
 						try {
 							List<Element> calcArrayItems = readDataCnv(datCnv);
 
