@@ -29,9 +29,10 @@ public class AlignWriter implements IPsaWriter {
 	
 	/**
 	 * takes @param orderedSensors and sets sensors to 
-	 * @param orderedSensors and prints '3 Strategy', & as well 
+	 * @param orderedSensors and prints '3 Strategy', as well 
 	 * as the content of the @param orderedSensors to console.
 	 */
+	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -42,8 +43,9 @@ public class AlignWriter implements IPsaWriter {
 
 	/**
 	 * takes @param psaTemplateFolderPath and uses it to create
-	 * the structure of the psa file
+	 * the structure of the .psa file.
 	 */
+	
 	@Override
 	public void readTemplate(String psaTemplateFolderPath) throws JDOMException,
 			IOException {
@@ -53,35 +55,37 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	/**
-	 * writes the upper section of the psa file which is above the calcArray. 
+	 * Writes the upper section of the .psa file which is above the calcArray. 
 	 * 
 	 * This includes:
 	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
-	 * 		by "batch". similar thing is done for outputDir's value attribute.
+	 * 		by "batch". A similar thing is done for outputDir's value attribute.
 	 * 
-	 * the parameter @param instrumentPath is not used in this writer class.
+	 * The parameter @param instrumentPath is not used in this writer class.
 	 * 
-	 * at the end of this method it removes pressure from the sensors as it's 
-	 * no longer needed.
+	 * At the end of this method, pressure is removed from the sensors as it is 
+	 * no longer required.
 	 */
+	
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		// TODO Auto-generated method stub
-		// //UPPER SECTION NOT COMPLETED YET!!!/////
+		
 		Element root = doc.getRootElement();
 		Element inputDir = root.getChild("InputDir");
 		inputDir.setAttribute("value", workingDirectory + "batch");
 		Element outputDir = root.getChild("OutputDir");
 		outputDir.setAttribute("value", workingDirectory + "batch");
 		
-		//To remove Pressure from align
+		//Removes pressure from Align
 		sensors.remove(0);
 	}
 
 	/**
-	 * this method populates the calcarray of the psa file, it takes @param userpoly
-	 * incase the calcarray includes a Upoly sensor.
+	 * This method populates the calcArray of the .psa file, it takes @param userpoly
+	 * in case the calcArray includes a Upoly sensor.
 	 */
+	
 	@Override
 	public void writeCalcArray(String userPoly) {
 		// TODO Auto-generated method stub
@@ -139,16 +143,19 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	/**
-	 * this fills out the lower section of the psa file which is below the calcArray.
+	 * This fills out the lower section of the .psa file which is below the calcArray.
 	 * 
 	 * In the filter writer it has a section called the FilterTypeArray, this just 
 	 * includes an index for each sensor in the array and a value for value. 
 	 * 
-	 * NEED MORE DOCUMENTING
+	 * Each variable name is listed as well as the valArrayItem number 
+	 * and value associated with each variable.
+	 *
 	 */
+	
 	@Override
 	public void writeLowerSection() {
-		// TODO MORE DOCUMENTATION
+	
 		int count1 = 0;
 		Element rootElement = doc.getRootElement();
 		Element valArray = rootElement.getChild("ValArray");
@@ -192,9 +199,10 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	/**
-	 * outputs a psa file to the directory of @param newDirName, while making it's
+	 * Outputs a .psa file to the directory of @param newDirName, while making it's
 	 * format 'pretty'.
 	 */
+	
 	@Override
 	public void writeToNewPsaFile(String newDirName)
 			throws FileNotFoundException, IOException {

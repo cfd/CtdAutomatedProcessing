@@ -20,6 +20,7 @@ public class DatCnvReader {
 	/**
 	 * @param args
 	 */
+	
 	public static void main(String[] args) {
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 
@@ -106,10 +107,11 @@ public class DatCnvReader {
 	}
 
 	/**
-	 * Populates the sensors array list based on the calc array items
+	 * Populates the sensors array list based on the calcArray items.
 	 * 
 	 * @param calcArrayItems
 	 */
+	
 	private static void populatSensorArray(List<Element> calcArrayItems) {
 		// Gets all the items for the sensors array
 		for (Element calcArray : calcArrayItems) {
@@ -134,12 +136,13 @@ public class DatCnvReader {
 	}
 
 	/**
-	 * Gets the list of elements from data cnv
+	 * Gets the list of elements from DataCnv
 	 * @param file
 	 * @return
 	 * @throws IOException
 	 * @throws JDOMException
 	 */
+	
 	public static List<Element> readDataCnv(File file) throws IOException,
 			JDOMException {
 		SAXBuilder builder = new SAXBuilder();

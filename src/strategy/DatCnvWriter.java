@@ -24,10 +24,11 @@ public class DatCnvWriter implements IPsaWriter {
 	private boolean isOxygen = true;
 
 	/**
-	 * takes @param orderedSensors and sets sensors to 
-	 * @param orderedSensors and prints '1 Strategy', & as well 
+	 * Takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '1 Strategy', as well 
 	 * as the content of the @param orderedSensors to console.
 	 */
+	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
@@ -37,29 +38,31 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 	
 	/**
-	 * takes @param psaTemplateFolderPath and uses it to create
-	 * the structure of the psa file.
+	 * Takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the .psa file.
 	 */
+	
 	@Override
 	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
 		doc = builder.build(new File(psaTemplateFolderPath + "\\DataCnvTemplate.xml"));
 
 		if (DEBUG) {
-			System.out.println("I Read The File");
+			System.out.println("File Read!");
 		}
 		// TODO Auto-generated method stub
 
 	}
 
 	/**
-	 * writes the upper section of the psa file which is above the calcArray. 
+	 * Writes the upper section of the .psa file which is above the calcArray. 
 	 * 
 	 * This includes:
 	 * 	- 	@param workingDirectory in inputDir's value attribute, followed 
 	 * 		by "raw". similar thing is done for outputDir's value attribute,
 	 * 		but it is followed by "batch".
 	 */
+	
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
 		if (DEBUG) {
@@ -152,8 +155,9 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	/**
-	 * called but does nothing
+	 * Called but does nothing.
 	 */
+	
 	@Override
 	public void writeLowerSection() {
 		// TODO Auto-generated method stub
@@ -167,7 +171,7 @@ public class DatCnvWriter implements IPsaWriter {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(newDirName
 				+ "/DatCnvIMOS.psa")));
-		System.out.println("Wrote to file");
+		System.out.println("DataCnvIMOS.psa File Written!");
 
 	}
 
