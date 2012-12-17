@@ -271,7 +271,7 @@ public class XmlconReader {
 		//Adding comments is fun
 		runSeabird.writeBatch();
 		
-		//findHex(new File(DIRECTORY + "/hex"));
+		findHex(new File(DIRECTORY + "/hex"));
 	}
 	
 	private static void findHex(File hexDir){
