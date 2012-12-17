@@ -30,10 +30,9 @@ public class RunSeabird {
 		// Creates a new Print Writer
 		PrintWriter fout = null;
 		try {
-			System.out.println("I write things :P");
-			//System.out.println(file.getAbsolutPath());
 			fout = new PrintWriter(file.getAbsolutePath());
 			fout.print(commands + "\nEXIT [/B] [exitCode] ");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
@@ -45,6 +44,7 @@ public class RunSeabird {
 
 		// Comment
 		System.out.println(folder + "\\" + con +  type);
+		//Checks if the con file exists and that it has the psa files
 		if (new File(folder + "\\" + con + type).isFile()
 				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
 			commands += "start /wait " + folder
@@ -52,13 +52,4 @@ public class RunSeabird {
 		}
 		System.out.println("Command: " + commands);
 	}
-
-	// private void setFolders() {
-	// // ArrayList<String> folders = new ArrayList<>();
-	// // DO foldery things
-	// File dir = new File(directory + "\\config\\");
-	// for (File file : dir.listFiles()) {
-	// folders.add(file.getName());
-	// }
-	// }
 }
