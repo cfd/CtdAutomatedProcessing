@@ -33,6 +33,9 @@ public class DatCnvReader {
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
 		File dir = new File(DIRECTORY + "/config");
+		
+		// Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
 
 		// Loops through all the folders in config
 		for (File xml : dir.listFiles()) {
@@ -86,24 +89,24 @@ public class DatCnvReader {
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+								}finally{
+									runSeabird.setBatch(xml.getName());
 								}
 							}
 							sensors.clear();
-							writers.clear();
+							writers.clear();				
+							
 
 						} catch (IOException | JDOMException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
 					}
 				}
 			}
 		}
 		
-		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
-		runSeabird.run();
+		runSeabird.writeBatch();
 	}
 
 	/**
