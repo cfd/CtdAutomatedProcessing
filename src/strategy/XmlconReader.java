@@ -259,6 +259,7 @@ public class XmlconReader {
 			 * psa files from it, otherwise continue to next file.
 			 */
 			
+			String xmlName = xml.getName().replaceFirst("[.][^.]+$", "");
 			if (xml.getName().endsWith(".xmlcon")) {
 				try {
 					
@@ -367,11 +368,13 @@ public class XmlconReader {
 
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
-				createProcessSbbat(outputDirName, xml.getName());
-				runSeabird.setBatch(xml.getName());
+				createProcessSbbat(outputDirName, xml.getName());				
 				
 				// Moves the file
 				moveCon(xml, outputDirName);
+				
+				//Need there to be a file IDIOT
+				runSeabird.setBatch(outputDirName, xmlName);
 
 			} else if (xml.getName().endsWith(".con")) {
 				String outputDirName = DIRECTORY + "\\config\\"
@@ -388,6 +391,7 @@ public class XmlconReader {
 			} //end of if
 		}
 		
+		//Adding comments is fun
 		runSeabird.writeBatch();
 //		// Comment in when you want sea bird to run
 //		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");

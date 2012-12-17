@@ -39,6 +39,7 @@ public class DatCnvReader {
 
 		// Loops through all the folders in config
 		for (File xml : dir.listFiles()) {
+			String xmlName = xml.getName().replaceFirst("[.][^.]+$", "");
 
 			File datCnv = new File(xml + "\\DatCnvIMOS.psa");
 
@@ -92,8 +93,7 @@ public class DatCnvReader {
 							}
 							sensors.clear();
 							
-							runSeabird.setBatch(xml.getName());
-							
+							runSeabird.setBatch(outputDirName, xmlName);				
 							
 
 						} catch (IOException | JDOMException e) {
@@ -105,6 +105,7 @@ public class DatCnvReader {
 			}
 		}
 		
+		//I like commenting
 		runSeabird.writeBatch();
 	}
 

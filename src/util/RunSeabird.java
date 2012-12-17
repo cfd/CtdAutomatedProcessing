@@ -21,16 +21,20 @@ public class RunSeabird {
 	 */
 
 	public void writeBatch() {
+		//Do you like commenting?
 		File file = new File(directory + "\\xmlcons\\" + output);
+		
+		//Checks if the batch file already exists and deletes it if it does
 		if (file.exists()) {
 			file.delete();
+			System.out.println("Old batch file deleted");
 		}
 		// Creates a new Print Writer
 		PrintWriter fout = null;
 		try {
-
 			fout = new PrintWriter(file.getAbsolutePath());
 			fout.print(commands + "\nEXIT [/B] [exitCode] ");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
@@ -38,23 +42,16 @@ public class RunSeabird {
 		}
 	}
 
-	public void setBatch(String folder) {
-		String file = directory + "\\config\\" + folder;
+	public void setBatch(String folder, String con) {
+
 		// Comment
-		if (new File(file + "\\" + folder + type).isFile()
-				&& new File(file + "\\" + "BinAvgIMOS.psa").isFile()) {
-			commands += "start /wait " + directory + "\\config\\" + folder
+		System.out.println(folder + "\\" + con +  type);
+		//Checks if the con file exists and that it has the psa files
+		if (new File(folder + "\\" + con + type).isFile()
+				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
+			commands += "start /wait " + folder
 					+ "\\run.bat *\n";
 		}
-		System.out.println(commands);
+		System.out.println("Command: " + commands);
 	}
-
-	// private void setFolders() {
-	// // ArrayList<String> folders = new ArrayList<>();
-	// // DO foldery things
-	// File dir = new File(directory + "\\config\\");
-	// for (File file : dir.listFiles()) {
-	// folders.add(file.getName());
-	// }
-	// }
 }
