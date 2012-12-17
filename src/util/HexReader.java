@@ -173,7 +173,6 @@ public class HexReader {
 			inStream.close();
 			outStream.close();
 			
-			file.delete();
 
 		} catch (IOException e) {
 			e.printStackTrace();
