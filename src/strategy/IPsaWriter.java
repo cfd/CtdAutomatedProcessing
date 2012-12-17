@@ -8,6 +8,12 @@ import org.jdom2.JDOMException;
 
 import model.SensorInfo;
 
+
+/**
+ * This file implements the strategy pattern within the 
+ * program that is used to create the six different .psa files.
+ */
+
 public interface IPsaWriter {
 	
 	public abstract void setup(ArrayList<SensorInfo> orderedSensors);
