@@ -44,7 +44,7 @@ public class DatCnvReader {
 
 			// Checks if datCnvImos is in the directory if not skips it
 			// completely
-			if (datCnv.exists()) {
+			if (datCnv.exists() && !(new File(xml + "\\BinAvgIMOS.psa").isFile())) {
 
 				// Gets all the files and looks for .con
 				for (File con : xml.listFiles()) {
@@ -89,12 +89,12 @@ public class DatCnvReader {
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}finally{
-									runSeabird.setBatch(xml.getName());
 								}
 							}
 							sensors.clear();
-							writers.clear();				
+							
+							runSeabird.setBatch(xml.getName());
+							
 							
 
 						} catch (IOException | JDOMException e) {

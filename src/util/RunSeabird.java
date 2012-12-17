@@ -8,7 +8,7 @@ public class RunSeabird {
 	private String directory;
 	private String type;
 	private String output;
-	private String commands;
+	private String commands = "";
 
 	public RunSeabird(String directory, String type, String output) {
 		this.directory = directory;
