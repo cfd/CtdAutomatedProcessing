@@ -20,6 +20,10 @@ public class AlignWriter implements IPsaWriter {
 
 	XMLOutputter xmlOutput;
 	
+	/**
+	 * Makes the format 'pretty'.
+	 */
+	
 	public AlignWriter() {
 		xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 	}
@@ -199,8 +203,7 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	/**
-	 * Outputs a .psa file to the directory of @param newDirName, while making it's
-	 * format 'pretty'.
+	 * Outputs a .psa file to the directory of @param newDirName.
 	 */
 	
 	@Override
