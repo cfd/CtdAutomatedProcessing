@@ -96,7 +96,7 @@ public class DatCnvWriter implements IPsaWriter {
 		Element root = doc.getRootElement();
 		Element calcArray = root.getChild("CalcArray");
 
-		// Adds size to the calc array
+		// Adds size to the calcArray
 		calcArray.setAttribute("Size", "" + (sensors.size() + 2));
 
 		// Creates the Time Elapsed and Scan Count array items
@@ -155,7 +155,8 @@ public class DatCnvWriter implements IPsaWriter {
 	}
 
 	/**
-	 * Called but does nothing.
+	 * This method is called due to the strategy pattern however is not required for 
+	 * this .psa file and is therefore left intentionally blank.
 	 */
 	
 	@Override
@@ -163,7 +164,12 @@ public class DatCnvWriter implements IPsaWriter {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * Outputs a .psa file to the directory of @param newDirName, while making it's
+	 * format 'pretty'.
+	 */
+	
 	@Override
 	public void writeToNewPsaFile(String newDirName)
 			throws FileNotFoundException, IOException {

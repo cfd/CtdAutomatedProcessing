@@ -28,7 +28,7 @@ public class AlignWriter implements IPsaWriter {
 	Document doc;
 	
 	/**
-	 * takes @param orderedSensors and sets sensors to 
+	 * Takes @param orderedSensors and sets sensors to 
 	 * @param orderedSensors and prints '3 Strategy', as well 
 	 * as the content of the @param orderedSensors to console.
 	 */
@@ -42,7 +42,7 @@ public class AlignWriter implements IPsaWriter {
 	}
 
 	/**
-	 * takes @param psaTemplateFolderPath and uses it to create
+	 * Takes @param psaTemplateFolderPath and uses it to create
 	 * the structure of the .psa file.
 	 */
 	

@@ -18,12 +18,23 @@ import model.SensorInfo;
 public class DeriveWriter implements IPsaWriter{
 	private Document doc;
 	
+	/**
+	 * Takes @param orderedSensors and sets sensors to 
+	 * @param orderedSensors and prints '5 Strategy', as well 
+	 * as the content of the @param orderedSensors to console.
+	 */
+	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		System.out.println();
 		System.out.println("5 strategy");
 		System.out.println(orderedSensors);
 	}
+	
+	/**
+	 * Takes @param psaTemplateFolderPath and uses it to create
+	 * the structure of the .psa file.
+	 */
 	
 	@Override
 	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException{
@@ -42,14 +53,29 @@ public class DeriveWriter implements IPsaWriter{
 		outputDir.setAttribute("value", workingDirectory + "batch");
 	}
 
+	/**
+	 * This method is called due to the strategy pattern however is not required for 
+	 * this .psa file and is therefore left intentionally blank.
+	 */	
+	
 	@Override
 	public void writeCalcArray(String userPoly) {
 	}
 
+	/**
+	 * This method is called due to the strategy pattern however is not required for 
+	 * this .psa file and is therefore left intentionally blank.
+	 */	
+	
 	@Override
 	public void writeLowerSection() {
 	}
 
+	/**
+	 * Outputs a .psa file to the directory of @param newDirName, while making it's
+	 * format 'pretty'.
+	 */
+	
 	@Override
 	public void writeToNewPsaFile(String newDirName) throws FileNotFoundException, IOException {
 		
