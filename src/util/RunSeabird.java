@@ -23,9 +23,11 @@ public class RunSeabird {
 	public void writeBatch() {
 		//Do you like commenting?
 		File file = new File(directory + "\\xmlcons\\" + output);
+		
+		//Checks if the batch file already exists and deletes it if it does
 		if (file.exists()) {
 			file.delete();
-			System.out.println("Deleted");
+			System.out.println("Old batch file deleted");
 		}
 		// Creates a new Print Writer
 		PrintWriter fout = null;
