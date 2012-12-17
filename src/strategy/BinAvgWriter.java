@@ -19,7 +19,6 @@ public class BinAvgWriter implements IPsaWriter{
 
 	ArrayList<SensorInfo> sensors;
 	Document doc;
-	
 
 	/**
 	 * Takes @param orderedSensors and sets sensors to 
@@ -74,7 +73,8 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * Doesn't need to do anything.
+	 * This method is called due to the strategy pattern however is not required for 
+	 * this .psa file and is therefore left intentionally blank.
 	 */
 	
 	@Override
@@ -84,7 +84,8 @@ public class BinAvgWriter implements IPsaWriter{
 	}
 
 	/**
-	 * Doesn't need to do anything.
+	 * This method is called due to the strategy pattern however is not required for 
+	 * this .psa file and is therefore left intentionally blank.
 	 */
 	
 	@Override
