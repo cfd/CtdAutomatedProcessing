@@ -241,6 +241,9 @@ public class XmlconReader {
 		XmlconReader binAvgWriter = new XmlconReader(new BinAvgWriter());
 		XmlconReader deriveWriter = new XmlconReader(new DeriveWriter());
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
+		
+		// Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
 
 		//fills the sensorsMap of all the XmlconReader
 		datCnvWriter.populateSensorsMap();
@@ -371,7 +374,8 @@ public class XmlconReader {
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
 				createProcessSbbat(outputDirName, xml.getName());
-
+				runSeabird.setBatch(xml.getName());
+				
 				// Moves the file
 				moveCon(xml, outputDirName);
 
@@ -389,9 +393,11 @@ public class XmlconReader {
 				moveCon(xml, outputDirName);
 			} //end of if
 		}
-		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
-		runSeabird.run();
+		
+		runSeabird.writeBatch();
+//		// Comment in when you want sea bird to run
+//		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
+//		runSeabird.run();
 		
 		findHex(new File(DIRECTORY + "/hex"));
 	}

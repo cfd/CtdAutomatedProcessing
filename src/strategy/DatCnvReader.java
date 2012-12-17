@@ -33,6 +33,9 @@ public class DatCnvReader {
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
 		File dir = new File(DIRECTORY + "/config");
+		
+		// Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
 
 		// Loops through all the folders in config
 		for (File xml : dir.listFiles()) {
@@ -40,8 +43,7 @@ public class DatCnvReader {
 			File datCnv = new File(xml + "\\DatCnvIMOS.psa");
 
 			// Checks if datCnvImos is in the directory if not skips it
-			// completely
-			if (datCnv.exists()) {
+			if (datCnv.exists() && !(new File(xml + "\\BinAvgIMOS.psa").isFile())) {
 
 				// Gets all the files and looks for .con
 				for (File con : xml.listFiles()) {
@@ -89,21 +91,21 @@ public class DatCnvReader {
 								}
 							}
 							sensors.clear();
-							writers.clear();
+							
+							runSeabird.setBatch(xml.getName());
+							
+							
 
 						} catch (IOException | JDOMException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
 					}
 				}
 			}
 		}
 		
-		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
-		runSeabird.run();
+		runSeabird.writeBatch();
 	}
 
 	/**
