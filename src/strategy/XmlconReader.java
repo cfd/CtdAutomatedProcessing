@@ -264,7 +264,7 @@ public class XmlconReader {
 		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon");
 		runSeabird.run();
 		
-		//findHex(new File(DIRECTORY + "/hex"));
+		findHex(new File(DIRECTORY + "/hex"));
 	}
 	
 	private static void findHex(File hexDir){

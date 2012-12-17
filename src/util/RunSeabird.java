@@ -42,7 +42,7 @@ public class RunSeabird {
 		String commands = "";
 		for (String folder : folders) {
 			String file = directory + "\\config\\" + folder;
-			
+			//Comment
 			if(new File(file + "\\" + folder + type).isFile()){
 				commands += "start /wait " + directory + "\\config\\" + folder
 						+ "\\run.bat *\n";
