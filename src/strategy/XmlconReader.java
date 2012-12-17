@@ -261,18 +261,23 @@ public class XmlconReader {
 			}
 		}
 
-		// put hex loop
-		File hexDir = new File(DIRECTORY + "/hex");
-		for (File hex : hexDir.listFiles()) {
-			if (hex.getName().endsWith(".hex")) {
-				HexReader reader = new HexReader(hex);
-				reader.run();
-			}
-		}
+		
+		findHex(new File(DIRECTORY + "/hex"));
 
 		// Comment in when you want sea bird to run
 		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
 		runSeabird.run();
+	}
+	
+	private static void findHex(File hexDir){
+		for (File hex : hexDir.listFiles()){
+			if(hex.isDirectory()){
+				findHex(hex);
+			}else if(hex.getName().endsWith(".hex")) {
+				HexReader reader = new HexReader(hex);
+				reader.run();
+			}
+		}
 	}
 
 	private static void createDirectory(String outputDirName) {
