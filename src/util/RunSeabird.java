@@ -25,11 +25,13 @@ public class RunSeabird {
 		File file = new File(directory + "\\xmlcons\\" + output);
 		if (file.exists()) {
 			file.delete();
+			System.out.println("Deleted");
 		}
 		// Creates a new Print Writer
 		PrintWriter fout = null;
 		try {
-
+			System.out.println("I write things :P");
+			//System.out.println(file.getAbsolutPath());
 			fout = new PrintWriter(file.getAbsolutePath());
 			fout.print(commands + "\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
@@ -42,12 +44,13 @@ public class RunSeabird {
 	public void setBatch(String folder, String con) {
 
 		// Comment
+		System.out.println(folder + "\\" + con +  type);
 		if (new File(folder + "\\" + con + type).isFile()
 				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
 			commands += "start /wait " + folder
 					+ "\\run.bat *\n";
 		}
-		System.out.println(commands);
+		System.out.println("Command: " + commands);
 	}
 
 	// private void setFolders() {

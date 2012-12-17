@@ -245,14 +245,13 @@ public class XmlconReader {
 
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
-				createProcessSbbat(outputDirName, xml.getName());
-				
-				System.out.println("Something: " + xml.getName());
-				System.out.println("Output: " + outputDirName);
-				runSeabird.setBatch(outputDirName, xmlName);
+				createProcessSbbat(outputDirName, xml.getName());				
 				
 				// Moves the file
 				moveCon(xml, outputDirName);
+				
+				//Need there to be a file IDIOT
+				runSeabird.setBatch(outputDirName, xmlName);
 
 			} else if (xml.getName().endsWith(".con")) {
 				String outputDirName = DIRECTORY + "\\config\\"
@@ -272,7 +271,7 @@ public class XmlconReader {
 		//Adding comments is fun
 		runSeabird.writeBatch();
 		
-		findHex(new File(DIRECTORY + "/hex"));
+		//findHex(new File(DIRECTORY + "/hex"));
 	}
 	
 	private static void findHex(File hexDir){

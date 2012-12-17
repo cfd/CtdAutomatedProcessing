@@ -93,8 +93,7 @@ public class DatCnvReader {
 							}
 							sensors.clear();
 							
-							runSeabird.setBatch(outputDirName, xmlName);
-							
+							runSeabird.setBatch(outputDirName, xmlName);				
 							
 
 						} catch (IOException | JDOMException e) {
