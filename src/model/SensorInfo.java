@@ -1,7 +1,7 @@
 package model;
 
 public class SensorInfo {
-	
+	//asdfa
 	private int unitID;
 	private int sensorID;
 	private int calcID;
