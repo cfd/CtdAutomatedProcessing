@@ -50,7 +50,7 @@
 
 
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
-		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\xmlconProcess.jar">
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\processFiles.jar">
 
 
 			<fileset dir="bin" includes="**/*.class" />
@@ -65,7 +65,7 @@
 			</manifest>
 		</jar>
 
-		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\datcnvProcess.jar">
+		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\processConPSAFiles.jar">
 
 
 			<fileset dir="bin" includes="**/*.class" />

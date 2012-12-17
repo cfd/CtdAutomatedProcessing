@@ -30,10 +30,10 @@ import util.RunSeabird;
 public class XmlconReader {
 
 	private static LinkedHashMap<Integer, SensorInfo> sensorsMap;
-	private static ArrayList<SensorInfo> orderedSensors;
+	private static  ArrayList<SensorInfo> orderedSensors;
 
-	private static Connection con;
-	private static Statement statement;
+	private Connection con;
+	private Statement statement;
 	private static String userPoly;
 	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 
@@ -45,7 +45,7 @@ public class XmlconReader {
 		orderedSensors = new ArrayList<>();
 	}
 
-	public static LinkedHashMap<Integer, SensorInfo> sensorsMap() {
+	public static LinkedHashMap<Integer, SensorInfo> getSensorsMap() {
 		return sensorsMap;
 	}
 
@@ -81,23 +81,6 @@ public class XmlconReader {
 	// return null;
 	// }
 
-	/**
-	 * connects to the database, and statement is initalized
-	 * with the connection to the database. The database is 
-	 * opened in this method as opposed to the 'getAllAttributes'
-	 * method as it needs to be closed here.
-	 * 
-	 * getAllAttributes returns a query result set from the
-	 * query 'SELECT * FROM sensor_info'. 
-	 * 
-	 * The while loop sorts through each row of the results
-	 * and inserts them as new sensorInfo items in the sensorrsMa,
-	 * with the the index of the sensorID.
-	 * 
-	 * with any exception is caused they are caught, and a error message
-	 * is printed to console. Program may not function in the event of a
-	 * exception raising.
-	 */
 	public void populateSensorsMap() {
 		ConnectDB db = new ConnectDB();
 		con = db.getDdConnection();
@@ -112,19 +95,14 @@ public class XmlconReader {
 				int unitID = results.getInt("unit_ID");
 				int ordinal = results.getInt("ordinal");
 				String name = results.getString("full_name");
-				sensorsMap.put(sensorID,
-								new SensorInfo(unitID, sensorID, calcID,
-										ordinal, name));
+				getSensorsMap()
+						.put(sensorID, new SensorInfo(unitID, sensorID, calcID, ordinal, name));
 			}
+			con.close();
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 	}
@@ -187,8 +165,6 @@ public class XmlconReader {
 
 	public static void main(String args[]) {
 		ArrayList<XmlconReader> writers = new ArrayList<>();
-		
-		//create 6 XMLcon Readers with each with a different psa Writer
 
 		XmlconReader datCnvWriter = new XmlconReader(new DatCnvWriter());
 		XmlconReader alignWriter = new XmlconReader(new AlignWriter());
@@ -197,7 +173,6 @@ public class XmlconReader {
 		XmlconReader deriveWriter = new XmlconReader(new DeriveWriter());
 		XmlconReader loopEditWriter = new XmlconReader(new LoopEditWriter());
 
-		
 		datCnvWriter.populateSensorsMap();
 
 		File dir = new File(DIRECTORY + "/xmlcons");
@@ -223,16 +198,19 @@ public class XmlconReader {
 				writers.add(loopEditWriter);
 
 				// Where the psa writes tod
-				
-				String outputDirName = DIRECTORY + "\\config\\" + xml.getName().replaceFirst("[.][^.]+$", "");
-				
-				new File(outputDirName).mkdir();
 
-				// Makes the data stuff
-				new File(outputDirName + "/data").mkdir();
-				new File(outputDirName + "/data/raw").mkdir();
-				new File(outputDirName + "/data/batch").mkdir();
-				new File(outputDirName + "/data/final").mkdir();
+				String outputDirName = DIRECTORY + "\\config\\"
+						+ xml.getName().replaceFirst("[.][^.]+$", "");
+
+				createDirectory(outputDirName);
+
+				// new File(outputDirName).mkdir();
+				//
+				// // Makes the data stuff
+				// new File(outputDirName + "/data").mkdir();
+				// new File(outputDirName + "/data/raw").mkdir();
+				// new File(outputDirName + "/data/batch").mkdir();
+				// new File(outputDirName + "/data/final").mkdir();
 
 				// Where the batch, final and raw files are located
 				String workingDirectory = outputDirName + "\\data\\";
@@ -261,55 +239,86 @@ public class XmlconReader {
 				}
 				orderedSensors.clear();
 
-				//Creates the bat files for the seabird processing
-				createSeabirdBat(outputDirName);
+				// Creates the bat files for the seabird processing
+				createRunBat(outputDirName);
 				createProcessBat(outputDirName, xml.getName());
-				
-				InputStream inStream = null;
-				OutputStream outStream = null;
 
-				try {
-					inStream = new FileInputStream(xml);
-					outStream = new FileOutputStream(new File(outputDirName
-							+ "/" + xml.getName()));
+				// Moves the file
+				moveCon(xml, outputDirName);
 
-					byte[] buffer = new byte[1024];
-					int length;
+			} else if (xml.getName().endsWith(".con")) {
+				String outputDirName = DIRECTORY + "\\config\\"
+						+ xml.getName().replaceFirst("[.][^.]+$", "");
 
-					// copy the file content in bytes
-					while ((length = inStream.read(buffer)) > 0) {
-						outStream.write(buffer, 0, length);
-					}
+				createDirectory(outputDirName);
 
-					inStream.close();
-					outStream.close();
+				// Creates the bat files for the seabird processing
+				createRunBat(outputDirName);
+				createProcessBat(outputDirName, xml.getName());
 
-					// delete the original file
-					xml.delete();
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				// Moves the file
+				moveCon(xml, outputDirName);
 			}
 		}
-		
-		//put hex loop
 
+		// put hex loop
 		File hexDir = new File(DIRECTORY + "/hex");
-		for (File hex : hexDir.listFiles()){
+		for (File hex : hexDir.listFiles()) {
 			if (hex.getName().endsWith(".hex")) {
 				HexReader reader = new HexReader(hex);
 				reader.run();
 			}
 		}
-		
-		//Comment in when you want sea bird to run
+
+		// Comment in when you want sea bird to run
 		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
 		runSeabird.run();
 	}
 
+	private static void createDirectory(String outputDirName) {
+		new File(outputDirName).mkdir();
+
+		// Makes the data stuff
+		new File(outputDirName + "/data").mkdir();
+		new File(outputDirName + "/data/raw").mkdir();
+		new File(outputDirName + "/data/batch").mkdir();
+		new File(outputDirName + "/data/final").mkdir();
+
+	}
+
+	private static void moveCon(File xml, String outputDirName) {
+
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try {
+			inStream = new FileInputStream(xml);
+			outStream = new FileOutputStream(new File(outputDirName + "/"
+					+ xml.getName()));
+
+			byte[] buffer = new byte[1024];
+			int length;
+
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+			// delete the original file
+			xml.delete();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * Creates the process batch file for each directory
+	 * 
 	 * @param outputDirName
 	 * @param name
 	 */
@@ -318,54 +327,85 @@ public class XmlconReader {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			//Write the stuff
-			
-			
-			///datcnv i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex" /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon" /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa" /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch" /aC
-			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
-			fout.println("datcnv /i\"" + outputDirName + "\\data\\raw\\%1.hex\" /c\""
-					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
-					"\\DatCnvIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
-			
-			//filter /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
-			fout.println("filter /i\"" + outputDirName + "\\data\\batch\\%1C.cnv\" /p\""
-					+ outputDirName + "\\FilterIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aF");
-			
-			//alignctd /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
-			fout.println("alignctd /i\"" + outputDirName + "\\data\\batch\\%1CF.cnv\" /p\""
-					+ outputDirName + "\\AlignIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aA");
-			
-			//loopedit /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
-			fout.println("loopedit /i\"" + outputDirName + "\\data\\batch\\%1CFA.cnv\" /p\""
-					+ outputDirName + "\\LoopEditIMOS.psa\" /o\"" + outputDirName + "\\data\\batch\" /aL");
-			
-			//derive /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv" /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
-			fout.println("derive /i\"" + outputDirName + "\\data\\batch\\%1CFAL.cnv\" /c\""
-					+ outputDirName + "\\" + name + "\" /p\"" + outputDirName + 
-					"\\DeriveIMOS.psa" + "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+			// Write the stuff
 
-			//binavg /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv" /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa" /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
-			fout.println("binavg /i\"" + outputDirName + "\\data\\batch\\%1CFALD.cnv\" /p\""
-					+ outputDirName + "\\BinAvgIMOS.psa\" /o\"" + outputDirName + "\\data\\final\" /aB");
-			
-		}catch (FileNotFoundException e){
+			// /datcnv
+			// i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex"
+			// /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon"
+			// /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa"
+			// /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch"
+			// /aC
+			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
+			fout.println("datcnv /i\"" + outputDirName
+					+ "\\data\\raw\\%1.hex\" /c\"" + outputDirName + "\\"
+					+ name + "\" /p\"" + outputDirName + "\\DatCnvIMOS.psa"
+					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+
+			// filter
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
+			fout.println("filter /i\"" + outputDirName
+					+ "\\data\\batch\\%1C.cnv\" /p\"" + outputDirName
+					+ "\\FilterIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aF");
+
+			// alignctd
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
+			fout.println("alignctd /i\"" + outputDirName
+					+ "\\data\\batch\\%1CF.cnv\" /p\"" + outputDirName
+					+ "\\AlignIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aA");
+
+			// loopedit
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
+			fout.println("loopedit /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + outputDirName
+					+ "\\LoopEditIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\batch\" /aL");
+
+			// derive
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv"
+			// /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
+			fout.println("derive /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + outputDirName + "\\"
+					+ name + "\" /p\"" + outputDirName + "\\DeriveIMOS.psa"
+					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+
+			// binavg
+			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv"
+			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa"
+			// /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
+			fout.println("binavg /i\"" + outputDirName
+					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + outputDirName
+					+ "\\BinAvgIMOS.psa\" /o\"" + outputDirName
+					+ "\\data\\final\" /aB");
+
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			fout.close();
 		}
-		
+
 	}
 
-	private static void createSeabirdBat(String outputDirName) {
-		File file = new File(outputDirName + "\\seabird.bat");
+	private static void createRunBat(String outputDirName) {
+		File file = new File(outputDirName + "\\run.bat");
 		// Creates a new Print Writer
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + outputDirName + "\\process.bat *\nEXIT [/B] [exitCode] ");			
+			fout.println("sbebatch " + outputDirName
+					+ "\\process.bat *\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			fout.close();
 		}
 	}
