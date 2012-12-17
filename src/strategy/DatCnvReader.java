@@ -12,6 +12,8 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import util.RunSeabird;
+
 public class DatCnvReader {
 	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 	private static ArrayList<SensorInfo> sensors = new ArrayList<>();
@@ -55,14 +57,9 @@ public class DatCnvReader {
 							writers.add(deriveWriter);
 							writers.add(loopEditWriter);
 
-							// Makes the data stuff
-							new File(xml + "/data").mkdir();
-							new File(xml + "/data/raw").mkdir();
-							new File(xml + "/data/batch").mkdir();
-							new File(xml + "/data/final").mkdir();
-
 							populatSensorArray(calcArrayItems);
 
+							System.out.println("I am doing things");
 							String outputDirName = xml.toString();
 
 							// Where the batch, final and raw files are located
@@ -94,7 +91,6 @@ public class DatCnvReader {
 							sensors.clear();
 							writers.clear();
 
-							// writers.clear();
 						} catch (IOException | JDOMException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -104,6 +100,10 @@ public class DatCnvReader {
 				}
 			}
 		}
+		
+		// Comment in when you want sea bird to run
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".con", "conProcessSeabirds.bat");
+		runSeabird.run();
 	}
 
 	/**

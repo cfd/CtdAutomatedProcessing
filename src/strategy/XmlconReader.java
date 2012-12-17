@@ -261,7 +261,7 @@ public class XmlconReader {
 			}
 		}
 		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon");
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
 		runSeabird.run();
 		
 		findHex(new File(DIRECTORY + "/hex"));

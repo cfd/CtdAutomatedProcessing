@@ -8,11 +8,14 @@ import java.util.ArrayList;
 public class RunSeabird {
 	private String directory;
 	private String type;
+	private String output;
+	
 	private ArrayList<String> folders = new ArrayList<>();
 	
-	public RunSeabird(String directory, String type) {
+	public RunSeabird(String directory, String type, String output) {
 		this.directory = directory;
 		this.type = type;
+		this.output = output;
 	}
 
 	/**
@@ -25,7 +28,7 @@ public class RunSeabird {
 	}
 
 	private void writeBatch(String commands) {
-			File file = new File(directory + "\\xmlcons\\processSeabirds.bat");
+			File file = new File(directory + "\\xmlcons\\" + output);
 			// Creates a new Print Writer
 			PrintWriter fout = null;
 			try {
@@ -43,13 +46,11 @@ public class RunSeabird {
 		for (String folder : folders) {
 			String file = directory + "\\config\\" + folder;
 			//Comment
-			if(new File(file + "\\" + folder + type).isFile()){
+			if(new File(file + "\\" + folder + type).isFile() && new File(file + "\\" + "BinAvgIMOS.psa").isFile()){
 				commands += "start /wait " + directory + "\\config\\" + folder
 						+ "\\run.bat *\n";
 				break;
-				
-			}				
-			
+			}						
 		}
 		System.out.println(commands);		
 		return commands;
