@@ -21,6 +21,7 @@ public class RunSeabird {
 	 */
 
 	public void writeBatch() {
+		//Do you like commenting?
 		File file = new File(directory + "\\xmlcons\\" + output);
 		if (file.exists()) {
 			file.delete();
