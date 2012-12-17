@@ -43,7 +43,6 @@ public class DatCnvReader {
 			File datCnv = new File(xml + "\\DatCnvIMOS.psa");
 
 			// Checks if datCnvImos is in the directory if not skips it
-			// completely
 			if (datCnv.exists() && !(new File(xml + "\\BinAvgIMOS.psa").isFile())) {
 
 				// Gets all the files and looks for .con

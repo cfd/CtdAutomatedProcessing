@@ -19,10 +19,6 @@ public class RunSeabird {
 	/**
 	 * @param args
 	 */
-	public void run() {
-		// setFolders();
-		// String commands = getBatch();
-	}
 
 	public void writeBatch() {
 		File file = new File(directory + "\\xmlcons\\" + output);
