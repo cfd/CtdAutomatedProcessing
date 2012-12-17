@@ -260,13 +260,11 @@ public class XmlconReader {
 				moveCon(xml, outputDirName);
 			}
 		}
-
-		
-		findHex(new File(DIRECTORY + "/hex"));
-
 		// Comment in when you want sea bird to run
-		RunSeabird runSeabird = new RunSeabird(DIRECTORY);
+		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon");
 		runSeabird.run();
+		
+		//findHex(new File(DIRECTORY + "/hex"));
 	}
 	
 	private static void findHex(File hexDir){

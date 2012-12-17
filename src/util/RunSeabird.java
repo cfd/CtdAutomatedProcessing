@@ -7,9 +7,12 @@ import java.util.ArrayList;
 
 public class RunSeabird {
 	private String directory;
+	private String type;
 	private ArrayList<String> folders = new ArrayList<>();
-	public RunSeabird(String directory) {
+	
+	public RunSeabird(String directory, String type) {
 		this.directory = directory;
+		this.type = type;
 	}
 
 	/**
@@ -38,8 +41,15 @@ public class RunSeabird {
 	private String getBatch() {
 		String commands = "";
 		for (String folder : folders) {
-			commands += "start /wait " + directory + "\\config\\" + folder
-					+ "\\run.bat *\n";
+			String file = directory + "\\config\\" + folder;
+			
+			if(new File(file + "\\" + folder + type).isFile()){
+				commands += "start /wait " + directory + "\\config\\" + folder
+						+ "\\run.bat *\n";
+				break;
+				
+			}				
+			
 		}
 		System.out.println(commands);		
 		return commands;
