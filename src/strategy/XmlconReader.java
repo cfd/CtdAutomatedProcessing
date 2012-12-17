@@ -181,6 +181,7 @@ public class XmlconReader {
 		File dir = new File(DIRECTORY + "/xmlcons");
 
 		for (File xml : dir.listFiles()) {
+			String xmlName = xml.getName().replaceFirst("[.][^.]+$", "");
 			if (xml.getName().endsWith(".xmlcon")) {
 				try {
 					List<Element> sensorsInXmlcon = datCnvWriter
@@ -245,7 +246,10 @@ public class XmlconReader {
 				// Creates the bat files for the seabird processing
 				createRunBat(outputDirName);
 				createProcessSbbat(outputDirName, xml.getName());
-				runSeabird.setBatch(xml.getName());
+				
+				System.out.println("Something: " + xml.getName());
+				System.out.println("Output: " + outputDirName);
+				runSeabird.setBatch(outputDirName, xmlName);
 				
 				// Moves the file
 				moveCon(xml, outputDirName);
@@ -266,9 +270,6 @@ public class XmlconReader {
 		}
 		
 		runSeabird.writeBatch();
-//		// Comment in when you want sea bird to run
-//		RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon", "xmlProcessSeabirds.bat");
-//		runSeabird.run();
 		
 		findHex(new File(DIRECTORY + "/hex"));
 	}

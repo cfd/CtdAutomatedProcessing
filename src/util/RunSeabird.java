@@ -38,12 +38,12 @@ public class RunSeabird {
 		}
 	}
 
-	public void setBatch(String folder) {
-		String file = directory + "\\config\\" + folder;
+	public void setBatch(String folder, String con) {
+
 		// Comment
-		if (new File(file + "\\" + folder + type).isFile()
-				&& new File(file + "\\" + "BinAvgIMOS.psa").isFile()) {
-			commands += "start /wait " + directory + "\\config\\" + folder
+		if (new File(folder + "\\" + con + type).isFile()
+				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
+			commands += "start /wait " + folder
 					+ "\\run.bat *\n";
 		}
 		System.out.println(commands);
