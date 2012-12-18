@@ -146,7 +146,7 @@ public class HexReader {
 
 					// Copies the hex to the right location. Not deleting the
 					// original
-					copyDeleteHex(hexFileLocation);
+					copyHex(hexFileLocation);
 				}
 			}
 
@@ -154,7 +154,7 @@ public class HexReader {
 		con.close();
 	}
 
-	private void copyDeleteHex(String hexFileLocation) {
+	private void copyHex(String hexFileLocation) {
 		InputStream inStream = null;
 		OutputStream outStream = null;
 
