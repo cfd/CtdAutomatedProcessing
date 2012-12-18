@@ -429,7 +429,7 @@ public class XmlconReader {
 			// "xmlProcessSeabirds.bat");
 			// runSeabird.run();
 
-			findHex(new File(inputHexLocation), outputFileLocation);
+			//findHex(new File(inputHexLocation), outputFileLocation);
 		} else {
 			if(!new File(inputLocation).isDirectory()){
 				System.out.println("Input file location invalid");
@@ -515,6 +515,7 @@ public class XmlconReader {
 	 */
 	private static void createProcessSbbat(String outputDirName, String name) {
 		File file = new File(outputDirName + "\\process.sbbat");
+		File location = new File(outputDirName);
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
@@ -527,36 +528,36 @@ public class XmlconReader {
 			// /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch"
 			// /aC
 			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
-			fout.println("datcnv /i\"" + outputDirName
-					+ "\\data\\raw\\%1.hex\" /c\"" + outputDirName + "\\"
-					+ name + "\" /p\"" + outputDirName + "\\DatCnvIMOS.psa"
-					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aC");
+			fout.println("datcnv /i\"" + location.getAbsolutePath()
+					+ "\\data\\raw\\%1.hex\" /c\"" + location.getAbsolutePath() + "\\"
+					+ name + "\" /p\"" + location.getAbsolutePath() + "\\DatCnvIMOS.psa"
+					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aC");
 
 			// filter
 			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv"
 			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa"
 			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
-			fout.println("filter /i\"" + outputDirName
-					+ "\\data\\batch\\%1C.cnv\" /p\"" + outputDirName
-					+ "\\FilterIMOS.psa\" /o\"" + outputDirName
+			fout.println("filter /i\"" + location.getAbsolutePath()
+					+ "\\data\\batch\\%1C.cnv\" /p\"" + location.getAbsolutePath()
+					+ "\\FilterIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aF");
 
 			// alignctd
 			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv"
 			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa"
 			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
-			fout.println("alignctd /i\"" + outputDirName
-					+ "\\data\\batch\\%1CF.cnv\" /p\"" + outputDirName
-					+ "\\AlignIMOS.psa\" /o\"" + outputDirName
+			fout.println("alignctd /i\"" + location.getAbsolutePath()
+					+ "\\data\\batch\\%1CF.cnv\" /p\"" + location.getAbsolutePath()
+					+ "\\AlignIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aA");
 
 			// loopedit
 			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv"
 			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa"
 			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
-			fout.println("loopedit /i\"" + outputDirName
-					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + outputDirName
-					+ "\\LoopEditIMOS.psa\" /o\"" + outputDirName
+			fout.println("loopedit /i\"" + location.getAbsolutePath()
+					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + location.getAbsolutePath()
+					+ "\\LoopEditIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aL");
 
 			// derive
@@ -564,18 +565,18 @@ public class XmlconReader {
 			// /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con"
 			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa"
 			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
-			fout.println("derive /i\"" + outputDirName
-					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + outputDirName + "\\"
-					+ name + "\" /p\"" + outputDirName + "\\DeriveIMOS.psa"
-					+ "\" /o\"" + outputDirName + "\\data\\batch\" /aD");
+			fout.println("derive /i\"" + location.getAbsolutePath()
+					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + location.getAbsolutePath() + "\\"
+					+ name + "\" /p\"" + location.getAbsolutePath() + "\\DeriveIMOS.psa"
+					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aD");
 
 			// binavg
 			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv"
 			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa"
 			// /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
-			fout.println("binavg /i\"" + outputDirName
-					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + outputDirName
-					+ "\\BinAvgIMOS.psa\" /o\"" + outputDirName
+			fout.println("binavg /i\"" + location.getAbsolutePath()
+					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + location.getAbsolutePath()
+					+ "\\BinAvgIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\final\" /aB");
 
 		} catch (FileNotFoundException e) {
@@ -591,11 +592,12 @@ public class XmlconReader {
 	 */
 	private static void createRunBat(String outputDirName) {
 		File file = new File(outputDirName + "\\run.bat");
+
 		// Creates a new Print Writer
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + outputDirName
+			fout.println("sbebatch " + new File(outputDirName).getAbsolutePath()
 					+ "\\process.sbbat *\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -45,11 +45,13 @@ public class RunSeabird {
 	public void setBatch(String folder, String con) {
 
 		// Comment
-		System.out.println(folder + "\\" + con +  type);
+		File file = new File(folder + "\\" + con + type);
+		File batch = new File(folder + "\\");
+		System.out.println(file.getAbsolutePath());
 		//Checks if the con file exists and that it has the psa files
-		if (new File(folder + "\\" + con + type).isFile()
+		if (file.isFile()
 				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
-			commands += "start /wait " + folder
+			commands += "start /wait " + batch.getAbsolutePath()
 					+ "\\run.bat *\n";
 		}
 		System.out.println("Command: " + commands);
