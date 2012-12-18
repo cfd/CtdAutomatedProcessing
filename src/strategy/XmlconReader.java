@@ -347,14 +347,6 @@ public class XmlconReader {
 
 					createDirectory(outputDirName);
 
-					// new File(outputDirName).mkdir();
-					//
-					// // Makes the data stuff
-					// new File(outputDirName + "/data").mkdir();
-					// new File(outputDirName + "/data/raw").mkdir();
-					// new File(outputDirName + "/data/batch").mkdir();
-					// new File(outputDirName + "/data/final").mkdir();
-
 					// Where the batch, final and raw files are located
 					String workingDirectory = outputDirName + "\\data\\";
 
@@ -394,10 +386,6 @@ public class XmlconReader {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						// for (SensorInfo i : orderedSensors) {
-						// System.out.println(i.getFullname());
-
-						// }
 					}
 					orderedSensors.clear();
 
@@ -428,12 +416,11 @@ public class XmlconReader {
 
 			// Adding comments is fun
 			runSeabird.writeBatch();
-			// // Comment in when you want sea bird to run
-			// RunSeabird runSeabird = new RunSeabird(DIRECTORY, ".xmlcon",
-			// "xmlProcessSeabirds.bat");
-			// runSeabird.run();
-
-			findHex(new File(inputHexLocation), outputFileLocation);
+			
+			if (!files.isEmpty()){
+				findHex(new File(inputHexLocation), outputFileLocation);
+			}
+			
 		} else {
 			if(!new File(inputLocation).isDirectory()){
 				System.out.println("Input file location invalid");
@@ -542,11 +529,6 @@ public class XmlconReader {
 			// Write the stuff
 
 			// /datcnv
-			// i"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\raw\%1.hex"
-			// /c"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\19plus1_4409_20120905.xmlcon"
-			// /p"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\DatCnvIMOS.psa"
-			// /o"\\pearl\temp\adc-jcu2012\config\19plus1_4409_20120905.xmlcon\data\batch"
-			// /aC
 			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
 			fout.println("datcnv /i\"" + location.getAbsolutePath()
 					+ "\\data\\raw\\%1.hex\" /c\"" + location.getAbsolutePath() + "\\"
@@ -554,46 +536,30 @@ public class XmlconReader {
 					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aC");
 
 			// filter
-			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1C.cnv"
-			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\FilterIMOS.psa"
-			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aF
 			fout.println("filter /i\"" + location.getAbsolutePath()
 					+ "\\data\\batch\\%1C.cnv\" /p\"" + location.getAbsolutePath()
 					+ "\\FilterIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aF");
 
 			// alignctd
-			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CF.cnv"
-			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\AlignIMOS.psa"
-			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aA
 			fout.println("alignctd /i\"" + location.getAbsolutePath()
 					+ "\\data\\batch\\%1CF.cnv\" /p\"" + location.getAbsolutePath()
 					+ "\\AlignIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aA");
 
 			// loopedit
-			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFA.cnv"
-			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\LoopEditIMOS.psa"
-			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aL
 			fout.println("loopedit /i\"" + location.getAbsolutePath()
 					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + location.getAbsolutePath()
 					+ "\\LoopEditIMOS.psa\" /o\"" + location.getAbsolutePath()
 					+ "\\data\\batch\" /aL");
 
 			// derive
-			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFAL.cnv"
-			// /c"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\19plus2.con"
-			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\DeriveIMOS.psa"
-			// /o"\\pearl\aims-data\CTD\imos-processed\data\Batch" /aD
 			fout.println("derive /i\"" + location.getAbsolutePath()
 					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + location.getAbsolutePath() + "\\"
 					+ name + "\" /p\"" + location.getAbsolutePath() + "\\DeriveIMOS.psa"
 					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aD");
 
 			// binavg
-			// /i"\\pearl\aims-data\CTD\imos-processed\data\Batch\%1CFALD.cnv"
-			// /p"\\Pearl\aims-data\CTD\imos-processed\config\SBE19plusV2_4525\SBE19plusV2_4525_20040204\BinAvgIMOS.psa"
-			// /o"\\pearl\aims-data\CTD\imos-processed\data\final" /aB
 			fout.println("binavg /i\"" + location.getAbsolutePath()
 					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + location.getAbsolutePath()
 					+ "\\BinAvgIMOS.psa\" /o\"" + location.getAbsolutePath()
