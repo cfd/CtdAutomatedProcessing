@@ -17,7 +17,7 @@ import util.RunSeabird;
 public class DatCnvReader {
 	private static final String DIRECTORY = "\\\\pearl\\temp\\adc-jcu2012";
 	private static ArrayList<SensorInfo> sensors = new ArrayList<>();
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 
 	/**
 	 * @param args

@@ -42,7 +42,7 @@ public class HexReader {
 		months.put("dec", "12");
 	}
 
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	private String serialNo;
 	private Date calibrationDate;
 
