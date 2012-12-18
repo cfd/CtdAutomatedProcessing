@@ -404,7 +404,7 @@ public class XmlconReader {
 			runSeabird.writeBatch();
 
 			findHex(new File(inputHexLocation), outputFileLocation);
-			System.out.println("Starting seabird.");
+			System.out.println("Running seabird...");
 
 		} else {
 			if (!new File(inputLocation).isDirectory()) {
