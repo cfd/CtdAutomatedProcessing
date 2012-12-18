@@ -42,13 +42,6 @@
 			<classpath refid="CtdAutomatedProcessing.classpath" />
 		</javac>
 	</target>
-
-
-
-
-
-
-
 	<target name="deploy_jar" description="JAR Deployment" depends="build">
 		<jar destfile="\\pearl\temp\adc-jcu2012\xmlcons\processFiles.jar">
 
@@ -82,13 +75,6 @@
 
 
 	</target>
-
-
-
-
-
-
-
 	<target
 		description="Build all projects which reference this project. Useful to propagate changes."
 		name="build-refprojects" />
