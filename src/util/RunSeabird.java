@@ -27,7 +27,6 @@ public class RunSeabird {
 		//Checks if the batch file already exists and deletes it if it does
 		if (file.exists()) {
 			file.delete();
-			System.out.println("Old batch file deleted");
 		}
 		// Creates a new Print Writer
 		PrintWriter fout = null;
@@ -47,13 +46,11 @@ public class RunSeabird {
 		// Comment
 		File file = new File(folder + "\\" + con + type);
 		File batch = new File(folder + "\\");
-		System.out.println(file.getAbsolutePath());
 		//Checks if the con file exists and that it has the psa files
 		if (file.isFile()
 				&& new File(folder + "\\" + "BinAvgIMOS.psa").isFile()) {
 			commands += "start /wait " + batch.getAbsolutePath()
 					+ "\\run.bat *\n";
 		}
-		System.out.println("Command: " + commands);
 	}
 }

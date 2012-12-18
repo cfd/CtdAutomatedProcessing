@@ -86,8 +86,6 @@ public class BinAvgWriter implements IPsaWriter{
 	
 	@Override
 	public void writeLowerSection() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**
