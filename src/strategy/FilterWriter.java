@@ -29,9 +29,6 @@ public class FilterWriter implements IPsaWriter{
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
-		System.out.println();
-		System.out.println("2 strategy");
-		System.out.println(orderedSensors);
 	}
 
 	/**
@@ -217,7 +214,7 @@ public class FilterWriter implements IPsaWriter{
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				newDirName + "/FilterIMOS.psa")));
-		System.out.println("FilterIMOS.psa File Written!");
+		System.out.println("FilterIMOS.psa written");
 	}
 
 }

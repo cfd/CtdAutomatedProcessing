@@ -30,18 +30,15 @@ public class DatCnvReader {
 		try{
 			 inputLocation = args[0];
 		}catch (Exception e){
-			System.out.println("No con file location going to default");
+			System.out.println("No con file location: going to default");
 			inputLocation = "\\\\pearl\\temp\\adc-jcu2012\\xmlcons";
 		}
 		try{
 			 outputFileLocation = args[2];
 		}catch (Exception e){
-			System.out.println("No output file location going to default");
+			System.out.println("No output file location: going to default");
 			outputFileLocation = "\\\\pearl\\temp\\adc-jcu2012\\config";
 		}
-		
-		System.out.println(inputLocation);
-		System.out.println(outputFileLocation);
 		
 		if (new File(inputLocation).isDirectory()
 				&& new File(outputFileLocation).isDirectory()) {
@@ -84,7 +81,6 @@ public class DatCnvReader {
 
 							populateSensorsMap(calcArrayItems);
 
-							System.out.println("I am doing things");
 							String outputDirName = xml.toString();
 
 							// Where the batch, final and raw files are located
@@ -159,9 +155,7 @@ public class DatCnvReader {
 			Element name = calc.getChild("FullName");
 			String fullname = name.getAttributeValue("value");
 			if (DEBUG) {
-				System.out
-						.printf("index: %d%ncalcId: %d%nunitId: %d%nordinal: %d%nfullname: %s%n%n",
-								index, calcID, unitID, ordinal, fullname);
+				System.out.printf("index: %d%ncalcId: %d%nunitId: %d%nordinal: %d%nfullname: %s%n%n", index, calcID, unitID, ordinal, fullname);
 			}
 			if (!fullname.equals("Scan Count")){
 				sensors.add(new SensorInfo(unitID, 0, calcID, ordinal, fullname));

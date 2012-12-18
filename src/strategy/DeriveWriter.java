@@ -26,9 +26,6 @@ public class DeriveWriter implements IPsaWriter{
 	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
-		System.out.println();
-		System.out.println("5 strategy");
-		System.out.println(orderedSensors);
 	}
 	
 	/**
@@ -82,7 +79,7 @@ public class DeriveWriter implements IPsaWriter{
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				newDirName + "/DeriveIMOS.psa")));
-		System.out.println("DeriveIMOS.psa File Written!");
+		System.out.println("DeriveIMOS.psa written");
 		
 	}
 }

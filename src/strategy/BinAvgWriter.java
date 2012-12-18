@@ -28,11 +28,7 @@ public class BinAvgWriter implements IPsaWriter{
 	
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
-		sensors = orderedSensors;
-		System.out.println();
-		System.out.println("4 strategy");
-		System.out.println(orderedSensors);
-		
+		sensors = orderedSensors;		
 	}
 
 	/**
@@ -105,7 +101,7 @@ public class BinAvgWriter implements IPsaWriter{
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				newDirName + "/BinAvgIMOS.psa")));
-		System.out.println("BinAvgIMOS.psa File Written!");
+		System.out.println("BinAvgIMOS.psa written");
 	}
 
 }

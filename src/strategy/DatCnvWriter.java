@@ -32,9 +32,6 @@ public class DatCnvWriter implements IPsaWriter {
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
-		System.out.println();
-		System.out.println("1 strategy");
-		System.out.println(orderedSensors);
 	}
 	
 	/**
@@ -46,11 +43,6 @@ public class DatCnvWriter implements IPsaWriter {
 	public void readTemplate(String psaTemplateFolderPath) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
 		doc = builder.build(new File(psaTemplateFolderPath + "\\DataCnvTemplate.xml"));
-
-		if (DEBUG) {
-			System.out.println("File Read!");
-		}
-		// TODO Auto-generated method stub
 
 	}
 
@@ -65,9 +57,7 @@ public class DatCnvWriter implements IPsaWriter {
 	
 	@Override
 	public void writeUpperSection(String workingDirectory, String instrumentPath) {
-		if (DEBUG) {
-			System.out.println("Writter upper section");
-		}
+
 		Element root = doc.getRootElement();
 		Element inPath = root.getChild("InstrumentPath");
 		inPath.setAttribute("value", instrumentPath);
@@ -138,13 +128,7 @@ public class DatCnvWriter implements IPsaWriter {
 			calcArray.addContent(latitude);
 		}
 
-		if (DEBUG) {
-			System.out.println(sensors.size() + 2);
-		}
 
-		for (SensorInfo sensor : sensors) {
-			System.out.println(sensor.getFullName());
-		}
 
 		// Disables user poly and other fields for another run
 		isLatLongPressure = false;
@@ -177,7 +161,7 @@ public class DatCnvWriter implements IPsaWriter {
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(newDirName
 				+ "/DatCnvIMOS.psa")));
-		System.out.println("DataCnvIMOS.psa File Written!");
+		System.out.println("DataCnvIMOS.psa written");
 
 	}
 

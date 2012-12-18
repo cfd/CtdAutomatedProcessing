@@ -40,9 +40,6 @@ public class AlignWriter implements IPsaWriter {
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
-		System.out.println();
-		System.out.println("3 strategy");
-		System.out.println(orderedSensors);
 	}
 
 	/**
@@ -212,6 +209,6 @@ public class AlignWriter implements IPsaWriter {
 		// TODO Auto-generated method stub
 		xmlOutput.output(doc, new FileOutputStream(new File(newDirName
 				+ "/AlignIMOS.psa")));
-		System.out.println("AlignIMOS.psa File Written!");
+		System.out.println("AlignIMOS.psa written");
 	}
 }

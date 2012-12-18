@@ -27,9 +27,6 @@ public class LoopEditWriter implements IPsaWriter{
 	@Override
 	public void setup(ArrayList<SensorInfo> orderedSensors) {
 		sensors = orderedSensors;
-		System.out.println();
-		System.out.println("6 strategy");
-		System.out.println(orderedSensors);
 	}
 	
 	/**
@@ -86,6 +83,6 @@ public class LoopEditWriter implements IPsaWriter{
 		XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
 		xmlOutput.output(doc, new FileOutputStream(new File(
 				newDirName + "/LoopEditIMOS.psa")));
-		System.out.println("LoopEditIMOS.psa File Written!");
+		System.out.println("LoopEditIMOS.psa written");
 	}
 }

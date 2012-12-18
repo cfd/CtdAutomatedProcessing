@@ -77,8 +77,7 @@ public class HexReader {
 					calibrationDate = formatDate(line.split("=")[1].trim());
 					if (DEBUG) {
 						System.out.println(line);
-						System.out.println("Date: "
-								+ calibrationDate.toString());
+						System.out.println("Date: " + calibrationDate.toString());
 					}
 
 				}
@@ -174,7 +173,7 @@ public class HexReader {
 			inStream.close();
 			outStream.close();
 			
-
+			System.out.println("Copying hex file...");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

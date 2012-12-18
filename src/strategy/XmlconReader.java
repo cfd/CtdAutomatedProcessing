@@ -88,10 +88,7 @@ public class XmlconReader {
 				Element sensorName = child.getChild("SensorName");
 				userPoly = sensorName.getValue();
 			}
-			System.out.println(e.getAttributeValue("SensorID"));
 		}
-
-		System.out.println();
 
 		return sensorsInXmlcon;
 	}
@@ -123,8 +120,6 @@ public class XmlconReader {
 		con = db.getDdConnection();
 		try {
 			statement = con.createStatement();
-			System.out.println(con);
-			System.out.println(statement);
 			ResultSet results = getAllAttributes();
 			while (results.next()) {
 				int sensorID = results.getInt("sensor_ID");
@@ -194,7 +189,7 @@ public class XmlconReader {
 		for (Element sensor : sensorsInXmlcon) {
 			insertSensor("Upoly", sensor);
 		}
-		//Other
+		// Other
 
 		SensorInfo freq = sensorsMap.get(-5);
 		SensorInfo desRate = sensorsMap.get(-3);
@@ -235,28 +230,24 @@ public class XmlconReader {
 		try {
 			inputLocation = args[0];
 		} catch (Exception e) {
-			System.out.println("No con file location going to default");
+			System.out.println("No con file location: going to default");
 			inputLocation = "\\\\pearl\\temp\\adc-jcu2012\\xmlcons";
 		}
 		try {
 			inputHexLocation = args[1];
 		} catch (Exception e) {
-			System.out.println("No hex file location going to default");
+			System.out.println("No hex file location: going to default");
 			inputHexLocation = "\\\\pearl\\temp\\adc-jcu2012\\hex";
 		}
 		try {
 			outputFileLocation = args[2];
 		} catch (Exception e) {
-			System.out.println("No output file location going to default");
+			System.out.println("No output file location: going to default");
 			outputFileLocation = "\\\\pearl\\temp\\adc-jcu2012\\config";
 		}
 
-		System.out.println(inputLocation);
-		System.out.println(inputHexLocation);
-		System.out.println(outputFileLocation);
-		
-		//Tries to make the output file location if it does not exist
-		if (!new File(outputFileLocation).isDirectory()){
+		// Tries to make the output file location if it does not exist
+		if (!new File(outputFileLocation).isDirectory()) {
 			new File(outputFileLocation).mkdir();
 		}
 
@@ -283,11 +274,9 @@ public class XmlconReader {
 			datCnvWriter.populateSensorsMap();
 			// dir is the folder //pearl/temp/adc-jcu2012/xmlcon
 			ArrayList<File> files = new ArrayList<>();
-			
+
 			files = findAllFiles(inputLocation, files);
-			
-			System.out.println(files.toString());
-			System.out.println(files.size());
+
 
 			// loops for every file in dir
 			for (File xml : files) {
@@ -416,34 +405,35 @@ public class XmlconReader {
 
 			// Adding comments is fun
 			runSeabird.writeBatch();
-			
-			if (!files.isEmpty()){
+
+			if (!files.isEmpty()) {
 				findHex(new File(inputHexLocation), outputFileLocation);
 			}
-			
+
 		} else {
-			if(!new File(inputLocation).isDirectory()){
+			if (!new File(inputLocation).isDirectory()) {
 				System.out.println("Input file location invalid");
 			}
-			if(!new File(inputHexLocation).isDirectory()){
+			if (!new File(inputHexLocation).isDirectory()) {
 				System.out.println("Input hex file location invalid");
 			}
-			if(!new File(outputFileLocation).isDirectory()){
+			if (!new File(outputFileLocation).isDirectory()) {
 				System.out.println("Output file location invalid");
 			}
 		}
 	}
 
-	private static ArrayList<File> findAllFiles(String inputLocation, ArrayList<File> files) {
-		System.out.println(inputLocation);
+	private static ArrayList<File> findAllFiles(String inputLocation,
+			ArrayList<File> files) {
 		File dir = new File(inputLocation);
-		 
+
 		// loops for every file in dir
-		for (File xml : dir.listFiles()) {			
-			if (xml.isDirectory()){
-				files.addAll(findAllFiles(xml.getAbsolutePath(), new ArrayList<File>()));
-			}
-			else if (xml.getName().toLowerCase().endsWith(".con") || xml.getName().toLowerCase().endsWith(".xmlcon")){
+		for (File xml : dir.listFiles()) {
+			if (xml.isDirectory()) {
+				files.addAll(findAllFiles(xml.getAbsolutePath(),
+						new ArrayList<File>()));
+			} else if (xml.getName().toLowerCase().endsWith(".con")
+					|| xml.getName().toLowerCase().endsWith(".xmlcon")) {
 				files.add(xml);
 			}
 		}
@@ -531,39 +521,42 @@ public class XmlconReader {
 			// /datcnv
 			fout.println("@Use: sbebatch AIMS-IMOS_CTD_batch.bat");
 			fout.println("datcnv /i\"" + location.getAbsolutePath()
-					+ "\\data\\raw\\%1.hex\" /c\"" + location.getAbsolutePath() + "\\"
-					+ name + "\" /p\"" + location.getAbsolutePath() + "\\DatCnvIMOS.psa"
-					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aC");
+					+ "\\data\\raw\\%1.hex\" /c\"" + location.getAbsolutePath()
+					+ "\\" + name + "\" /p\"" + location.getAbsolutePath()
+					+ "\\DatCnvIMOS.psa" + "\" /o\""
+					+ location.getAbsolutePath() + "\\data\\batch\" /aC");
 
 			// filter
 			fout.println("filter /i\"" + location.getAbsolutePath()
-					+ "\\data\\batch\\%1C.cnv\" /p\"" + location.getAbsolutePath()
-					+ "\\FilterIMOS.psa\" /o\"" + location.getAbsolutePath()
-					+ "\\data\\batch\" /aF");
+					+ "\\data\\batch\\%1C.cnv\" /p\""
+					+ location.getAbsolutePath() + "\\FilterIMOS.psa\" /o\""
+					+ location.getAbsolutePath() + "\\data\\batch\" /aF");
 
 			// alignctd
 			fout.println("alignctd /i\"" + location.getAbsolutePath()
-					+ "\\data\\batch\\%1CF.cnv\" /p\"" + location.getAbsolutePath()
-					+ "\\AlignIMOS.psa\" /o\"" + location.getAbsolutePath()
-					+ "\\data\\batch\" /aA");
+					+ "\\data\\batch\\%1CF.cnv\" /p\""
+					+ location.getAbsolutePath() + "\\AlignIMOS.psa\" /o\""
+					+ location.getAbsolutePath() + "\\data\\batch\" /aA");
 
 			// loopedit
 			fout.println("loopedit /i\"" + location.getAbsolutePath()
-					+ "\\data\\batch\\%1CFA.cnv\" /p\"" + location.getAbsolutePath()
-					+ "\\LoopEditIMOS.psa\" /o\"" + location.getAbsolutePath()
-					+ "\\data\\batch\" /aL");
+					+ "\\data\\batch\\%1CFA.cnv\" /p\""
+					+ location.getAbsolutePath() + "\\LoopEditIMOS.psa\" /o\""
+					+ location.getAbsolutePath() + "\\data\\batch\" /aL");
 
 			// derive
 			fout.println("derive /i\"" + location.getAbsolutePath()
-					+ "\\data\\batch\\%1CFAL.cnv\" /c\"" + location.getAbsolutePath() + "\\"
-					+ name + "\" /p\"" + location.getAbsolutePath() + "\\DeriveIMOS.psa"
-					+ "\" /o\"" + location.getAbsolutePath() + "\\data\\batch\" /aD");
+					+ "\\data\\batch\\%1CFAL.cnv\" /c\""
+					+ location.getAbsolutePath() + "\\" + name + "\" /p\""
+					+ location.getAbsolutePath() + "\\DeriveIMOS.psa"
+					+ "\" /o\"" + location.getAbsolutePath()
+					+ "\\data\\batch\" /aD");
 
 			// binavg
 			fout.println("binavg /i\"" + location.getAbsolutePath()
-					+ "\\data\\batch\\%1CFALD.cnv\" /p\"" + location.getAbsolutePath()
-					+ "\\BinAvgIMOS.psa\" /o\"" + location.getAbsolutePath()
-					+ "\\data\\final\" /aB");
+					+ "\\data\\batch\\%1CFALD.cnv\" /p\""
+					+ location.getAbsolutePath() + "\\BinAvgIMOS.psa\" /o\""
+					+ location.getAbsolutePath() + "\\data\\final\" /aB");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -583,7 +576,8 @@ public class XmlconReader {
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(file.getAbsolutePath());
-			fout.println("sbebatch " + new File(outputDirName).getAbsolutePath()
+			fout.println("sbebatch "
+					+ new File(outputDirName).getAbsolutePath()
 					+ "\\process.sbbat *\nEXIT [/B] [exitCode] ");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
