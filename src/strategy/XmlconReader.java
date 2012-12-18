@@ -277,7 +277,6 @@ public class XmlconReader {
 
 			files = findAllFiles(inputLocation, files);
 
-
 			// loops for every file in dir
 			for (File xml : files) {
 
@@ -385,7 +384,6 @@ public class XmlconReader {
 					// Moves the file
 					moveCon(xml, outputDirName);
 
-					// Need there to be a file IDIOT
 					runSeabird.setBatch(outputDirName, xmlName);
 
 				} else if (xml.getName().toLowerCase().endsWith(".con")) {
@@ -400,16 +398,13 @@ public class XmlconReader {
 
 					// Moves the file
 					moveCon(xml, outputDirName);
-				} // end of if
+				}
 			}
 
-			// Adding comments is fun
 			runSeabird.writeBatch();
 
-//			if (!files.isEmpty()) {
-				findHex(new File(inputHexLocation), outputFileLocation);
-//				System.out.println("n files");
-//			}
+			findHex(new File(inputHexLocation), outputFileLocation);
+			System.out.println("Starting seabird.");
 
 		} else {
 			if (!new File(inputLocation).isDirectory()) {
