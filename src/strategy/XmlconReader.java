@@ -282,11 +282,15 @@ public class XmlconReader {
 			// fills the sensorsMap of all the XmlconReader
 			datCnvWriter.populateSensorsMap();
 			// dir is the folder //pearl/temp/adc-jcu2012/xmlcon
-
-			File dir = new File(inputLocation);
+			ArrayList<File> files = new ArrayList<>();
+			
+			files = findAllFiles(inputLocation, files);
+			
+			System.out.println(files.toString());
+			System.out.println(files.size());
 
 			// loops for every file in dir
-			for (File xml : dir.listFiles()) {
+			for (File xml : files) {
 
 				/*
 				 * if the file ends with '.xmlcon' then proceed to parse the 6
@@ -429,7 +433,7 @@ public class XmlconReader {
 			// "xmlProcessSeabirds.bat");
 			// runSeabird.run();
 
-			//findHex(new File(inputHexLocation), outputFileLocation);
+			findHex(new File(inputHexLocation), outputFileLocation);
 		} else {
 			if(!new File(inputLocation).isDirectory()){
 				System.out.println("Input file location invalid");
@@ -441,6 +445,22 @@ public class XmlconReader {
 				System.out.println("Output file location invalid");
 			}
 		}
+	}
+
+	private static ArrayList<File> findAllFiles(String inputLocation, ArrayList<File> files) {
+		System.out.println(inputLocation);
+		File dir = new File(inputLocation);
+		 
+		// loops for every file in dir
+		for (File xml : dir.listFiles()) {			
+			if (xml.isDirectory()){
+				files.addAll(findAllFiles(xml.getAbsolutePath(), new ArrayList<File>()));
+			}
+			else if (xml.getName().toLowerCase().endsWith(".con") || xml.getName().toLowerCase().endsWith(".xmlcon")){
+				files.add(xml);
+			}
+		}
+		return files;
 	}
 
 	/**
