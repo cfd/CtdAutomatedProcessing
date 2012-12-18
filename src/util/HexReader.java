@@ -110,7 +110,7 @@ public class HexReader {
 		while (results.next()) {
 			String conFile = results.getString("Associated_con_file").replaceFirst(
 					"[.][^.]+$", "");
-			String hexFileLocation = outputFileLocation + "\\"	+ conFile + "\\data\\raw\\";
+			String hexFileLocation = new File(outputFileLocation).getAbsolutePath() + "\\"	+ conFile + "\\data\\raw\\";
 
 			Date startDate = new Date();
 			Date endDate = new Date();
