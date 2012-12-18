@@ -143,10 +143,12 @@ public class HexReader {
 					System.out.println("InstrumentID is: " + conFile);
 					System.out.println("File Location is: " + hexFileLocation);
 
-					// Copies the hex to the right location. Not deleting the
-					// original
-					copyHex(hexFileLocation);
+					
 				}
+				
+				// Copies the hex to the right location. Not deleting the
+				// original
+				copyHex(hexFileLocation);
 			}
 
 		}

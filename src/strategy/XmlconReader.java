@@ -406,9 +406,10 @@ public class XmlconReader {
 			// Adding comments is fun
 			runSeabird.writeBatch();
 
-			if (!files.isEmpty()) {
+//			if (!files.isEmpty()) {
 				findHex(new File(inputHexLocation), outputFileLocation);
-			}
+//				System.out.println("n files");
+//			}
 
 		} else {
 			if (!new File(inputLocation).isDirectory()) {
