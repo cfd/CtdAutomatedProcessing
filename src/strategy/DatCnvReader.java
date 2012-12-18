@@ -24,8 +24,8 @@ public class DatCnvReader {
 	 */
 	
 	public static void main(String[] args) {
-		String inputLocation;
-		String outputFileLocation;
+		String inputLocation = "";
+		String outputFileLocation = "";
 		
 		try{
 			 inputLocation = args[0];
@@ -42,6 +42,9 @@ public class DatCnvReader {
 		
 		System.out.println(inputLocation);
 		System.out.println(outputFileLocation);
+		
+		if (new File(inputLocation).isDirectory()
+				&& new File(outputFileLocation).isDirectory()) {
 		
 		ArrayList<XmlconReader> writers = new ArrayList<>();
 
@@ -112,6 +115,7 @@ public class DatCnvReader {
 							}
 							sensors.clear();
 							
+							//Something
 							runSeabird.setBatch(outputDirName, xmlName);				
 							
 
@@ -126,6 +130,15 @@ public class DatCnvReader {
 		
 		//I like commenting
 		runSeabird.writeBatch();
+		
+		} else {
+			if(!new File(inputLocation).isDirectory()){
+				System.out.println("Input file location invalid");
+			}
+			if(!new File(outputFileLocation).isDirectory()){
+				System.out.println("Output file location invalid");
+			}
+		}
 	}
 
 	/**
