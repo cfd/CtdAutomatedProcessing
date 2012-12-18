@@ -60,7 +60,7 @@ public class DatCnvReader {
 							writers.add(deriveWriter);
 							writers.add(loopEditWriter);
 
-							populatSensorArray(calcArrayItems);
+							populateSensorsMap(calcArrayItems);
 
 							System.out.println("I am doing things");
 							String outputDirName = xml.toString();
@@ -115,7 +115,7 @@ public class DatCnvReader {
 	 * @param calcArrayItems
 	 */
 	
-	private static void populatSensorArray(List<Element> calcArrayItems) {
+	private static void populateSensorsMap(List<Element> calcArrayItems) {
 		// Gets all the items for the sensors array
 		for (Element calcArray : calcArrayItems) {
 			// Index is not used anywhere other then debugging
