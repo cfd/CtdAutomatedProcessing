@@ -125,7 +125,7 @@ public class DatCnvReader {
 		
 		//I like commenting
 		runSeabird.writeBatch();
-		System.out.println("Running Seabird");
+		System.out.println("Running Seabird...");
 		
 		} else {
 			if(!new File(inputLocation).isDirectory()){
